@@ -1,0 +1,457 @@
+/* ==============================================
+   lobby.css — Lobby / Home Screen
+   Desain game modern, bersih, profesional (tidak over-AI)
+   ============================================== */
+
+/* ── Halaman Lobby ────────────────────────────── */
+#screen-lobby {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    background: var(--bg-base);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    overflow-x: hidden;
+
+    /* Subtle atmospheric background pattern */
+    background-image:
+        radial-gradient(circle at 25% 30%, rgba(2, 132, 199, 0.08) 0%, transparent 45%),
+        radial-gradient(circle at 75% 70%, rgba(168, 85, 247, 0.06) 0%, transparent 45%);
+}
+
+#screen-lobby.hidden {
+    display: none;
+}
+
+/* ── Layout Container ────────────────────────── */
+.lobby-layout {
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    width: 100%;
+    max-width: 460px;
+    padding: clamp(14px, 2.5vh, 24px) var(--sp-4);
+    gap: clamp(12px, 2vh, 18px);
+}
+
+/* ── Brand / Hero ─────────────────────────────── */
+.lobby-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 8px;
+}
+
+.lobby-logo-icon {
+    width: 54px;
+    height: 54px;
+    border-radius: var(--r-lg);
+    background: linear-gradient(135deg, #0369a1 0%, #075985 50%, #0c4a6e 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.75rem;
+    box-shadow: 0 6px 20px rgba(2, 132, 199, 0.35), 0 0 0 1px rgba(56, 189, 248, 0.25);
+    flex-shrink: 0;
+    transition: transform 0.2s var(--ease-out);
+}
+.lobby-logo-icon:hover {
+    transform: scale(1.05);
+}
+
+.lobby-brand-name {
+    font-family: var(--font-game);
+    font-size: clamp(1.05rem, 3.5vw, 1.35rem);
+    color: #ffffff;
+    letter-spacing: 2px;
+    line-height: 1.2;
+}
+
+.lobby-brand-sub {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    max-width: 320px;
+    line-height: 1.45;
+}
+
+/* ── Progress Summary Card ────────────────────── */
+.lobby-progress-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-default);
+    border-radius: var(--r-md);
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: var(--sp-3);
+}
+
+.progress-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+    gap: 2px;
+}
+
+.progress-stat-value {
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: var(--gold);
+    line-height: 1.1;
+}
+
+.progress-stat-label {
+    font-size: 0.68rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    text-align: center;
+    line-height: 1.2;
+}
+
+.progress-divider {
+    width: 1px;
+    height: 28px;
+    background: var(--border-subtle);
+    flex-shrink: 0;
+}
+
+.progress-bar-wrap {
+    margin-top: 2px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.progress-bar-track {
+    height: 5px;
+    background: var(--bg-muted);
+    border-radius: var(--r-full);
+    overflow: hidden;
+}
+
+.progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--blue), var(--cyan));
+    border-radius: var(--r-full);
+    transition: width 0.8s var(--ease-out);
+    width: 0%;
+}
+
+.progress-bar-label {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    display: flex;
+    justify-content: space-between;
+}
+
+/* ── Level Grid Section ───────────────────────── */
+.lobby-level-section {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.lobby-section-label {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+}
+
+.lobby-level-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 8px;
+}
+
+.lobby-level-btn {
+    height: clamp(40px, 6.2vh, 48px);
+    border-radius: var(--r-sm);
+    border: 1px solid var(--border-subtle);
+    background: var(--bg-elevated);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    cursor: pointer;
+    transition: all 0.16s var(--ease-out);
+    position: relative;
+    font-family: var(--font-ui);
+    padding: 2px 4px;
+}
+
+.lobby-level-btn:hover:not(:disabled) {
+    border-color: var(--cyan);
+    background: var(--bg-card);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(56, 189, 248, 0.2);
+}
+
+.lobby-level-btn:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+}
+
+.lobby-level-btn.done {
+    border-color: rgba(250, 204, 21, 0.4);
+    background: rgba(250, 204, 21, 0.06);
+}
+
+.lobby-level-btn.current {
+    border-color: var(--cyan);
+    background: rgba(56, 189, 248, 0.08);
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.25);
+}
+
+.lobby-level-num {
+    font-size: 0.82rem;
+    font-weight: 800;
+    color: var(--text-primary);
+    line-height: 1;
+}
+
+.lobby-level-stars {
+    font-size: 0.55rem;
+    line-height: 1;
+    color: var(--gold);
+    min-height: 8px;
+    letter-spacing: -1px;
+}
+
+.lobby-level-btn .lock-icon {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+}
+
+/* ── CTA Buttons ──────────────────────────────── */
+.lobby-cta {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.btn-lobby-primary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--sp-2);
+    width: 100%;
+    padding: 12px 20px;
+    background: linear-gradient(135deg, var(--blue), var(--blue-dk));
+    color: #fff;
+    border: none;
+    border-radius: var(--r-md);
+    font-size: 0.92rem;
+    font-weight: 700;
+    letter-spacing: 0.3px;
+    box-shadow: 0 4px 16px rgba(2, 132, 199, 0.35);
+    transition: all 0.16s var(--ease-out);
+}
+
+.btn-lobby-primary:hover {
+    background: linear-gradient(135deg, #0ea5e9, var(--blue));
+    transform: translateY(-2px);
+    box-shadow: 0 6px 22px rgba(2, 132, 199, 0.45);
+}
+
+.btn-lobby-primary:active {
+    transform: translateY(0);
+}
+
+.btn-lobby-secondary {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--sp-2);
+    width: 100%;
+    padding: 9px 20px;
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-default);
+    border-radius: var(--r-md);
+    font-size: 0.8rem;
+    font-weight: 600;
+    transition: all 0.16s var(--ease-out);
+}
+
+.btn-lobby-secondary:hover {
+    color: var(--text-primary);
+    border-color: var(--border-bright);
+    background: var(--bg-elevated);
+}
+
+/* ── Animated entrance ────────────────────────── */
+.lobby-hero,
+.lobby-progress-card,
+.lobby-level-section,
+.lobby-cta {
+    animation: lobby-fade-up 0.45s var(--ease-out) both;
+}
+.lobby-progress-card { animation-delay: 0.05s; }
+.lobby-level-section  { animation-delay: 0.1s; }
+.lobby-cta            { animation-delay: 0.15s; }
+
+/* ── Banner Spesial SORT-BOT (Game IF-ELSE) ──── */
+.lobby-games-hub {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.lobby-sortbot-banner {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, rgba(6, 182, 212, 0.08) 100%);
+    border: 1px solid rgba(16, 185, 129, 0.35);
+    border-radius: var(--r-md);
+    padding: 12px 14px;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.2s var(--ease-out);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.1);
+}
+
+.lobby-sortbot-banner:hover {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(6, 182, 212, 0.15) 100%);
+    border-color: rgba(52, 211, 153, 0.6);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.2);
+}
+
+.sortbot-banner-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.sortbot-banner-tag {
+    font-size: 0.65rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #34d399;
+    background: rgba(16, 185, 129, 0.18);
+    border: 1px solid rgba(52, 211, 153, 0.3);
+    padding: 2px 7px;
+    border-radius: 999px;
+}
+
+.sortbot-banner-badge-btn {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #10b981;
+    background: rgba(16, 185, 129, 0.15);
+    padding: 3px 10px;
+    border-radius: 6px;
+    transition: all 0.15s ease;
+}
+
+.lobby-sortbot-banner:hover .sortbot-banner-badge-btn {
+    background: #10b981;
+    color: #042f1a;
+}
+
+.sortbot-banner-body {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.sortbot-banner-icon {
+    font-size: 2rem;
+    line-height: 1;
+    filter: drop-shadow(0 2px 8px rgba(16, 185, 129, 0.3));
+}
+
+.sortbot-banner-text {
+    flex: 1;
+    min-width: 0;
+}
+
+.sortbot-banner-title {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 2px;
+    letter-spacing: 0.2px;
+}
+
+.sortbot-banner-desc {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    line-height: 1.35;
+    margin: 0;
+}
+
+.sortbot-banner-desc strong {
+    color: #6ee7b7;
+}
+
+/* ── Banner OUTFIT-BOT (Fungsi & Parameter) ── */
+.lobby-outfitbot-banner {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.14) 0%, rgba(236, 72, 153, 0.09) 100%);
+    border: 1px solid rgba(168, 85, 247, 0.35);
+    border-radius: var(--r-md);
+    padding: 12px 14px;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.2s var(--ease-out);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 4px 14px rgba(168, 85, 247, 0.1);
+}
+
+.lobby-outfitbot-banner:hover {
+    background: linear-gradient(135deg, rgba(168, 85, 247, 0.22) 0%, rgba(236, 72, 153, 0.16) 100%);
+    border-color: rgba(192, 132, 252, 0.65);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(168, 85, 247, 0.25);
+}
+
+.outfitbot-banner-tag {
+    font-size: 0.65rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: #f472b6;
+    background: rgba(236, 72, 153, 0.18);
+    border: 1px solid rgba(236, 72, 153, 0.3);
+    padding: 2px 7px;
+    border-radius: 999px;
+}
+
+.outfitbot-banner-badge-btn {
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #c084fc;
+    background: rgba(168, 85, 247, 0.15);
+    padding: 3px 10px;
+    border-radius: 6px;
+    transition: all 0.15s ease;
+}
+
+.lobby-outfitbot-banner:hover .outfitbot-banner-badge-btn {
+    background: #a855f7;
+    color: #ffffff;
+}
+
+.outfitbot-banner-desc strong {
+    color: #f472b6;
+}
+
+@keyframes lobby-fade-up {
+    from { opacity: 0; transform: translateY(12px); }
+    to   { opacity: 1; transform: translateY(0); }
+}

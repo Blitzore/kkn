@@ -1,0 +1,107 @@
+/* ==============================================
+   base.css — Design Tokens & Reset
+   ============================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Press+Start+2P&display=swap');
+
+:root {
+    /* Fonts */
+    --font-game:   'Press Start 2P', monospace;
+    --font-ui:     'Outfit', -apple-system, BlinkMacSystemFont, sans-serif;
+
+    /* Background layers */
+    --bg-base:     #07090f;
+    --bg-panel:    #0b1120;
+    --bg-card:     #0f1a2e;
+    --bg-elevated: #162034;
+    --bg-muted:    #1e2d45;
+
+    /* Borders */
+    --border-subtle:  #1e2d45;
+    --border-default: #243448;
+    --border-bright:  rgba(56, 189, 248, 0.35);
+
+    /* Accent colors */
+    --cyan:    #38bdf8;
+    --blue:    #0284c7;
+    --blue-dk: #0369a1;
+    --gold:    #facc15;
+    --green:   #22c55e;
+    --emerald: #10b981;
+    --rose:    #f43f5e;
+    --purple:  #a855f7;
+    --orange:  #f97316;
+    --indigo:  #6366f1;
+
+    /* Text */
+    --text-primary:   #f0f4f8;
+    --text-secondary: #94a3b8;
+    --text-muted:     #64748b;
+    --text-inverse:   #07090f;
+
+    /* Spacing */
+    --sp-1: 4px;
+    --sp-2: 8px;
+    --sp-3: 12px;
+    --sp-4: 16px;
+    --sp-5: 20px;
+    --sp-6: 24px;
+
+    /* Radius */
+    --r-sm:   6px;
+    --r-md:   10px;
+    --r-lg:   16px;
+    --r-xl:   24px;
+    --r-full: 9999px;
+
+    /* Shadows */
+    --shadow-sm:   0 2px 8px rgba(0,0,0,0.4);
+    --shadow-md:   0 4px 20px rgba(0,0,0,0.5);
+    --shadow-lg:   0 12px 40px rgba(0,0,0,0.7);
+    --shadow-cyan: 0 0 16px rgba(56, 189, 248, 0.2);
+
+    /* Transitions */
+    --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+    --ease-in:  cubic-bezier(0.4, 0, 1, 1);
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    -webkit-tap-highlight-color: transparent;
+    user-select: none;
+}
+
+html {
+    font-size: 16px;
+    height: 100%;
+    overflow: hidden;
+}
+
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: var(--bg-base);
+    font-family: var(--font-ui);
+    font-size: 1rem;
+    color: var(--text-primary);
+    line-height: 1.5;
+}
+
+button {
+    font-family: var(--font-ui);
+    cursor: pointer;
+}
+
+/* Utility */
+.sr-only {
+    position: absolute;
+    width: 1px; height: 1px;
+    padding: 0; margin: -1px;
+    overflow: hidden;
+    clip: rect(0,0,0,0);
+    white-space: nowrap;
+    border: 0;
+}

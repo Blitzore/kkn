@@ -1,0 +1,187 @@
+/* ==============================================
+   responsive.css — Breakpoints & Mobile Fixes
+   ============================================== */
+
+/* ══════════════════════════════════════════════
+   MOBILE PORTRAIT  (≤ 480px)
+   Focus: compact HUD, large arena, touch targets
+   ══════════════════════════════════════════════ */
+@media (max-width: 640px) {
+
+    /* HUD */
+    .hud-bar {
+        height: 46px;
+        padding: 0 var(--sp-2);
+        gap: var(--sp-1);
+    }
+    .hud-score,
+    .btn-hud-reset-stars {
+        display: none; /* keep clean on mobile */
+    }
+    .btn-icon {
+        width: 32px;
+        height: 32px;
+        font-size: 0.85rem;
+    }
+    .hud-level-title { font-size: 0.8rem; }
+    .hud-level-tag   { font-size: 0.58rem; }
+
+    /* Camera toolbar — icon-only on mobile */
+    .camera-toolbar { top: 6px; right: 6px; }
+    .btn-cam { height: 26px; padding: 0 6px; font-size: 0.6rem; }
+    .btn-cam .cam-text { display: none; }
+
+    /* Arena hint — positioned below toolbar so it never collides with camera/compass */
+    .arena-hint {
+        top: 42px;
+        left: 50%;
+        transform: translateX(-50%);
+        font-size: 0.72rem;
+        max-width: 88%;
+        padding: 4px 12px;
+        white-space: normal;
+        text-align: center;
+        line-height: 1.35;
+    }
+
+    /* Deck */
+    .prog-deck {
+        padding: var(--sp-2) var(--sp-2) var(--sp-2);
+        gap: var(--sp-1);
+        max-height: 52vh;
+    }
+
+    /* Blocks */
+    .btn-block {
+        padding: 5px 9px;
+        font-size: 0.72rem;
+        min-height: 34px;
+    }
+    .block-label { font-size: 0.68rem; }
+
+    /* Slots */
+    .slot { min-width: 56px; height: 30px; font-size: 0.68rem; }
+
+    /* Controls */
+    .btn-ctrl {
+        font-size: 0.7rem;
+        min-height: 34px;
+        padding: 0 10px;
+    }
+    /* "DEBUG" label hidden on small screens */
+    .btn-step .step-text { display: none; }
+
+    /* Modal */
+    .modal-sheet {
+        border-radius: var(--r-lg);
+        max-height: 92dvh;
+    }
+    .modal-briefing {
+        max-width: 95vw;
+    }
+    .modal-briefing .modal-heading { font-size: 1.15rem; }
+    .modal-briefing #intro-body { font-size: 1rem; }
+    .modal-briefing .info-block { font-size: 0.92rem; }
+    .modal-briefing .unlock-block { font-size: 0.9rem; }
+    #demo-canvas { height: 115px; }
+    .modal-header { padding: var(--sp-4) var(--sp-4) var(--sp-3); }
+    .modal-body   { padding: var(--sp-3) var(--sp-4); }
+    .modal-footer { padding: var(--sp-3) var(--sp-4) var(--sp-4); }
+    .modal-heading { font-size: 0.95rem; }
+
+    /* Lobby */
+    .lobby-layout {
+        padding: var(--sp-4) var(--sp-3);
+        gap: var(--sp-4);
+        justify-content: flex-start;
+        padding-top: env(safe-area-inset-top, var(--sp-4));
+        padding-bottom: env(safe-area-inset-bottom, var(--sp-4));
+    }
+    .lobby-logo-icon { width: 60px; height: 60px; font-size: 1.6rem; }
+    .lobby-brand-name { font-size: 1rem; }
+    .lobby-level-grid { grid-template-columns: repeat(5, 1fr); }
+}
+
+
+/* ══════════════════════════════════════════════
+   MOBILE LANDSCAPE  (max-height: 500px)
+   Critical: arena cannot be tiny
+   ══════════════════════════════════════════════ */
+@media (max-height: 500px) and (orientation: landscape) {
+
+    .hud-bar { height: 38px; }
+
+    .prog-deck {
+        max-height: 40vh;
+        gap: var(--sp-1);
+        padding: var(--sp-1) var(--sp-3);
+    }
+
+    /* Stack controls horizontally to save space */
+    .slots-wrap { min-height: 36px; }
+    .slot { height: 28px; }
+
+    .btn-ctrl { min-height: 30px; font-size: 0.68rem; }
+
+    /* Status + concept side-by-side */
+    .deck-bottom-row { flex-wrap: nowrap; }
+}
+
+
+/* ══════════════════════════════════════════════
+   TABLET  (481px – 768px)
+   ══════════════════════════════════════════════ */
+@media (min-width: 641px) and (max-width: 768px) {
+
+    .prog-deck {
+        padding: var(--sp-2) var(--sp-3);
+        max-height: 46vh;
+    }
+
+    .btn-block { padding: 6px 11px; min-height: 36px; }
+    .slot { min-width: 64px; height: 32px; }
+}
+
+
+/* ══════════════════════════════════════════════
+   DESKTOP  (≥ 769px)
+   ══════════════════════════════════════════════ */
+@media (min-width: 769px) {
+
+    .hud-bar { height: 52px; padding: 0 var(--sp-5); }
+    .btn-icon { width: 36px; height: 36px; }
+
+    .prog-deck {
+        padding: var(--sp-3) var(--sp-5);
+        gap: var(--sp-2);
+        max-height: 42vh;
+    }
+
+    .btn-block { padding: 7px 14px; min-height: 38px; }
+    .slot { min-width: 72px; height: 34px; }
+    .btn-ctrl { min-height: 38px; padding: 0 16px; }
+
+    .camera-toolbar { top: 10px; right: 10px; }
+    .btn-cam { height: 30px; padding: 0 10px; }
+}
+
+
+/* ══════════════════════════════════════════════
+   LARGE DESKTOP / PROJECTOR  (≥ 1280px)
+   ══════════════════════════════════════════════ */
+@media (min-width: 1280px) {
+
+    .hud-bar { padding: 0 var(--sp-6); }
+
+    .prog-deck {
+        padding: var(--sp-3) var(--sp-6);
+        max-height: 38vh;
+    }
+
+    .btn-block { padding: 8px 16px; font-size: 0.82rem; min-height: 40px; }
+    .slot { min-width: 80px; height: 36px; font-size: 0.76rem; }
+
+    /* Lobby wider layout */
+    .lobby-layout { max-width: 600px; }
+    .lobby-level-grid { grid-template-columns: repeat(5, 1fr); }
+}

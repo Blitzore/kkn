@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#07090f">
+    <meta name="description" content="ALGO-BOT — Media Visual Interaktif Pengenalan Logika Pemrograman Dasar untuk siswa SD.">
+    <title>ALGO-BOT | Media Visual Interaktif</title>
+
+    <!-- CSS — Modular Architecture -->
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/lobby.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/components.css">
+    <link rel="stylesheet" href="css/responsive.css">
+
+    <!-- CDN: Confetti & QR Code -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+</head>
+
+<body>
+
+<!-- ══════════════════════════════════════════════════
+     SCREEN 1: LOBBY
+     ════════════════════════════════════════════════ -->
+<div id="screen-lobby">
+    <!-- Content rendered by LobbyScreen JS -->
+</div>
+
+
+<!-- ══════════════════════════════════════════════════
+     SCREEN 2: GAME
+     ════════════════════════════════════════════════ -->
+<div id="screen-game" class="hidden">
+
+    <!-- ① HUD Bar -->
+    <header class="hud-bar">
+        <div class="hud-left">
+            <button type="button" id="btn-lobby" class="btn-icon" title="Kembali ke Lobby">←</button>
+            <button type="button" id="btn-map"   class="btn-icon" title="Peta Level">🗺️</button>
+            <div class="hud-level-info">
+                <span class="hud-level-tag"  id="hud-tag">Level 1 · Algoritma</span>
+                <h1   class="hud-level-title" id="hud-title">Langkah Pertama</h1>
+            </div>
+        </div>
+
+        <div class="hud-right">
+            <div class="hud-score-wrap">
+                <span class="hud-score" id="hud-score" title="Total Bintang Terkumpul">⭐ 0/60</span>
+                <button type="button" id="btn-hud-reset-stars" class="btn-icon btn-hud-reset-stars" title="Reset Semua Bintang ke 0">🔄</button>
+            </div>
+            <button type="button" id="btn-speed" class="btn-icon speed-btn" title="Kecepatan Robot">1×</button>
+            <button type="button" id="btn-sound" class="btn-icon" title="Musik & Suara">🔊</button>
+            <button type="button" id="btn-info"  class="btn-icon" title="Materi Level">📖</button>
+        </div>
+    </header>
+
+    <!-- ② Arena (Canvas) -->
+    <main class="arena-wrap">
+        <canvas id="arena-canvas"></canvas>
+
+        <!-- Hint tantangan -->
+        <div class="arena-hint" id="arena-hint">
+            🎯 Susun balok MAJU dan AMBIL untuk meraih kristal!
+        </div>
+
+        <!-- Camera controls -->
+        <nav class="camera-toolbar" id="camera-toolbar" aria-label="Sudut Pandang Kamera">
+            <button type="button" class="btn-cam active" id="btn-cam-iso"   title="3D Isometrik">🔄 <span class="cam-text">3D</span></button>
+            <button type="button" class="btn-cam"        id="btn-cam-top"   title="Tampak Atas">🔝 <span class="cam-text">Atas</span></button>
+            <button type="button" class="btn-cam"        id="btn-cam-side"  title="Tampak Samping">👁 <span class="cam-text">Samping</span></button>
+            <button type="button" class="btn-cam"        id="btn-cam-reset" title="Reset Kamera">↩</button>
+        </nav>
+
+        <!-- Drag hint -->
+        <div class="drag-hint" id="drag-hint">🖱️ Geser untuk putar 360°</div>
+    </main>
+
+    <!-- ③ Programming Deck -->
+    <footer class="prog-deck" id="prog-deck">
+
+        <!-- Palet Balok -->
+        <div class="deck-section">
+            <div class="deck-row">
+                <span class="deck-label">Balok</span>
+                <div class="palette-blocks" id="palette-container">
+                    <!-- Rendered by JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Program Utama -->
+        <div class="deck-section">
+            <div class="deck-row">
+                <span class="deck-label">Program Robot</span>
+                <span class="deck-counter" id="main-counter">0/4</span>
+            </div>
+            <div class="slots-wrap" id="main-slots">
+                <!-- Rendered by JS -->
+            </div>
+        </div>
+
+        <!-- Fungsi F1 (tersembunyi jika tidak aktif) -->
+        <div class="f1-deck" id="f1-deck" style="display:none;">
+            <div class="f1-header">
+                <span class="f1-label">Fungsi F1</span>
+                <span class="deck-counter" id="f1-counter" style="color:var(--purple);">0/2</span>
+            </div>
+            <div class="slots-wrap" id="f1-slots" style="border-color:rgba(168,85,247,0.3);">
+                <!-- Rendered by JS -->
+            </div>
+        </div>
+
+        <!-- Kontrol Eksekusi -->
+        <div class="controls-row">
+            <button type="button" id="btn-run"   class="btn-ctrl btn-run">▶ Jalankan</button>
+            <button type="button" id="btn-step"  class="btn-ctrl btn-step" title="Jalankan satu langkah">⏭ <span class="step-text">Debug</span></button>
+            <button type="button" id="btn-clear" class="btn-ctrl btn-reset" title="Kosongkan semua balok">🗑</button>
+        </div>
+
+        <!-- Status + Konsep -->
+        <div class="deck-row" style="gap:var(--sp-2);">
+            <div class="status-bar" id="status-bar">
+                <span id="status-icon">🤖</span>
+                <span id="status-msg">Siap — pasang balok lalu tekan Jalankan.</span>
+            </div>
+            <div class="concept-chip" id="concept-chip" title="Klik untuk membaca materi">
+                <span class="concept-chip-label">Konsep</span>
+                <span class="concept-chip-name" id="concept-name">Algoritma</span>
+            </div>
+        </div>
+
+    </footer>
+
+</div><!-- /screen-game -->
+
+
+<!-- ══════════════════════════════════════════════════
+     MODALS
+     ════════════════════════════════════════════════ -->
+
+<!-- Modal: Briefing Level (sebelum mulai) -->
+<div class="modal-overlay" id="modal-intro">
+    <div class="modal-sheet modal-briefing">
+        <div class="modal-header">
+            <div class="modal-icon" id="intro-icon">🧩</div>
+            <div>
+                <div class="modal-heading"    id="intro-title">Apa itu Algoritma?</div>
+                <div class="modal-subheading" id="intro-module">Modul 1 · Algoritma</div>
+            </div>
+        </div>
+        <div class="modal-body">
+            <p id="intro-body">Susun perintah secara berurutan — komputer membacanya dari atas ke bawah, satu per satu.</p>
+            <div class="intro-stars-badge" id="intro-stars-badge"></div>
+            <div class="info-block" id="intro-analogy" style="display:none;"></div>
+            <div class="unlock-block" id="intro-unlock" style="display:none;">
+                <span class="unlock-block-icon" id="intro-unlock-icon">✨</span>
+                <div>
+                    <strong id="intro-unlock-title">Baru: MAJU & AMBIL</strong>
+                    <p id="intro-unlock-desc" style="margin-top:3px;"></p>
+                </div>
+            </div>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="btn-start-level" class="btn-cta">Mulai Misi →</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal: Kemenangan -->
+<div class="modal-overlay" id="modal-victory">
+    <div class="modal-sheet">
+        <div class="modal-header" style="justify-content:center;flex-direction:column;text-align:center;gap:var(--sp-2);">
+            <div class="victory-stars" id="victory-stars">
+                <span class="victory-star">⭐</span>
+                <span class="victory-star">⭐</span>
+                <span class="victory-star">⭐</span>
+            </div>
+            <div class="victory-title" id="victory-title">Level Selesai!</div>
+        </div>
+        <div class="modal-body">
+            <div class="info-block" id="victory-takeaway"></div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" id="btn-next-level"   class="btn-cta">Lanjut ke Level Berikutnya →</button>
+            <button type="button" id="btn-replay-level" class="btn-outline">Ulang Level Ini</button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal: Misi Belum Berhasil (Kalah / Gagal) -->
+<div class="modal-overlay" id="modal-defeat">
+    <div class="modal-sheet">
+        <div class="modal-header" style="background:#160b12;border-bottom:1.5px solid #3b1828;gap:14px;">
+            <div class="modal-icon" id="defeat-icon" style="font-size:2.4rem;">💥</div>
+            <div>
+                <div class="modal-heading" id="defeat-title" style="color:#fda4af;">Misi Belum Berhasil</div>
+                <div class="modal-subheading" id="defeat-subtitle" style="color:#fb7185;">Periksa Rute dan Urutan Balok</div>
+            </div>
+            <button type="button" class="modal-close-btn js-close-modal">✕</button>
+        </div>
+        <div class="modal-body">
+            <div class="defeat-reason-box" id="defeat-reason">
+                <!-- Diisi dinamis oleh JS -->
+            </div>
+            <div class="info-block" style="background:#090e1a;border:1.5px solid #1a2840;color:#94a3b8;font-size:0.85rem;padding:10px 14px;">
+                💡 Periksa urutan langkah dan orientasi arah robot sebelum mencoba kembali.
+            </div>
+        </div>
+        <div class="modal-footer" style="padding:14px 22px;gap:10px;flex-direction:column;">
+            <button type="button" id="btn-defeat-retry" class="btn-cta" style="background:linear-gradient(135deg, #e11d48, #be123c);border-color:#fb7185;width:100%;font-size:0.95rem;padding:11px;">
+                🔄 Coba Lagi
+            </button>
+            <button type="button" id="btn-defeat-clear" class="btn-outline" style="width:100%;font-size:0.85rem;padding:9px;color:#94a3b8;">
+                🧹 Kosongkan Balok
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal: Peta Level -->
+<div class="modal-overlay" id="modal-map">
+    <div class="modal-sheet">
+        <div class="modal-header">
+            <div class="modal-icon">🗺️</div>
+            <div>
+                <div class="modal-heading">Peta Level</div>
+                <div class="modal-subheading">Pilih Misi Petualangan</div>
+            </div>
+            <button type="button" class="modal-close-btn js-close-modal">✕</button>
+        </div>
+        <div class="modal-body">
+            <div class="level-grid" id="level-grid">
+                <!-- Rendered by JS -->
+            </div>
+            <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px;">
+                <a href="sortbot.html" style="display:flex;align-items:center;justify-content:space-between;background:rgba(16,185,129,0.12);border:1px solid rgba(16,185,129,0.3);border-radius:8px;padding:8px 12px;text-decoration:none;color:#6ee7b7;font-size:0.8rem;font-weight:700;transition:all 0.2s;">
+                    <span>♻️ Modul Spesial: SORT-BOT (Robot Pemilah Sampah IF-ELSE)</span>
+                    <span>Buka ➔</span>
+                </a>
+                <a href="outfitbot.html" style="display:flex;align-items:center;justify-content:space-between;background:rgba(168,85,247,0.12);border:1px solid rgba(168,85,247,0.3);border-radius:8px;padding:8px 12px;text-decoration:none;color:#c084fc;font-size:0.8rem;font-weight:700;transition:all 0.2s;">
+                    <span>👗 Modul Spesial: OUTFIT-BOT (Robot Lemari Fungsi & Parameter)</span>
+                    <span>Buka ➔</span>
+                </a>
+            </div>
+        </div>
+        <div class="modal-footer" style="padding:12px 22px;flex-direction:row;justify-content:space-between;align-items:center;">
+            <button type="button" id="btn-reset-stars" class="btn-outline" style="color:#fb7185;border-color:rgba(244,63,94,0.35);padding:8px 16px;font-size:0.82rem;gap:6px;width:auto;">
+                🔄 Reset Semua Bintang
+            </button>
+            <button type="button" class="btn-outline js-close-modal" style="padding:8px 16px;font-size:0.82rem;width:auto;">
+                Tutup
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Modal: QR Code -->
+<div class="modal-overlay" id="modal-qr">
+    <div class="modal-sheet">
+        <div class="modal-header">
+            <div class="modal-icon">📱</div>
+            <div>
+                <div class="modal-heading">Main di Smartphone</div>
+                <div class="modal-subheading">Akses Cepat Melalui Ponsel</div>
+            </div>
+            <button type="button" class="modal-close-btn js-close-modal">✕</button>
+        </div>
+        <div class="modal-body" style="align-items:center;text-align:center;">
+            <p style="color:var(--text-secondary);font-size:0.92rem;">Scan QR Code ini untuk bermain di layar HP.</p>
+            <div style="padding:14px;background:#fff;border-radius:var(--r-md);margin:var(--sp-2) 0;">
+                <div id="qr-canvas"></div>
+            </div>
+            <p style="font-size:0.8rem;color:var(--text-muted);">Upload ke <strong>GitHub Pages</strong> atau <strong>Netlify</strong> untuk link online gratis.</p>
+        </div>
+    </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════════
+     SCRIPTS — Urutan loading penting!
+     ════════════════════════════════════════════════ -->
+<!-- Config -->
+<script src="js/config/commands.js"></script>
+<script src="js/config/levels.js"></script>
+
+<!-- Core systems -->
+<script src="js/audio/soundSystem.js"></script>
+<script src="js/core/gameState.js"></script>
+<script src="js/core/interpreter.js"></script>
+
+<!-- Renderers -->
+<script src="js/renderer/tileRenderer.js"></script>
+<script src="js/renderer/robotRenderer.js"></script>
+<script src="js/renderer/headlightOverlay.js"></script>
+<script src="js/renderer/canvasEngine.js"></script>
+
+<!-- UI modules -->
+<script src="js/ui/tutorialDemo.js"></script>
+<script src="js/ui/lobby.js"></script>
+
+<!-- Main controller -->
+<script src="js/app.js"></script>
+
+<!-- QR Code init -->
+<script>
+    window.addEventListener('load', () => {
+        const el = document.getElementById('qr-canvas');
+        if (el && window.QRCode) {
+            new QRCode(el, {
+                text: window.location.href.startsWith('file:') ? 'https://github.com' : window.location.href,
+                width: 148, height: 148,
+                colorDark: '#07090f', colorLight: '#ffffff',
+                correctLevel: QRCode.CorrectLevel.M
+            });
+        }
+    });
+</script>
+
+</body>
+</html>

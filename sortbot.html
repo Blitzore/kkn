@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#07090f">
+    <meta name="description" content="SORT-BOT — Robot Pemilah Sampah Pintar. Media visual interaktif pengenalan logika percabangan IF - ELSE IF - ELSE untuk siswa SD selaras Kurikulum Merdeka P5.">
+    <title>SORT-BOT | Robot Pemilah Sampah (Game Logika IF - ELSE IF - ELSE)</title>
+
+    <!-- Google Fonts & CDN Confetti -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=JetBrains+Mono:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+
+    <!-- Modular Stylesheet -->
+    <link rel="stylesheet" href="css/sortbot.css">
+</head>
+<body>
+
+    <!-- ── Navbar ── -->
+    <header class="navbar">
+        <div class="nav-left">
+            <a href="index.html" class="btn-back-algo" title="Kembali ke ALGO-BOT">
+                ← ALGO
+            </a>
+            <a href="outfitbot.html" class="btn-goto-outfit" title="Game OUTFIT-BOT">
+                👗 OUTFIT
+            </a>
+            <div class="brand-wrap">
+                <div class="brand-icon-box">🤖</div>
+                <div class="brand-title">SORT-BOT</div>
+                <span class="brand-subtitle-tag">LOGIKA IF-ELSE</span>
+            </div>
+        </div>
+
+        <div class="nav-right">
+            <button type="button" class="btn-concept-nav" id="btn-open-concept-modal">
+                💡 <span>Konsep Percabangan</span>
+            </button>
+            <button type="button" class="level-badge-btn" id="btn-show-levels">
+                <span id="label-active-level">Level 1</span> ▾
+            </button>
+            <button type="button" class="sound-btn" id="btn-sound-toggle" title="Suara Nyala/Mati">🔊</button>
+        </div>
+    </header>
+
+    <!-- ── Dual Column Main Content ── -->
+    <main class="main-content">
+
+        <!-- 1. Arena Pabrik Daur Ulang (Left Column) -->
+        <section class="simulation-card">
+            <div class="card-header-bar">
+                <h2 class="card-header-title">🏭 Ban Berjalan Daur Ulang</h2>
+                <div class="header-score-pill" id="score-stars-pill">⭐ 0/15 Bintang</div>
+            </div>
+
+            <div class="mission-banner" id="mission-text-banner">
+                <span class="mission-icon">🎯</span>
+                <div class="mission-text-wrap" id="mission-content">
+                    <!-- Diisi JS -->
+                </div>
+            </div>
+
+            <!-- Active Trash Item Scanner HUD (Nama & Kategori Besar) -->
+            <div class="active-inspection-banner" id="active-inspection-banner">
+                <div class="aib-tag">🔍 DETEKSI SENSOR SAAT INI:</div>
+                <div class="aib-display">
+                    <span class="aib-icon" id="scan-disp-icon">📦</span>
+                    <div class="aib-text">
+                        <span class="aib-name" id="scan-disp-name">Kardus Bekas</span>
+                        <span class="aib-cat">Kategori: <strong id="scan-disp-cat-val">KERTAS</strong></span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Factory Conveyor Stage -->
+            <div class="factory-stage">
+                <!-- Live Telemetry -->
+                <div class="telemetry-screen" id="telemetry-box">
+                    <span class="telemetry-dot"></span>
+                    <span id="telemetry-text">STATUS: PABRIK SIAP</span>
+                </div>
+
+                <!-- Center Inspection Station -->
+                <div class="inspection-booth">
+                    <div class="scanner-beam-line" id="scanner-laser-line"></div>
+                    <span class="booth-label">SENSOR PENGECEK</span>
+                </div>
+
+                <!-- Animated Conveyor Belt Track -->
+                <div class="conveyor-belt" id="conveyor-moving-belt"></div>
+
+                <!-- Trash item cards on track -->
+                <div class="items-track-wrap" id="items-track-container"></div>
+            </div>
+
+            <!-- The Real 3D Bins Row -->
+            <div class="bins-dock-row" id="bins-dock-container">
+                <!-- Diisi otomatis oleh JS -->
+            </div>
+
+            <!-- Telemetry / Live Inspection Log -->
+            <div class="factory-log-console" id="factory-log-display">
+                🤖 Susun aturan logika percabangan lalu jalankan pabrik.
+            </div>
+        </section>
+
+        <!-- 2. Interactive Logic Workspace (Right Column) -->
+        <section class="workspace-card">
+            <div class="workspace-header">
+                <h2 class="workspace-title">🧩 Susun Aturan Logika Komputer</h2>
+                <button type="button" class="btn-guide-inline" id="btn-guide-inline">
+                    💡 Cara Kerja IF-ELSE
+                </button>
+            </div>
+
+            <div class="code-block-canvas">
+                <div class="loop-envelope-header">
+                    <span>🔁 SETIAP SAMPAH DI BAN BERJALAN:</span>
+                </div>
+
+                <div class="branch-block-structure" id="branch-structure-container">
+                    <!-- Branch 1: JIKA (IF) -->
+                    <div class="branch-row" id="row-if">
+                        <div class="branch-head-line">
+                            <span class="badge-if">JIKA (IF)</span>
+                            <span>(Kategori Sampah ==</span>
+                            <select class="rule-select unconfigured" id="select-if-cond">
+                                <option value="" selected>-- Pilih Kategori --</option>
+                                <option value="PLASTIK">PLASTIK 🧴</option>
+                                <option value="ORGANIK">ORGANIK 🍏</option>
+                                <option value="LOGAM">LOGAM / B3 🥫</option>
+                                <option value="KERTAS">KERTAS 📦</option>
+                            </select>
+                            <span>)</span>
+                            <span class="branch-eval-pill" id="pill-eval-if"></span>
+                        </div>
+                        <div class="branch-action-line">
+                            <span>👉 MAKA :</span>
+                            <select class="rule-select unconfigured" id="select-if-action">
+                                <option value="" selected>-- Pilih Tindakan / Tong --</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Dynamic ELSE IF Branches Container -->
+                    <div id="dynamic-elseif-container" style="display:flex; flex-direction:column; gap:8px;">
+                        <!-- Ditambah secara dinamis oleh JS -->
+                    </div>
+
+                    <!-- Branch Final: LAINNYA (ELSE) -->
+                    <div class="branch-row" id="row-else">
+                        <div class="branch-head-line">
+                            <span class="badge-else">LAINNYA (ELSE)</span>
+                            <span class="branch-eval-pill" id="pill-eval-else"></span>
+                        </div>
+                        <div class="branch-action-line">
+                            <span>👉 MAKA :</span>
+                            <select class="rule-select unconfigured" id="select-else-action">
+                                <option value="" selected>-- Pilih Tindakan / Tong --</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Execution Controls -->
+            <div class="execution-bar">
+                <button type="button" class="btn-factory-run" id="btn-run-factory">
+                    <span>▶ JALANKAN PABRIK</span>
+                </button>
+                <button type="button" class="btn-factory-step" id="btn-step-factory" title="Uji 1 Barang secara bertahap">
+                    <span>⏭️ Uji 1 Barang (Step)</span>
+                </button>
+                <button type="button" class="btn-factory-reset" id="btn-reset-factory" title="Kembalikan semua barang ke awal">
+                    <span>🔄 Reset</span>
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ── Level Selector Modal ── -->
+    <div class="modal-backdrop" id="modal-level-selector">
+        <div class="modal-dialog-box">
+            <div class="modal-header-row">
+                <div class="modal-header-title">🗺️ Pilih Level Sortir</div>
+                <button type="button" class="btn-modal-x" id="btn-close-level-modal">✕</button>
+            </div>
+            <p style="font-size:0.8rem; color:#94a3b8; line-height:1.4;">
+                Setiap level memperkenalkan lebih banyak jenis sampah dan cabang logika percabangan baru.
+            </p>
+            <div class="lvl-grid" id="modal-level-buttons">
+                <!-- Diisi otomatis oleh JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Concept Guide Modal ── -->
+    <div class="modal-backdrop" id="modal-concept-guide">
+        <div class="modal-dialog-box" style="max-width:540px;">
+            <div class="modal-header-row">
+                <div class="modal-header-title">💡 Cara Kerja Percabangan Komputer</div>
+                <button type="button" class="btn-modal-x" id="btn-close-concept-modal">✕</button>
+            </div>
+
+            <div class="concept-card-block">
+                <div class="concept-card-title">1. JIKA (IF)</div>
+                <p>
+                    Komputer selalu memeriksa syarat pertama di paling atas. Bila syarat terpenuhi (<strong>BENAR / TRUE</strong>), komputer langsung menjalankan tindakan dan <strong>melewati</strong> semua baris aturan di bawahnya!
+                </p>
+            </div>
+
+            <div class="concept-card-block">
+                <div class="concept-card-title">2. LAINNYA JIKA (ELSE IF)</div>
+                <p>
+                    Hanya diperiksa bila syarat sebelumnya <strong>SALAH / FALSE</strong>. Berguna saat kamu memiliki 3 atau 4 pilihan kategori yang berbeda.
+                </p>
+            </div>
+
+            <div class="concept-card-block">
+                <div class="concept-card-title">3. LAINNYA (ELSE)</div>
+                <p>
+                    Penampung cadangan terakhir. Dijalankan bila <strong>TIDAK ADA SATUPUN</strong> syarat di atas yang cocok.
+                </p>
+            </div>
+
+            <div class="flowchart-visual">
+                <div class="fc-node fc-start">Barang Sampah Tiba</div>
+                <div class="fc-arrow">↓</div>
+                <div class="fc-node fc-if">Apakah Syarat JIKA Cocok?</div>
+                <div style="display:flex; width:100%; justify-content:space-around; align-items:center;">
+                    <div style="text-align:center;">
+                        <span style="color:#34d399; font-size:0.75rem; font-weight:800;">[YA]</span>
+                        <div class="fc-node fc-action" style="margin-top:4px;">Buang & Selesai!</div>
+                    </div>
+                    <div style="text-align:center;">
+                        <span style="color:#ef4444; font-size:0.75rem; font-weight:800;">[TIDAK]</span>
+                        <div class="fc-node fc-elseif" style="margin-top:4px;">Cek ELSE IF / ELSE</div>
+                    </div>
+                </div>
+            </div>
+
+            <button type="button" class="btn-modal-action" id="btn-understand-concept">
+                Paham! Kembali Menyusun Aturan
+            </button>
+        </div>
+    </div>
+
+    <!-- ── Victory Modal ── -->
+    <div class="modal-backdrop" id="modal-victory-dialog">
+        <div class="modal-dialog-box" style="text-align:center; align-items:center;">
+            <div style="font-size:3.5rem; line-height:1; margin-top:8px;">🏆</div>
+            <div class="modal-header-title" id="vic-heading" style="justify-content:center; font-size:1.35rem;">
+                Level Selesai!
+            </div>
+            <p id="vic-submessage" style="font-size:0.85rem; color:#94a3b8; line-height:1.5;">
+                Semua sampah berhasil disortir dengan struktur logika yang tepat.
+            </p>
+            <div style="display:flex; gap:10px; width:100%; margin-top:8px;">
+                <button type="button" class="btn-factory-reset" id="btn-vic-replay" style="flex:1;">
+                    🔄 Main Ulang
+                </button>
+                <button type="button" class="btn-modal-action" id="btn-vic-continue" style="flex:2;">
+                    Lanjut Level Berikutnya ➔
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Alert Modal Dialog (Peringatan Validasi Pop-up) ── -->
+    <div class="modal-backdrop" id="modal-alert-dialog">
+        <div class="modal-dialog-box modal-alert-box">
+            <div class="alert-icon-wrap" id="alert-dialog-icon">⚠️</div>
+            <div class="alert-title" id="alert-dialog-title">Aturan Belum Lengkap!</div>
+            <p class="alert-desc" id="alert-dialog-message">
+                Pilih kategori dan tindakan tong terlebih dahulu sebelum menjalankan pabrik.
+            </p>
+            <button type="button" class="alert-btn-confirm" id="btn-alert-confirm">
+                Oke, Saya Lengkapi
+            </button>
+        </div>
+    </div>
+
+    <!-- ── Modular Scripts ── -->
+    <script src="js/config/sortbotLevels.js"></script>
+    <script src="js/sortbot/sortbotApp.js"></script>
+</body>
+</html>

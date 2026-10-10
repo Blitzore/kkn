@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#070a13">
+    <meta name="description" content="OUTFIT-BOT — Robot Lemari Seragam. Media visual interaktif pengenalan konsep Fungsi & Parameter Pemrograman untuk siswa SD selaras Kurikulum Merdeka.">
+    <title>OUTFIT-BOT | Robot Lemari Seragam (Fungsi & Parameter)</title>
+
+    <!-- Google Fonts & CDN Confetti -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=JetBrains+Mono:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+
+    <!-- Modular Stylesheet -->
+    <link rel="stylesheet" href="css/outfitbot.css">
+</head>
+<body>
+
+    <!-- ── Navbar ── -->
+    <header class="navbar">
+        <div class="nav-left">
+            <a href="index.html" class="btn-nav-link btn-link-algo" title="Kembali ke Game ALGO-BOT">
+                ← ALGO
+            </a>
+            <a href="sortbot.html" class="btn-nav-link btn-link-sort" title="Game SORT-BOT">
+                ♻️ SORT
+            </a>
+            <div class="brand-title">👗 OUTFIT-BOT</div>
+        </div>
+        <div class="nav-right">
+            <button type="button" class="level-badge-btn" id="btn-show-levels">
+                <span id="label-active-level">Level 1</span> ▾
+            </button>
+            <button type="button" class="sound-btn" id="btn-sound-toggle" title="Suara">🔊</button>
+        </div>
+    </header>
+
+    <!-- ── Main App Layout (Desktop No-Scroll Grid) ── -->
+    <main class="main-content">
+
+        <!-- 1. Arena Lemari & Mannequin (Left Column) -->
+        <section class="stage-card">
+            <div class="card-header-bar">
+                <h2 class="card-header-title">🪞 Lemari & Mannequin Siswa</h2>
+                <div class="header-score-pill" id="score-stars-pill">⭐ 0/15 Bintang</div>
+            </div>
+
+            <!-- Target Briefing -->
+            <div class="mission-banner" id="mission-text-banner">
+                <span class="mission-icon">🎯</span>
+                <div class="mission-text-wrap" id="mission-content">
+                    <!-- Diisi JS -->
+                </div>
+            </div>
+
+            <!-- Dressing Stage -->
+            <div class="dressing-stage">
+                <!-- Wardrobe Closet -->
+                <div class="wardrobe-closet">
+                    <div class="closet-title">
+                        <span>🚪 Lemari Pakaian</span>
+                        <span id="closet-arm-status">🦾 Siap</span>
+                    </div>
+
+                    <!-- Atasan -->
+                    <div class="closet-shelf-row">
+                        <span class="shelf-label">Atasan:</span>
+                        <div class="shelf-items">
+                            <span class="wardrobe-item-pill" id="closet-shirt-PUTIH">⚪ Putih</span>
+                            <span class="wardrobe-item-pill" id="closet-shirt-BATIK">🟠 Batik</span>
+                            <span class="wardrobe-item-pill" id="closet-shirt-KOTAK">🔵 Kotak</span>
+                            <span class="wardrobe-item-pill" id="closet-shirt-PRAMUKA">🟤 Pramuka</span>
+                        </div>
+                    </div>
+
+                    <!-- Bawahan -->
+                    <div class="closet-shelf-row">
+                        <span class="shelf-label">Bawahan:</span>
+                        <div class="shelf-items">
+                            <span class="wardrobe-item-pill" id="closet-pants-MERAH">🔴 Merah</span>
+                            <span class="wardrobe-item-pill" id="closet-pants-PUTIH">⚪ Putih</span>
+                            <span class="wardrobe-item-pill" id="closet-pants-HITAM">⚫ Hitam</span>
+                            <span class="wardrobe-item-pill" id="closet-pants-COKELAT_TUA">🟤 Cokelat</span>
+                        </div>
+                    </div>
+
+                    <!-- Aksesoris -->
+                    <div class="closet-shelf-row">
+                        <span class="shelf-label">Atribut:</span>
+                        <div class="shelf-items">
+                            <span class="wardrobe-item-pill" id="closet-acc-TOPI_DASI">🧢 Topi & Dasi</span>
+                            <span class="wardrobe-item-pill" id="closet-acc-DASI">👔 Dasi</span>
+                            <span class="wardrobe-item-pill" id="closet-acc-SABUK">🎗️ Sabuk</span>
+                            <span class="wardrobe-item-pill" id="closet-acc-KACU_HASDUK">🧣 Kacu</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Mannequin Area -->
+                <div class="mannequin-container">
+                    <svg class="student-avatar-svg" id="student-svg" viewBox="0 0 100 170">
+                        <circle cx="50" cy="30" r="16" fill="#fed7aa" />
+                        <path d="M 34 30 C 34 14, 66 14, 66 30 C 64 22, 56 20, 50 20 C 44 20, 36 22, 34 30 Z" fill="#1e293b" />
+                        <circle cx="45" cy="29" r="2" fill="#0f172a" />
+                        <circle cx="55" cy="29" r="2" fill="#0f172a" />
+                        <path d="M 46 36 Q 50 40 54 36" stroke="#0f172a" stroke-width="1.5" fill="none" stroke-linecap="round" />
+
+                        <g id="svg-part-hat" style="display:none;">
+                            <path d="M 32 20 Q 50 10 68 20 L 72 23 L 28 23 Z" fill="#ef4444" />
+                            <rect x="33" y="19" width="34" height="4" fill="#ffffff" />
+                        </g>
+
+                        <path id="svg-part-shirt" d="M 35 48 L 65 48 L 68 95 L 32 95 Z" fill="#334155" stroke="#1e293b" stroke-width="1.5" />
+                        <path id="svg-part-sleeve-l" d="M 35 48 L 22 75 L 29 78 L 36 60 Z" fill="#334155" />
+                        <path id="svg-part-sleeve-r" d="M 65 48 L 78 75 L 71 78 L 64 60 Z" fill="#334155" />
+                        <path d="M 43 48 L 50 56 L 57 48 Z" fill="#ffffff" />
+
+                        <g id="svg-part-tie" style="display:none;">
+                            <polygon id="svg-tie-shape" points="47,56 53,56 52,78 50,83 48,78" fill="#ef4444" />
+                        </g>
+
+                        <path id="svg-part-pants" d="M 32 95 L 68 95 L 65 140 L 52 140 L 50 110 L 48 140 L 35 140 Z" fill="#1e293b" stroke="#0f172a" stroke-width="1.5" />
+                        <rect id="svg-part-belt" x="32" y="93" width="36" height="5" fill="#0f172a" stroke="#fbbf24" stroke-width="0.8" style="display:none;" />
+
+                        <ellipse cx="38" cy="145" rx="8" ry="4" fill="#020617" />
+                        <ellipse cx="62" cy="145" rx="8" ry="4" fill="#020617" />
+                    </svg>
+                    <div class="avatar-tag" id="mannequin-status-label">Siap Berpakaian</div>
+                </div>
+            </div>
+
+            <!-- Weekly Calendar Checklist -->
+            <div class="weekly-calendar-grid" id="calendar-days-container">
+                <!-- Rendered by JS -->
+            </div>
+
+            <!-- Telemetry / Live Log -->
+            <div class="stage-log-console" id="stage-log-display">
+                🤖 OUTFIT-BOT siap. Atur parameter fungsi lalu jalankan robot.
+            </div>
+        </section>
+
+        <!-- 2. Deck Koding: Fungsi & Pemanggil (Right Column) -->
+        <section class="deck-card">
+            <div class="card-header-bar">
+                <h2 class="card-header-title">📝 Lembar Soal Pemanggilan Fungsi</h2>
+                <span class="header-sub-tag">Belajar Fungsi (SD)</span>
+            </div>
+
+            <!-- Kotak Prosedur Kerja Fungsi -->
+            <div class="code-blueprint-box" id="blueprint-box">
+                <div class="blueprint-header">
+                    <div class="blueprint-badge-row">
+                        <span class="badge-fn-def">⚙️ PROSEDUR FUNGSI ROBOT</span>
+                        <span class="badge-efficiency" id="blueprint-efficiency-badge">⚡ 1 Fungsi = 9 Prosedur Otomatis</span>
+                    </div>
+                    <div class="blueprint-fn-signature" id="blueprint-sig">fungsi siapkanSeragam(...) {</div>
+                </div>
+                <div class="blueprint-code-body" id="blueprint-code-body">
+                    <!-- Rendered by JS: 9 procedural steps in natural Indonesian -->
+                </div>
+                <div class="blueprint-footer">
+                    <span class="blueprint-close-bracket">}</span>
+                    <span class="blueprint-efficiency-note">💡 Fungsi membungkus 9 langkah kerja di atas agar hemat kode!</span>
+                </div>
+            </div>
+
+            <!-- Kotak Lembar Soal Tantangan Harian -->
+            <div class="schedule-calls-box" id="schedule-calls-box">
+                <div class="schedule-title-row">
+                    <h3 class="schedule-title">📋 Lembar Soal Tantangan Harian</h3>
+                    <span class="schedule-subhint">Ketik: siapkanSeragam(...)</span>
+                </div>
+
+                <div id="call-rows-container" style="display:flex; flex-direction:column; gap:8px;">
+                    <!-- Rendered by JS: Worksheet cards -->
+                </div>
+            </div>
+
+            <!-- Execution Controls -->
+            <div class="execution-bar">
+                <button type="button" class="btn-exec-run" id="btn-run-outfit">
+                    <span>▶ JALANKAN ROBOT</span>
+                </button>
+                <button type="button" class="btn-exec-step" id="btn-step-outfit" title="Uji 1 Hari">
+                    <span>⏭️ Uji 1 Hari</span>
+                </button>
+                <button type="button" class="btn-exec-reset" id="btn-reset-outfit" title="Reset">
+                    <span>🔄 Reset</span>
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ── Level Selector Modal ── -->
+    <div class="modal-backdrop" id="modal-level-selector">
+        <div class="modal-sheet">
+            <div class="modal-title-row">
+                <h3 class="modal-title-text">🗺️ Pilih Level OUTFIT-BOT</h3>
+                <button type="button" class="btn-modal-x" id="btn-close-level-modal">✕</button>
+            </div>
+            <p style="font-size:0.82rem; color:var(--text-secondary); line-height:1.4;">
+                Tantangan fungsi dan parameter: dari 1 parameter hingga otomatisasi 5 hari sekolah.
+            </p>
+            <div class="level-grid-container" id="modal-level-buttons">
+                <!-- Rendered by JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Victory Modal ── -->
+    <div class="modal-backdrop" id="modal-victory-dialog">
+        <div class="modal-sheet" style="text-align:center;">
+            <div style="font-size:3rem;">🎉</div>
+            <h3 class="modal-title-text" style="justify-content:center;" id="vic-heading">Level Selesai!</h3>
+            <p style="font-size:0.88rem; color:#cbd5e1; line-height:1.4;" id="vic-submessage">
+                Seluruh seragam berhasil disiapkan menggunakan parameter fungsi yang tepat.
+            </p>
+            <div style="font-size:2rem; margin:4px 0;" id="vic-stars-display">⭐⭐⭐</div>
+            <div style="display:flex; gap:10px; justify-content:center; margin-top:6px;">
+                <button type="button" class="btn-exec-reset" id="btn-vic-replay">🔄 Main Ulang</button>
+                <button type="button" class="btn-exec-run" id="btn-vic-continue" style="flex:unset; padding:9px 18px;">Level Selanjutnya ➔</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ── Alert Modal Dialog (Peringatan Parameter Pop-up) ── -->
+    <div class="modal-backdrop" id="modal-alert-dialog">
+        <div class="modal-sheet modal-alert-sheet">
+            <div class="alert-icon-wrap" id="alert-dialog-icon">⚠️</div>
+            <h3 class="modal-title-text" style="justify-content:center; color:#fef08a;" id="alert-dialog-title">Pilihan Belum Lengkap!</h3>
+            <p style="font-size:0.9rem; color:#cbd5e1; line-height:1.5; margin:6px 0 14px;" id="alert-dialog-message">
+                Pilih parameter seragam yang masih kosong sebelum menjalankan robot.
+            </p>
+            <button type="button" class="btn-exec-run" id="btn-alert-confirm" style="width:100%; justify-content:center; padding:12px; font-weight:800;">
+                Oke, Saya Lengkapi
+            </button>
+        </div>
+    </div>
+
+    <!-- ── Modular Scripts ── -->
+    <script src="js/config/outfitbotLevels.js"></script>
+    <script src="js/outfitbot/outfitbotApp.js"></script>
+</body>
+</html>
