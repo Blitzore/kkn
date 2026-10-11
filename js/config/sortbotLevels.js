@@ -11,11 +11,9 @@ const SORTBOT_LEVELS = [
         puzzleGoal: 'Masukkan sampah <strong>PLASTIK</strong> ke <strong>Tong Kuning</strong>. Buang <strong>semua jenis sampah lainnya</strong> ke <strong>Tong Hijau</strong>!',
         clues: [
             { text: '🧴 PLASTIK ➔ 🟡 Tong Kuning', isElse: false },
-            { text: '📦 Semua Lainnya (ELSE) ➔ 🟢 Tong Hijau', isElse: true }
+            { text: '📦 Semua Sampah Lainnya ➔ 🟢 Tong Hijau', isElse: true }
         ],
         availableBins: ['KUNING', 'HIJAU'],
-        initialElseIfs: [],
-        allowAddElseIf: false,
         items: [
             { type: 'PLASTIK', name: 'Botol Plastik', icon: '🧴', targetBin: 'KUNING' },
             { type: 'ORGANIK', name: 'Kulit Pisang', icon: '🍌', targetBin: 'HIJAU' },
@@ -32,11 +30,9 @@ const SORTBOT_LEVELS = [
         puzzleGoal: 'Masukkan sampah <strong>ORGANIK</strong> ke <strong>Tong Hijau</strong>. Buang <strong>semua jenis sampah lainnya</strong> ke <strong>Tong Kuning</strong>!',
         clues: [
             { text: '🍏 ORGANIK ➔ 🟢 Tong Hijau', isElse: false },
-            { text: '📦 Semua Lainnya (ELSE) ➔ 🟡 Tong Kuning', isElse: true }
+            { text: '📦 Semua Sampah Lainnya ➔ 🟡 Tong Kuning', isElse: true }
         ],
         availableBins: ['HIJAU', 'KUNING'],
-        initialElseIfs: [],
-        allowAddElseIf: false,
         items: [
             { type: 'ORGANIK', name: 'Sisa Sayur',     icon: '🥬', targetBin: 'HIJAU' },
             { type: 'PLASTIK', name: 'Kantong Kresek', icon: '🛍️', targetBin: 'KUNING' },
@@ -55,13 +51,9 @@ const SORTBOT_LEVELS = [
         clues: [
             { text: '🥫 LOGAM ➔ 🔴 Tong Merah', isElse: false },
             { text: '🧴 PLASTIK ➔ 🟡 Tong Kuning', isElse: false },
-            { text: '📦 Semua Lainnya (ELSE) ➔ 🟢 Tong Hijau', isElse: true }
+            { text: '📦 Semua Sampah Lainnya ➔ 🟢 Tong Hijau', isElse: true }
         ],
         availableBins: ['MERAH', 'KUNING', 'HIJAU'],
-        initialElseIfs: [
-            { cond: '', action: '' }
-        ],
-        allowAddElseIf: true,
         items: [
             { type: 'LOGAM',   name: 'Kaleng Soda',    icon: '🥫', targetBin: 'MERAH' },
             { type: 'PLASTIK', name: 'Botol Shampo',   icon: '🧴', targetBin: 'KUNING' },
@@ -82,14 +74,9 @@ const SORTBOT_LEVELS = [
             { text: '🥫 LOGAM ➔ 🔴 Tong Merah', isElse: false },
             { text: '📦 KERTAS ➔ 🔵 Tong Biru', isElse: false },
             { text: '🧴 PLASTIK ➔ 🟡 Tong Kuning', isElse: false },
-            { text: '🍏 Semua Lainnya (ELSE) ➔ 🟢 Tong Hijau', isElse: true }
+            { text: '🍏 Semua Sampah Lainnya ➔ 🟢 Tong Hijau', isElse: true }
         ],
         availableBins: ['MERAH', 'BIRU', 'KUNING', 'HIJAU'],
-        initialElseIfs: [
-            { cond: '', action: '' },
-            { cond: '', action: '' }
-        ],
-        allowAddElseIf: true,
         items: [
             { type: 'ORGANIK', name: 'Sisa Jagung',    icon: '🌽', targetBin: 'HIJAU' },
             { type: 'KERTAS',  name: 'Kardus Paket',   icon: '📦', targetBin: 'BIRU' },
@@ -110,14 +97,9 @@ const SORTBOT_LEVELS = [
             { text: '🍏 ORGANIK ➔ 🟢 Tong Hijau', isElse: false },
             { text: '🧴 PLASTIK ➔ 🟡 Tong Kuning', isElse: false },
             { text: '🥫 LOGAM ➔ 🔴 Tong Merah', isElse: false },
-            { text: '📦 KERTAS (ELSE) ➔ 🔵 Tong Biru', isElse: true }
+            { text: '📦 KERTAS / Lainnya ➔ 🔵 Tong Biru', isElse: true }
         ],
         availableBins: ['HIJAU', 'KUNING', 'MERAH', 'BIRU'],
-        initialElseIfs: [
-            { cond: '', action: '' },
-            { cond: '', action: '' }
-        ],
-        allowAddElseIf: true,
         items: [
             { type: 'PLASTIK', name: 'Botol Minyak',     icon: '🧴', targetBin: 'KUNING' },
             { type: 'ORGANIK', name: 'Sisa Nasi',        icon: '🍚', targetBin: 'HIJAU' },

@@ -137,6 +137,10 @@
             this.dom.btnStep.addEventListener('click', () => this.stepSimulation());
             this.dom.btnReset.addEventListener('click', () => this.resetSimulation());
 
+            const onResetStars = () => this.resetAllStars();
+            document.getElementById('btn-reset-stars-hud')?.addEventListener('click', onResetStars);
+            document.getElementById('btn-reset-stars-modal')?.addEventListener('click', onResetStars);
+
             if (this.dom.btnAlertConfirm) {
                 this.dom.btnAlertConfirm.addEventListener('click', () => this.closeAlertModal());
             }
@@ -384,6 +388,16 @@
         updateScoreDisplay() {
             const totalStars = this.stars.reduce((a, b) => a + b, 0);
             this.dom.scorePill.textContent = `⭐ ${totalStars}/15 Bintang`;
+        }
+
+        resetAllStars() {
+            if (confirm('Yakin ingin mereset semua bintang OUTFIT-BOT ke 0?\nSemua riwayat bintang level akan dikosongkan agar fresh untuk kelas baru.')) {
+                this.stars = [0, 0, 0, 0, 0];
+                localStorage.setItem('outfitbot_stars', JSON.stringify(this.stars));
+                this.updateScoreDisplay();
+                this.renderLevelModal();
+                sfx.clothSlide();
+            }
         }
 
         resetSimulation() {

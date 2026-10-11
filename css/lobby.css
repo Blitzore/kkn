@@ -296,159 +296,104 @@
 .lobby-level-section  { animation-delay: 0.1s; }
 .lobby-cta            { animation-delay: 0.15s; }
 
-/* ── Banner Spesial SORT-BOT (Game IF-ELSE) ──── */
-.lobby-games-hub {
+/* ── Modul Spesial Tambahan (Di Bawah & Ringkas) ── */
+.lobby-games-hub.compact-bottom {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 6px;
+    margin-top: 4px;
+    padding-top: 10px;
+    border-top: 1px dashed rgba(255, 255, 255, 0.1);
 }
 
-.lobby-sortbot-banner {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    background: linear-gradient(135deg, rgba(16, 185, 129, 0.12) 0%, rgba(6, 182, 212, 0.08) 100%);
-    border: 1px solid rgba(16, 185, 129, 0.35);
-    border-radius: var(--r-md);
-    padding: 12px 14px;
-    text-decoration: none;
-    color: inherit;
-    transition: all 0.2s var(--ease-out);
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 4px 14px rgba(16, 185, 129, 0.1);
+.lobby-modules-title {
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--text-muted);
 }
 
-.lobby-sortbot-banner:hover {
-    background: linear-gradient(135deg, rgba(16, 185, 129, 0.2) 0%, rgba(6, 182, 212, 0.15) 100%);
-    border-color: rgba(52, 211, 153, 0.6);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(16, 185, 129, 0.2);
-}
-
-.sortbot-banner-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
+.lobby-modules-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
     gap: 8px;
 }
 
-.sortbot-banner-tag {
-    font-size: 0.65rem;
-    font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    color: #34d399;
-    background: rgba(16, 185, 129, 0.18);
-    border: 1px solid rgba(52, 211, 153, 0.3);
-    padding: 2px 7px;
-    border-radius: 999px;
-}
-
-.sortbot-banner-badge-btn {
-    font-size: 0.72rem;
-    font-weight: 700;
-    color: #10b981;
-    background: rgba(16, 185, 129, 0.15);
-    padding: 3px 10px;
-    border-radius: 6px;
-    transition: all 0.15s ease;
-}
-
-.lobby-sortbot-banner:hover .sortbot-banner-badge-btn {
-    background: #10b981;
-    color: #042f1a;
-}
-
-.sortbot-banner-body {
+.lobby-module-compact-card {
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 8px;
+    padding: 7px 10px;
+    border-radius: var(--r-md);
+    text-decoration: none;
+    transition: all 0.16s ease;
+    overflow: hidden;
 }
 
-.sortbot-banner-icon {
-    font-size: 2rem;
-    line-height: 1;
-    filter: drop-shadow(0 2px 8px rgba(16, 185, 129, 0.3));
-}
-
-.sortbot-banner-text {
-    flex: 1;
-    min-width: 0;
-}
-
-.sortbot-banner-title {
-    font-size: 0.92rem;
-    font-weight: 700;
-    color: #ffffff;
-    margin-bottom: 2px;
-    letter-spacing: 0.2px;
-}
-
-.sortbot-banner-desc {
-    font-size: 0.75rem;
-    color: var(--text-secondary);
-    line-height: 1.35;
-    margin: 0;
-}
-
-.sortbot-banner-desc strong {
+.lobby-module-compact-card.sortbot-compact {
+    background: rgba(16, 185, 129, 0.08);
+    border: 1px solid rgba(16, 185, 129, 0.28);
     color: #6ee7b7;
 }
 
-/* ── Banner OUTFIT-BOT (Fungsi & Parameter) ── */
-.lobby-outfitbot-banner {
+.lobby-module-compact-card.sortbot-compact:hover {
+    background: rgba(16, 185, 129, 0.18);
+    border-color: rgba(52, 211, 153, 0.6);
+    transform: translateY(-1px);
+}
+
+.lobby-module-compact-card.outfitbot-compact {
+    background: rgba(168, 85, 247, 0.08);
+    border: 1px solid rgba(168, 85, 247, 0.28);
+    color: #c084fc;
+}
+
+.lobby-module-compact-card.outfitbot-compact:hover {
+    background: rgba(168, 85, 247, 0.18);
+    border-color: rgba(192, 132, 252, 0.6);
+    transform: translateY(-1px);
+}
+
+.compact-icon {
+    font-size: 1.25rem;
+    line-height: 1;
+    flex-shrink: 0;
+}
+
+.compact-info {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    background: linear-gradient(135deg, rgba(168, 85, 247, 0.14) 0%, rgba(236, 72, 153, 0.09) 100%);
-    border: 1px solid rgba(168, 85, 247, 0.35);
-    border-radius: var(--r-md);
-    padding: 12px 14px;
-    text-decoration: none;
-    color: inherit;
-    transition: all 0.2s var(--ease-out);
-    position: relative;
-    overflow: hidden;
-    box-shadow: 0 4px 14px rgba(168, 85, 247, 0.1);
+    min-width: 0;
+    flex: 1;
 }
 
-.lobby-outfitbot-banner:hover {
-    background: linear-gradient(135deg, rgba(168, 85, 247, 0.22) 0%, rgba(236, 72, 153, 0.16) 100%);
-    border-color: rgba(192, 132, 252, 0.65);
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(168, 85, 247, 0.25);
-}
-
-.outfitbot-banner-tag {
-    font-size: 0.65rem;
+.compact-title {
+    font-size: 0.8rem;
     font-weight: 800;
-    text-transform: uppercase;
-    letter-spacing: 0.8px;
-    color: #f472b6;
-    background: rgba(236, 72, 153, 0.18);
-    border: 1px solid rgba(236, 72, 153, 0.3);
-    padding: 2px 7px;
-    border-radius: 999px;
-}
-
-.outfitbot-banner-badge-btn {
-    font-size: 0.72rem;
-    font-weight: 700;
-    color: #c084fc;
-    background: rgba(168, 85, 247, 0.15);
-    padding: 3px 10px;
-    border-radius: 6px;
-    transition: all 0.15s ease;
-}
-
-.lobby-outfitbot-banner:hover .outfitbot-banner-badge-btn {
-    background: #a855f7;
     color: #ffffff;
+    line-height: 1.2;
 }
 
-.outfitbot-banner-desc strong {
-    color: #f472b6;
+.compact-sub {
+    font-size: 0.65rem;
+    color: var(--text-secondary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.compact-arrow {
+    font-size: 0.72rem;
+    font-weight: 800;
+    opacity: 0.6;
+    transition: transform 0.15s, opacity 0.15s;
+    flex-shrink: 0;
+}
+
+.lobby-module-compact-card:hover .compact-arrow {
+    transform: translateX(2px);
+    opacity: 1;
 }
 
 @keyframes lobby-fade-up {

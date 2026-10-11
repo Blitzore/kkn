@@ -99,39 +99,6 @@ class LobbyScreen {
                     </div>
                 </div>
 
-                <!-- Hub Game Edukasi Spesial (IF-ELSE & FUNGSI) -->
-                <div class="lobby-games-hub">
-                    <!-- 1. SORT-BOT (IF-ELSE) -->
-                    <a href="sortbot.html" class="lobby-sortbot-banner" title="Buka Game Edukasi Spesial IF-ELSE: SORT-BOT (Robot Pemilah Sampah)">
-                        <div class="sortbot-banner-header">
-                            <span class="sortbot-banner-tag">🌟 Modul Percabangan IF-ELSE</span>
-                            <span class="sortbot-banner-badge-btn">Mainkan ➔</span>
-                        </div>
-                        <div class="sortbot-banner-body">
-                            <span class="sortbot-banner-icon">♻️</span>
-                            <div class="sortbot-banner-text">
-                                <div class="sortbot-banner-title">SORT-BOT: Robot Pemilah Sampah</div>
-                                <p class="sortbot-banner-desc">Logika percabangan <strong>IF - ELSE IF - ELSE</strong> untuk memilah sampah otomatis.</p>
-                            </div>
-                        </div>
-                    </a>
-
-                    <!-- 2. OUTFIT-BOT (FUNGSI & PARAMETER) -->
-                    <a href="outfitbot.html" class="lobby-outfitbot-banner" title="Buka Game Edukasi Spesial FUNGSI: OUTFIT-BOT (Robot Lemari Seragam)">
-                        <div class="sortbot-banner-header">
-                            <span class="outfitbot-banner-tag">✨ Modul Fungsi & Parameter</span>
-                            <span class="outfitbot-banner-badge-btn">Mainkan ➔</span>
-                        </div>
-                        <div class="sortbot-banner-body">
-                            <span class="sortbot-banner-icon">👗</span>
-                            <div class="sortbot-banner-text">
-                                <div class="sortbot-banner-title">OUTFIT-BOT: Robot Lemari Seragam</div>
-                                <p class="sortbot-banner-desc">Logika prosedur <strong>Fungsi & Parameter</strong> untuk menyiapkan seragam harian.</p>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-
                 <!-- Level grid -->
                 <div class="lobby-level-section">
                     <div class="lobby-section-label">Pilih Level</div>
@@ -149,6 +116,30 @@ class LobbyScreen {
                     <button type="button" class="btn-lobby-secondary" id="lobby-btn-reset">
                         Mulai dari Awal
                     </button>` : ''}
+                </div>
+
+                <!-- Hub Modul Tambahan (Di Bawah & Ringkas) -->
+                <div class="lobby-games-hub compact-bottom">
+                    <div class="lobby-modules-title">🎮 Modul Spesial Lainnya</div>
+                    <div class="lobby-modules-grid">
+                        <a href="sortbot.html" class="lobby-module-compact-card sortbot-compact" title="SORT-BOT: Robot Pemilah Sampah (IF-ELSE)">
+                            <span class="compact-icon">♻️</span>
+                            <div class="compact-info">
+                                <span class="compact-title">SORT-BOT</span>
+                                <span class="compact-sub">Pemilah Sampah · IF-ELSE</span>
+                            </div>
+                            <span class="compact-arrow">➔</span>
+                        </a>
+
+                        <a href="outfitbot.html" class="lobby-module-compact-card outfitbot-compact" title="OUTFIT-BOT: Robot Lemari Seragam (Fungsi & Parameter)">
+                            <span class="compact-icon">👗</span>
+                            <div class="compact-info">
+                                <span class="compact-title">OUTFIT-BOT</span>
+                                <span class="compact-sub">Lemari Baju · Fungsi</span>
+                            </div>
+                            <span class="compact-arrow">➔</span>
+                        </a>
+                    </div>
                 </div>
 
             </div>

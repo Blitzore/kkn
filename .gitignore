@@ -1,0 +1,12 @@
+# OS & Editors
+.DS_Store
+Thumbs.db
+*.swp
+*.bak
+*~
+
+# Temporary browser cache / automation artifacts
+.temp_edge/
+.tempmediaStorage/
+*.dmp
+*.log

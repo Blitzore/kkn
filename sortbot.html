@@ -52,7 +52,10 @@
         <section class="simulation-card">
             <div class="card-header-bar">
                 <h2 class="card-header-title">🏭 Ban Berjalan Daur Ulang</h2>
-                <div class="header-score-pill" id="score-stars-pill">⭐ 0/15 Bintang</div>
+                <div class="score-stars-wrap">
+                    <div class="header-score-pill" id="score-stars-pill">⭐ 0/15 Bintang</div>
+                    <button type="button" class="btn-icon-reset-stars" id="btn-reset-stars-hud" title="Reset Semua Bintang ke 0">🔄</button>
+                </div>
             </div>
 
             <div class="mission-banner" id="mission-text-banner">
@@ -193,6 +196,11 @@
             </p>
             <div class="lvl-grid" id="modal-level-buttons">
                 <!-- Diisi otomatis oleh JS -->
+            </div>
+            <div style="display:flex; justify-content:center; margin-top:14px;">
+                <button type="button" class="btn-reset-stars-modal" id="btn-reset-stars-modal">
+                    🔄 Reset Semua Bintang (Mulai Fresh)
+                </button>
             </div>
         </div>
     </div>

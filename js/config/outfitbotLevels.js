@@ -11,13 +11,6 @@ const OUTFITBOT_LEVELS = [
         desc: 'Panggil fungsi <code>siapkanSeragam(...)</code> agar robot menyiapkan atasan putih untuk upacara bendera hari Senin.',
         fnName: 'siapkanSeragam',
         params: ['atasan'],
-        paramOptions: {
-            atasan: [
-                { value: 'PUTIH', label: '⚪ Putih' },
-                { value: 'BATIK', label: '🟠 Batik' },
-                { value: 'PRAMUKA', label: '🟤 Pramuka' }
-            ]
-        },
         scheduleDays: [
             {
                 day: 'SENIN',
@@ -35,13 +28,6 @@ const OUTFITBOT_LEVELS = [
         desc: 'Gunakan 1 fungsi yang sama dua kali. Isi pemanggilan fungsi untuk hari Senin dan hari Rabu.',
         fnName: 'siapkanSeragam',
         params: ['atasan'],
-        paramOptions: {
-            atasan: [
-                { value: 'PUTIH', label: '⚪ Putih' },
-                { value: 'BATIK', label: '🟠 Batik' },
-                { value: 'KOTAK', label: '🔵 Kotak' }
-            ]
-        },
         scheduleDays: [
             {
                 day: 'SENIN',
@@ -66,18 +52,6 @@ const OUTFITBOT_LEVELS = [
         desc: 'Fungsi menerima 2 parameter: <code>siapkanSeragam(atasan, bawahan)</code>. Ketik pemanggilan dengan kedua warna!',
         fnName: 'siapkanSeragam',
         params: ['atasan', 'bawahan'],
-        paramOptions: {
-            atasan: [
-                { value: 'PUTIH', label: '⚪ Putih' },
-                { value: 'PRAMUKA', label: '🟤 Pramuka' },
-                { value: 'BATIK', label: '🟠 Batik' }
-            ],
-            bawahan: [
-                { value: 'MERAH', label: '🔴 Merah' },
-                { value: 'COKELAT_TUA', label: '🟤 Cokelat' },
-                { value: 'HITAM', label: '⚫ Hitam' }
-            ]
-        },
         scheduleDays: [
             {
                 day: 'SELASA',
@@ -102,23 +76,6 @@ const OUTFITBOT_LEVELS = [
         desc: 'Fungsi menerima 3 parameter: <code>siapkanSeragam(atasan, bawahan, atribut)</code>.',
         fnName: 'siapkanSeragam',
         params: ['atasan', 'bawahan', 'atribut'],
-        paramOptions: {
-            atasan: [
-                { value: 'PUTIH', label: '⚪ Putih' },
-                { value: 'KOTAK', label: '🔵 Kotak' },
-                { value: 'PRAMUKA', label: '🟤 Pramuka' }
-            ],
-            bawahan: [
-                { value: 'MERAH', label: '🔴 Merah' },
-                { value: 'HITAM', label: '⚫ Hitam' },
-                { value: 'COKELAT_TUA', label: '🟤 Cokelat' }
-            ],
-            atribut: [
-                { value: 'TOPI_DASI', label: '🧢 Topi & Dasi' },
-                { value: 'SABUK', label: '🎗️ Sabuk' },
-                { value: 'KACU_HASDUK', label: '🧣 Kacu' }
-            ]
-        },
         scheduleDays: [
             {
                 day: 'SENIN',
@@ -150,26 +107,6 @@ const OUTFITBOT_LEVELS = [
         desc: 'Otomatiskan seluruh 5 hari sekolah dengan memanggil fungsi 1 baris per hari!',
         fnName: 'siapkanSeragam',
         params: ['atasan', 'bawahan', 'atribut'],
-        paramOptions: {
-            atasan: [
-                { value: 'PUTIH', label: '⚪ Putih' },
-                { value: 'BATIK', label: '🟠 Batik' },
-                { value: 'KOTAK', label: '🔵 Kotak' },
-                { value: 'PRAMUKA', label: '🟤 Pramuka' }
-            ],
-            bawahan: [
-                { value: 'MERAH', label: '🔴 Merah' },
-                { value: 'PUTIH', label: '⚪ Putih' },
-                { value: 'HITAM', label: '⚫ Hitam' },
-                { value: 'COKELAT_TUA', label: '🟤 Cokelat' }
-            ],
-            atribut: [
-                { value: 'TOPI_DASI', label: '🧢 Topi & Dasi' },
-                { value: 'DASI', label: '👔 Dasi' },
-                { value: 'SABUK', label: '🎗️ Sabuk' },
-                { value: 'KACU_HASDUK', label: '🧣 Kacu' }
-            ]
-        },
         scheduleDays: [
             {
                 day: 'SENIN',

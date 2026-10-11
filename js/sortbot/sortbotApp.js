@@ -863,6 +863,20 @@
             renderLevel(activeLevelIdx);
         });
 
+        // Reset Semua Bintang ke 0
+        function resetAllStars() {
+            if (confirm('Yakin ingin mereset semua bintang SORT-BOT ke 0?\nSemua riwayat bintang level akan dikosongkan agar fresh untuk kelas baru.')) {
+                starsHistory = [0, 0, 0, 0, 0];
+                localStorage.setItem('sortbot_stars_v2', JSON.stringify(starsHistory));
+                updateGlobalStarsHUD();
+                renderLevelSelectorModal();
+                sfx.playWhoosh();
+            }
+        }
+
+        document.getElementById('btn-reset-stars-hud')?.addEventListener('click', resetAllStars);
+        document.getElementById('btn-reset-stars-modal')?.addEventListener('click', resetAllStars);
+
         // Remove unconfigured class when select changed
         [$selectIfCond, $selectIfAction, $selectElseAction].forEach(sel => {
             sel.addEventListener('change', () => sel.classList.remove('unconfigured'));
