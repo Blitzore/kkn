@@ -38,6 +38,25 @@ Dokumen ini berisi prinsip mutlak dan tidak boleh dilanggar dalam pengembangan a
 
 ---
 
+## 5. Arsitektur Modular Wajib (No Giant Single Files)
+* **Selalu Pisahkan Kode Secara Modular**: Dilarang keras menaruh semua kode (logika, audio, parser, renderer visual, dan controller) ke dalam 1 file raksasa.
+* **Pemisahan Berdasarkan Tanggung Jawab (Separation of Concerns)**:
+  * Audio / Sound FX ➔ File tersendiri (misal: `*Sound.js`)
+  * Parser / Logika Evaluasi ➔ File tersendiri (misal: `*Evaluator.js` atau `*Parser.js`)
+  * Renderer Visual / Animasi ➔ File tersendiri (misal: `*Renderer.js`)
+  * Konfigurasi Data Level ➔ File config tersendiri di folder `config/`
+  * Main App Controller ➔ File controller ramping yang mengorkestrasi modul-modul di atas
+* **Manfaat**: Memudahkan debugging, mencegah regresi, kode mudah dipelihara, dan bersih.
+
+---
+
+## 6. Batasan Live Preview Browser: Khusus Cek Tampilan UI (Bukan Playtesting UX)
+* **Hanya untuk Inspeksi Visual UI**: Live preview / browser subagent **HANYA** digunakan untuk memastikan tata letak (layout), keselarasan elemen visual, kontras warna, keterbacaan teks proyektor, dan tangkapan layar (screenshot) tampilan antarmuka.
+* **Dilarang Playtesting Gameplay Berlarut-larut**: AI dilarang melakukan simulasi bermain level dari awal sampai akhir, mengklik satu per satu pilihan secara berulang-ulang, atau playtesting alur UX mendalam yang memakan waktu lama.
+* **Pengujian UX & Gameplay Dilakukan Langsung oleh Pengguna**: Pengujian interaksi bermain, respons gameplay, dan pencocokan skenario level diserahkan kepada pengguna untuk diuji secara langsung.
+
+---
+
 <!-- antislop:start -->
 ## antislop
 For UI, copy, people, mobile layout, or code comments work, read `antislop.md` (core) and then the skill for the task:

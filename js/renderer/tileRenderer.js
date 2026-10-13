@@ -5,90 +5,40 @@
 
 class TileRenderer {
     static drawTile(ctx, tile, engine) {
-        const s = 0.47;   // Separuh ukuran ubin dalam unit grid
-        const bH = 0.42;  // Tinggi dinding blok 3D
+        const s = 0.44;   // Jeda batas ubin yang presisi (grid separation)
 
-        // 4 Titik Sudut Atas (Top Face)
+        // 4 Titik Sudut Atas Ubin Datar (Top Face murni, tanpa kaki gantung)
         const p0 = engine.gridToScreen(tile.x - s, tile.y - s, tile.z); // NW
         const p1 = engine.gridToScreen(tile.x + s, tile.y - s, tile.z); // NE
         const p2 = engine.gridToScreen(tile.x + s, tile.y + s, tile.z); // SE
         const p3 = engine.gridToScreen(tile.x - s, tile.y + s, tile.z); // SW
 
-        // 4 Titik Sudut Bawah (Skirt / Bottom Face)
-        const b0 = engine.gridToScreen(tile.x - s, tile.y - s, tile.z - bH);
-        const b1 = engine.gridToScreen(tile.x + s, tile.y - s, tile.z - bH);
-        const b2 = engine.gridToScreen(tile.x + s, tile.y + s, tile.z - bH);
-        const b3 = engine.gridToScreen(tile.x - s, tile.y + s, tile.z - bH);
-
-        let topColor = '#1e293b';
+        let topColor = '#0f172a';
         let strokeColor = '#38bdf8';
-        let wallDark = '#090d16';
-        let wallMid = '#0f172a';
-        let wallLight = '#1e293b';
 
         if (tile.type === 'start') {
-            topColor = '#0284c7';
+            topColor = '#0369a1';
             strokeColor = '#38bdf8';
-            wallDark = '#0369a1';
-            wallMid = '#075985';
-            wallLight = '#0c4a6e';
+        } else if (tile.hasLaser) {
+            topColor = '#1c1917';
+            strokeColor = '#f43f5e';
         } else if (tile.type === 'sensor_dynamic' || tile.type === 'sensor_mystery') {
-            // Sensor Misteri / Dinamis untuk materi IF-ELSE (Jurang vs Laser)
             if (tile.hazardType === 'laser' || tile.currentColor === 'red') {
-                topColor = '#be123c';
+                topColor = '#881337';
                 strokeColor = '#f43f5e';
-                wallDark = '#881337';
-                wallMid = '#9f1239';
-                wallLight = '#be123c';
             } else if (tile.hazardType === 'gap' || tile.currentColor === 'blue') {
-                topColor = '#c2410c';
+                topColor = '#7c2d12';
                 strokeColor = '#fb923c';
-                wallDark = '#7c2d12';
-                wallMid = '#9a3412';
-                wallLight = '#c2410c';
             } else {
-                // Misteri Berpendar Ungu / Cyber
-                topColor = '#7e22ce';
+                topColor = '#581c87';
                 strokeColor = '#c084fc';
-                wallDark = '#581c87';
-                wallMid = '#6b21a8';
-                wallLight = '#7e22ce';
             }
         } else if (tile.type === 'active_switch') {
-            topColor = tile.activated ? '#16a34a' : '#475569';
+            topColor = tile.activated ? '#14532d' : '#334155';
             strokeColor = tile.activated ? '#4ade80' : '#94a3b8';
-            wallDark = tile.activated ? '#14532d' : '#1e293b';
-            wallMid = tile.activated ? '#15803d' : '#334155';
-            wallLight = tile.activated ? '#16a34a' : '#475569';
         }
 
-        // 4 Dinding Vertikal (Wall 0: N, Wall 1: E, Wall 2: S, Wall 3: W)
-        const walls = [
-            { pA: p0, pB: p1, bB: b1, bA: b0, color: wallDark },
-            { pA: p1, pB: p2, bB: b2, bA: b1, color: wallMid },
-            { pA: p2, pB: p3, bB: b3, bA: b2, color: wallLight },
-            { pA: p3, pB: p0, bB: b0, bA: b3, color: wallMid }
-        ];
-
-        // Gambar hanya dinding yang menghadap kamera (Backface Culling)
-        walls.forEach(w => {
-            const cross = (w.pB.x - w.pA.x) * (w.bA.y - w.pA.y) - (w.pB.y - w.pA.y) * (w.bA.x - w.pA.x);
-            if (cross > 0) {
-                ctx.beginPath();
-                ctx.moveTo(w.pA.x, w.pA.y);
-                ctx.lineTo(w.pB.x, w.pB.y);
-                ctx.lineTo(w.bB.x, w.bB.y);
-                ctx.lineTo(w.bA.x, w.bA.y);
-                ctx.closePath();
-                ctx.fillStyle = w.color;
-                ctx.fill();
-                ctx.strokeStyle = 'rgba(56, 189, 248, 0.2)';
-                ctx.lineWidth = 1;
-                ctx.stroke();
-            }
-        });
-
-        // Permukaan Atas Blok (Top Face)
+        // 1. Permukaan Ubin Datar (Top Face) - Bersih tanpa kaki/dinding gantung
         ctx.beginPath();
         ctx.moveTo(p0.x, p0.y);
         ctx.lineTo(p1.x, p1.y);
@@ -98,9 +48,26 @@ class TileRenderer {
         ctx.fillStyle = topColor;
         ctx.fill();
 
-        // Garis Tepi Neon
+        // 2. Garis Batas Neon Tegas Berketebalan 2px (Pemisah Antar Petak)
         ctx.strokeStyle = strokeColor;
-        ctx.lineWidth = 1.5;
+        ctx.lineWidth = 2;
+        ctx.stroke();
+
+        // 3. Garis Aksen Inset di Dalam Ubin (Memperjelas bentuk petak terpisah)
+        const inS = s * 0.72;
+        const ip0 = engine.gridToScreen(tile.x - inS, tile.y - inS, tile.z);
+        const ip1 = engine.gridToScreen(tile.x + inS, tile.y - inS, tile.z);
+        const ip2 = engine.gridToScreen(tile.x + inS, tile.y + inS, tile.z);
+        const ip3 = engine.gridToScreen(tile.x - inS, tile.y + inS, tile.z);
+
+        ctx.strokeStyle = strokeColor === '#38bdf8' ? 'rgba(56, 189, 248, 0.3)' : 'rgba(244, 63, 94, 0.3)';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(ip0.x, ip0.y);
+        ctx.lineTo(ip1.x, ip1.y);
+        ctx.lineTo(ip2.x, ip2.y);
+        ctx.lineTo(ip3.x, ip3.y);
+        ctx.closePath();
         ctx.stroke();
 
         const centerPos = engine.gridToScreen(tile.x, tile.y, tile.z);
@@ -238,44 +205,152 @@ class TileRenderer {
     }
 
     static drawLaser(ctx, tile, engine) {
-        const baseL = engine.gridToScreen(tile.x - 0.35, tile.y, tile.z);
-        const baseR = engine.gridToScreen(tile.x + 0.35, tile.y, tile.z);
-        const topL = engine.gridToScreen(tile.x - 0.35, tile.y, tile.z + 0.35);
-        const topR = engine.gridToScreen(tile.x + 0.35, tile.y, tile.z + 0.35);
+        // Posisi Proyeksi Layar Berdasarkan Ketinggian Grid
+        const centerPos = engine.gridToScreen(tile.x, tile.y, tile.z);        // Lantai
+        const laserPos  = engine.gridToScreen(tile.x, tile.y, tile.z + 0.38); // Ketinggian Sinar Laser
+        const archPos   = engine.gridToScreen(tile.x, tile.y, tile.z + 0.60); // Ketinggian Palang Atap
 
-        const alpha = 0.7 + Math.sin(engine.tick * 0.2) * 0.3;
+        // Lebar setengah petak ubin di layar (dijamin 100% selalu melintang horizontal)
+        const hw = (engine.zoomScale || 60) * 0.44;
 
-        // Tiang Pemancar Laser Kiri & Kanan
-        ctx.fillStyle = '#475569';
-        ctx.strokeStyle = '#64748b';
-        ctx.lineWidth = 2;
+        const baseL   = { x: centerPos.x - hw, y: centerPos.y };
+        const baseR   = { x: centerPos.x + hw, y: centerPos.y };
+        const beamL   = { x: laserPos.x - hw,  y: laserPos.y };
+        const beamR   = { x: laserPos.x + hw,  y: laserPos.y };
+        const archL   = { x: archPos.x - hw,   y: archPos.y };
+        const archR   = { x: archPos.x + hw,   y: archPos.y };
+        const archMid = { x: archPos.x,        y: archPos.y };
 
+        ctx.save();
+
+        // 1. Garis Peringatan Bahaya di Lantai (Caution Line di Kolong Gapura)
+        ctx.strokeStyle = tile.laserDisabled ? 'rgba(34, 197, 94, 0.35)' : 'rgba(255, 0, 85, 0.55)';
+        ctx.lineWidth = 2.5;
+        ctx.setLineDash([5, 4]);
         ctx.beginPath();
         ctx.moveTo(baseL.x, baseL.y);
-        ctx.lineTo(topL.x, topL.y);
+        ctx.lineTo(baseR.x, baseR.y);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        // 2. Dudukan Kaki Tiang Metalik di Lantai (Base Pedestals)
+        [baseL, baseR].forEach(base => {
+            ctx.fillStyle = '#1e293b';
+            ctx.strokeStyle = '#38bdf8';
+            ctx.lineWidth = 1.5;
+            ctx.beginPath();
+            ctx.arc(base.x, base.y, 5, 0, Math.PI * 2);
+            ctx.fill();
+            ctx.stroke();
+
+            ctx.fillStyle = '#94a3b8';
+            ctx.beginPath();
+            ctx.arc(base.x, base.y, 2.5, 0, Math.PI * 2);
+            ctx.fill();
+        });
+
+        // 3. Tiang Penyangga Kiri & Kanan (Bright Titanium Cyber Posts - Super Terang & Kontras!)
+        // Tiang Kiri
+        ctx.strokeStyle = '#0f172a';
+        ctx.lineWidth = 6;
+        ctx.beginPath();
+        ctx.moveTo(baseL.x, baseL.y);
+        ctx.lineTo(archL.x, archL.y);
         ctx.stroke();
 
+        ctx.strokeStyle = '#e2e8f0'; // Chrome/Silver terang kontras tinggi
+        ctx.lineWidth = 2.5;
+        ctx.beginPath();
+        ctx.moveTo(baseL.x, baseL.y);
+        ctx.lineTo(archL.x, archL.y);
+        ctx.stroke();
+
+        // Tiang Kanan
+        ctx.strokeStyle = '#0f172a';
+        ctx.lineWidth = 6;
         ctx.beginPath();
         ctx.moveTo(baseR.x, baseR.y);
-        ctx.lineTo(topR.x, topR.y);
+        ctx.lineTo(archR.x, archR.y);
         ctx.stroke();
 
-        // Sinar Laser Merah Neon
-        ctx.save();
-        ctx.globalAlpha = alpha;
-        ctx.strokeStyle = '#f43f5e';
-        ctx.lineWidth = 4;
+        ctx.strokeStyle = '#e2e8f0'; // Chrome/Silver terang kontras tinggi
+        ctx.lineWidth = 2.5;
         ctx.beginPath();
-        ctx.moveTo(topL.x, topL.y);
-        ctx.lineTo(topR.x, topR.y);
+        ctx.moveTo(baseR.x, baseR.y);
+        ctx.lineTo(archR.x, archR.y);
         ctx.stroke();
 
-        ctx.strokeStyle = '#ffffff';
+        // 4. Palang Atap Gapura (Gantry Top Arch Header)
+        ctx.strokeStyle = '#0f172a';
+        ctx.lineWidth = 5;
+        ctx.beginPath();
+        ctx.moveTo(archL.x, archL.y);
+        ctx.lineTo(archR.x, archR.y);
+        ctx.stroke();
+
+        ctx.strokeStyle = '#94a3b8';
         ctx.lineWidth = 2;
         ctx.beginPath();
-        ctx.moveTo(topL.x, topL.y);
-        ctx.lineTo(topR.x, topR.y);
+        ctx.moveTo(archL.x, archL.y);
+        ctx.lineTo(archR.x, archR.y);
         ctx.stroke();
+
+        // Lampu Indikator Status di Tengah Atap Gapura
+        const isBlink = Math.sin(engine.tick * 0.25) > 0;
+        const ledColor = tile.laserDisabled ? '#22c55e' : (isBlink ? '#ff0055' : '#fbbf24');
+        ctx.fillStyle = ledColor;
+        ctx.beginPath();
+        ctx.arc(archMid.x, archMid.y, 4, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 1;
+        ctx.stroke();
+
+        // 5. Node Pemancar Laser (Emitter Bulbs) di Tiang
+        const emitterColor = tile.laserDisabled ? '#64748b' : '#ff0055';
+        [beamL, beamR].forEach(node => {
+            ctx.fillStyle = emitterColor;
+            ctx.beginPath();
+            ctx.arc(node.x, node.y, 5, 0, Math.PI * 2);
+            ctx.fill();
+
+            ctx.fillStyle = '#ffffff';
+            ctx.beginPath();
+            ctx.arc(node.x, node.y, 2, 0, Math.PI * 2);
+            ctx.fill();
+        });
+
+        // 6. Sinar Laser Merah Neon Super Terang (High-Visibility Horizontal Neon Beam)
+        if (!tile.laserDisabled) {
+            const alpha = 0.85 + Math.sin(engine.tick * 0.25) * 0.15;
+            ctx.globalAlpha = alpha;
+
+            // Lapisan 1: Pendaran Luar Lebar (Outer Glow Bloom)
+            ctx.strokeStyle = 'rgba(255, 0, 85, 0.45)';
+            ctx.lineWidth = 14;
+            ctx.beginPath();
+            ctx.moveTo(beamL.x, beamL.y);
+            ctx.lineTo(beamR.x, beamR.y);
+            ctx.stroke();
+
+            // Lapisan 2: Sinar Merah Neon Pekat
+            ctx.strokeStyle = '#ff0055';
+            ctx.lineWidth = 5.5;
+            ctx.beginPath();
+            ctx.moveTo(beamL.x, beamL.y);
+            ctx.lineTo(beamR.x, beamR.y);
+            ctx.stroke();
+
+            // Lapisan 3: Inti Putih Panas Laser (Hot White Laser Core)
+            ctx.strokeStyle = '#ffffff';
+            ctx.lineWidth = 2.5;
+            ctx.beginPath();
+            ctx.moveTo(beamL.x, beamL.y);
+            ctx.lineTo(beamR.x, beamR.y);
+            ctx.stroke();
+        }
+
         ctx.restore();
     }
 }

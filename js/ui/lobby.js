@@ -139,6 +139,15 @@ class LobbyScreen {
                             </div>
                             <span class="compact-arrow">➔</span>
                         </a>
+
+                        <a href="gatebot.html" class="lobby-module-compact-card gatebot-compact" title="GATE-BOT: Gerbang Keamanan Pintar (Operator Logika: AND, OR, NOT)">
+                            <span class="compact-icon">🚪</span>
+                            <div class="compact-info">
+                                <span class="compact-title">GATE-BOT</span>
+                                <span class="compact-sub">Gerbang · AND, OR, NOT</span>
+                            </div>
+                            <span class="compact-arrow">➔</span>
+                        </a>
                     </div>
                 </div>
 

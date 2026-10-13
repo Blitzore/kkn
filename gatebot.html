@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#07090f">
+    <meta name="description" content="GATE-BOT — Robot Penjaga Gerbang Pintar. Media visual interaktif pengenalan operator logika AND, OR, NOT untuk proyektor kelas siswa SD.">
+    <title>GATE-BOT | Robot Gerbang Keamanan (Operator Logika AND, OR, NOT)</title>
+
+    <!-- Google Fonts & CDN Confetti -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=JetBrains+Mono:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+
+    <!-- Modular Stylesheet -->
+    <link rel="stylesheet" href="css/gatebot.css">
+</head>
+<body>
+
+    <!-- ── 1. Navbar ── -->
+    <header class="navbar">
+        <div class="nav-left">
+            <a href="index.html" class="btn-nav-link" title="Kembali ke Game ALGO-BOT">
+                ← ALGO
+            </a>
+            <a href="sortbot.html" class="btn-nav-link" title="Game SORT-BOT (IF-ELSE)">
+                ♻️ SORT
+            </a>
+            <a href="outfitbot.html" class="btn-nav-link" title="Game OUTFIT-BOT (Fungsi)">
+                👗 OUTFIT
+            </a>
+            <div class="brand-badge">
+                <span class="brand-title">🚪 GATE-BOT</span>
+                <span class="brand-sub-pill">OPERATOR LOGIKA: AND, OR, NOT</span>
+            </div>
+        </div>
+        <div class="nav-right">
+            <button type="button" class="level-badge-btn" id="btn-show-levels">
+                <span id="label-active-level">Level 1</span> ▾
+            </button>
+            <button type="button" class="sound-btn" id="btn-sound-toggle" title="Suara Nyala/Mati">🔊</button>
+        </div>
+    </header>
+
+    <!-- ── 2. Dual Column Layout ── -->
+    <main class="main-content">
+
+        <!-- Kolom Kiri: Arena Gerbang & Inspeksi Sensor -->
+        <section class="card-deck">
+            <div class="card-header-bar">
+                <h2 class="card-title">🛡️ Gerbang Keamanan Pintar</h2>
+                <div class="score-stars-wrap">
+                    <div class="header-score-pill" id="score-stars-pill">⭐ 0/15 Bintang</div>
+                    <button type="button" class="btn-icon-reset-stars" id="btn-reset-stars-hud" title="Reset Semua Bintang ke 0">🔄</button>
+                </div>
+            </div>
+
+            <!-- Misi Banner (Besar & Kontras untuk Proyektor) -->
+            <div class="mission-banner" id="mission-text-banner">
+                <div id="mission-content">
+                    <!-- Diisi JS -->
+                </div>
+            </div>
+
+            <!-- Stage Arena Fisik Gerbang -->
+            <div class="gate-arena-stage">
+                <div class="gate-graphic-box">
+                    <!-- Robot Satpam LCD -->
+                    <div class="bot-station">
+                        <div class="bot-antenna"><span class="antenna-bulb"></span></div>
+                        <div class="bot-face-lcd" id="gate-bot-eyes">o_o</div>
+                        <span class="bot-status-tag" id="bot-status-tag">Siaga 🦾</span>
+                    </div>
+
+                    <!-- Palang Gerbang Elektronik -->
+                    <div class="barrier-gate-wrap">
+                        <div class="gate-post">
+                            <div class="status-bulb bulb-off" id="gate-status-light"></div>
+                            <div class="gate-pivot"></div>
+                            <div class="barrier-arm" id="gate-barrier-arm"></div>
+                        </div>
+                        <span class="gate-status-label" id="gate-status-text">GERBANG SIAP</span>
+                    </div>
+                </div>
+
+                <!-- Bilik Inspeksi Sensor Pengunjung Saat Ini -->
+                <div class="active-booth-wrap">
+                    <div class="booth-tag-title">🔍 Hasil Pembacaan Sensor Pengunjung:</div>
+                    <div id="active-visitor-booth">
+                        <span class="empty-booth-text">Tentukan pilihan TRUE / FALSE untuk setiap pengunjung di lembar soal, lalu uji robot.</span>
+                    </div>
+                </div>
+
+                <!-- Telemetri / Live Log Robot -->
+                <div class="stage-log-console" id="stage-log-display">
+                    🤖 GATE-BOT siap. Tentukan keputusan TRUE / FALSE untuk setiap pengunjung lalu uji robot.
+                </div>
+            </div>
+        </section>
+
+        <!-- Kolom Kanan: Lembar Soal & Antrean Pengunjung -->
+        <section class="card-deck">
+            <div class="card-header-bar">
+                <h2 class="card-title">📝 Lembar Soal: Evaluasi Nilai Logika (TRUE / FALSE)</h2>
+                <span class="brand-sub-pill">SD / PROYEKTOR KELAS</span>
+            </div>
+
+            <!-- Cetak Biru Logika & Aturan Misi -->
+            <div class="blueprint-box">
+                <div class="blueprint-header">
+                    <span class="badge-fn-def">⚙️ CETAK BIRU KEPUTUSAN ROBOT</span>
+                </div>
+                <div class="target-rule-text" id="target-rule-text">
+                    <!-- Diisi JS -->
+                </div>
+            </div>
+
+            <!-- Token Atribut yang Tersedia -->
+            <div class="allowed-attrs-wrap">
+                <span class="allowed-attrs-title">Atribut yang Dapat Digunakan:</span>
+                <div class="attrs-pills-row" id="allowed-attrs-pills">
+                    <!-- Diisi JS -->
+                </div>
+            </div>
+
+            <!-- Antrean Pengunjung yang Diinspeksi -->
+            <div class="queue-section-wrap">
+                <span class="queue-section-title">📋 Antrean Pengunjung & Pilihan Nilai Kebenaran:</span>
+                <div class="queue-cards-list" id="visitor-queue-list">
+                    <!-- Diisi JS -->
+                </div>
+            </div>
+
+            <!-- Tombol Kontrol Eksekusi -->
+            <div class="control-buttons-row">
+                <button type="button" class="btn-primary-action" id="btn-run-gate">
+                    ⚡ Uji Semua Keputusan
+                </button>
+                <button type="button" class="btn-secondary-action" id="btn-step-gate">
+                    👤 Uji 1 Pengunjung
+                </button>
+                <button type="button" class="btn-reset-action" id="btn-reset-gate" title="Reset Simulasi">
+                    ↩
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ── 3. Modals ── -->
+
+    <!-- Modal Level Selector -->
+    <div class="modal-overlay" id="modal-level-selector">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3 class="modal-title">🗺️ Pilih Level GATE-BOT</h3>
+                <button type="button" class="modal-close-btn" id="btn-close-level-modal">✕</button>
+            </div>
+            <div class="level-cards-grid" id="modal-level-buttons">
+                <!-- Diisi JS -->
+            </div>
+            <div style="display:flex; justify-content:center; margin-top:8px;">
+                <button type="button" class="btn-icon-reset-stars" id="btn-reset-stars-modal" style="width:auto; padding:6px 14px; border-radius:8px;" title="Reset Semua Bintang ke 0">
+                    🔄 Reset Semua Bintang ke 0
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Victory Dialog -->
+    <div class="modal-overlay" id="modal-victory-dialog">
+        <div class="modal-box">
+            <div class="victory-content">
+                <div class="vic-trophy-icon">🏆</div>
+                <h3 class="vic-heading" id="vic-heading">Level Berhasil!</h3>
+                <p class="vic-submessage" id="vic-submessage">Semua pengunjung teruji dengan 100% tepat!</p>
+                <div class="vic-actions-row">
+                    <button type="button" class="btn-secondary-action" id="btn-vic-replay">Uji Lagi</button>
+                    <button type="button" class="btn-primary-action" id="btn-vic-continue">Level Selanjutnya ➔</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Alert Dialog -->
+    <div class="modal-overlay" id="modal-alert-dialog">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3 class="modal-title" id="alert-dialog-title">Perhatian!</h3>
+            </div>
+            <div class="alert-body-content" id="alert-dialog-message">
+                <!-- Pesan dinamis -->
+            </div>
+            <button type="button" class="btn-primary-action" id="btn-alert-confirm" style="width:100%;">
+                Oke, Saya Perbaiki 👍
+            </button>
+        </div>
+    </div>
+
+    <!-- ── 4. Modular Scripts (Strict Order of Execution) ── -->
+    <script src="js/config/gatebotLevels.js"></script>
+    <script src="js/gatebot/gatebotSound.js"></script>
+    <script src="js/gatebot/gatebotEvaluator.js"></script>
+    <script src="js/gatebot/gatebotRenderer.js"></script>
+    <script src="js/gatebot/gatebotApp.js"></script>
+
+</body>
+</html>

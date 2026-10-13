@@ -202,22 +202,57 @@
             this.resetSimulation();
         }
 
+        getBlueprintSteps(lvl) {
+            const hasPants = lvl.params.includes('bawahan');
+            const hasAcc = lvl.params.includes('atribut');
+
+            if (!hasPants && !hasAcc) {
+                // Tier 1: 1 Parameter (atasan) — Prosedur penyiapan baju atasan
+                return [
+                    { num: 1, id: 'step-open', label: 'Buka pintu lemari pakaian' },
+                    { num: 2, id: 'step-shirt', label: `Ambil baju + <span class="param-highlight">atasan</span> dari gantungan` },
+                    { num: 3, id: 'step-check', label: 'Periksa kebersihan kerah baju' },
+                    { num: 4, id: 'step-iron-front', label: 'Setrika bagian badan baju hingga rapi' },
+                    { num: 5, id: 'step-iron-sleeve', label: 'Setrika bagian lengan baju hingga licin' },
+                    { num: 6, id: 'step-button', label: 'Pasang dan rapikan kancing baju' },
+                    { num: 7, id: 'step-perfume', label: 'Semprot parfum pewangi pakaian' },
+                    { num: 8, id: 'step-wear', label: 'Pasangkan baju ke mannequin siswa' },
+                    { num: 9, id: 'step-close', label: 'Tutup kembali pintu lemari pakaian' }
+                ];
+            } else if (hasPants && !hasAcc) {
+                // Tier 2: 2 Parameter (atasan & bawahan) — Setelan baju atasan dan celana bawahan
+                return [
+                    { num: 1, id: 'step-open', label: 'Buka pintu lemari pakaian' },
+                    { num: 2, id: 'step-shirt', label: `Ambil baju + <span class="param-highlight">atasan</span> dari gantungan` },
+                    { num: 3, id: 'step-iron-shirt', label: 'Setrika baju dan rapikan kancing' },
+                    { num: 4, id: 'step-pants', label: `Ambil celana + <span class="param-highlight">bawahan</span> dari rak lemari` },
+                    { num: 5, id: 'step-iron-pants', label: 'Setrika dan luruskan lipatan celana' },
+                    { num: 6, id: 'step-match', label: 'Satukan setelan baju dan celana' },
+                    { num: 7, id: 'step-perfume', label: 'Semprot parfum pewangi pakaian' },
+                    { num: 8, id: 'step-wear', label: 'Pasangkan setelan ke mannequin siswa' },
+                    { num: 9, id: 'step-close', label: 'Tutup kembali pintu lemari pakaian' }
+                ];
+            } else {
+                // Tier 3: 3 Parameter (atasan, bawahan, atribut) — Seragam sekolah lengkap
+                return [
+                    { num: 1, id: 'step-open', label: 'Buka pintu lemari pakaian' },
+                    { num: 2, id: 'step-shirt', label: `Ambil baju + <span class="param-highlight">atasan</span> dari gantungan` },
+                    { num: 3, id: 'step-iron-shirt', label: 'Setrika baju dan rapikan kancing' },
+                    { num: 4, id: 'step-pants', label: `Ambil celana + <span class="param-highlight">bawahan</span> dari rak lemari` },
+                    { num: 5, id: 'step-iron-pants', label: 'Setrika dan rapikan lipatan celana' },
+                    { num: 6, id: 'step-acc', label: `Pasang atribut + <span class="param-highlight">atribut</span> seragam` },
+                    { num: 7, id: 'step-perfume', label: 'Semprot parfum pewangi pakaian' },
+                    { num: 8, id: 'step-wear', label: 'Pasangkan seragam lengkap ke mannequin siswa' },
+                    { num: 9, id: 'step-close', label: 'Tutup kembali pintu lemari pakaian' }
+                ];
+            }
+        }
+
         renderBlueprint() {
             const lvl = window.OUTFITBOT_LEVELS[this.currentLvlIdx];
             this.dom.blueprintSig.innerHTML = `<span class="code-kw">fungsi</span> <span class="code-fn-name">${lvl.fnName}</span>(${lvl.params.map(p => `<span class="param-highlight">${p}</span>`).join(', ')}) {`;
 
-            const steps = [
-                { num: 1, id: 'step-open', label: 'Buka pintu lemari pakaian' },
-                { num: 2, id: 'step-shirt', label: `Ambil + <span class="param-highlight">atasan</span>` },
-                { num: 3, id: 'step-iron', label: 'Setrika atasan hingga rapi' },
-                { num: 4, id: 'step-button', label: 'Pasang dan kancingkan atasan' },
-                { num: 5, id: 'step-pants', label: lvl.params.includes('bawahan') ? `Ambil + <span class="param-highlight">bawahan</span>` : 'Ambil celana merah' },
-                { num: 6, id: 'step-acc', label: lvl.params.includes('atribut') ? `Pasang + <span class="param-highlight">atribut</span>` : 'Pasang topi dan dasi' },
-                { num: 7, id: 'step-perfume', label: 'Semprot parfum pewangi pakaian' },
-                { num: 8, id: 'step-wear', label: 'Pasangkan ke mannequin siswa' },
-                { num: 9, id: 'step-close', label: 'Tutup kembali pintu lemari' }
-            ];
-
+            const steps = this.getBlueprintSteps(lvl);
             const totalSteps = steps.length;
             const daysCount = lvl.scheduleDays.length;
             const manualCount = totalSteps * daysCount;
@@ -311,6 +346,107 @@
             });
         }
 
+        splitArgs(argsString) {
+            const args = [];
+            let current = '';
+            let inQuote = null;
+            for (let i = 0; i < argsString.length; i++) {
+                const char = argsString[i];
+                if ((char === "'" || char === '"') && (i === 0 || argsString[i - 1] !== '\\')) {
+                    if (inQuote === char) {
+                        inQuote = null;
+                    } else if (!inQuote) {
+                        inQuote = char;
+                    }
+                    current += char;
+                } else if (char === ',' && !inQuote) {
+                    args.push(current.trim());
+                    current = '';
+                } else {
+                    current += char;
+                }
+            }
+            if (current.trim()) {
+                args.push(current.trim());
+            }
+            return args;
+        }
+
+        normalizeArgValue(val) {
+            if (!val) return '';
+            let clean = val.trim();
+            if (clean.includes(':')) {
+                clean = clean.split(':')[1].trim();
+            } else if (clean.includes('=')) {
+                clean = clean.split('=')[1].trim();
+            }
+
+            clean = clean.replace(/^['"]+|['"]+$/g, '').trim().toUpperCase();
+            clean = clean.replace(/\s+/g, ' ');
+
+            // Strip garment prefixes if user wrote 'baju putih', 'celana merah', etc.
+            clean = clean.replace(/^(BAJU|KEMEJA|KAOS|CELANA|ROK)\s+/i, '');
+
+            const spaced = clean.replace(/_/g, ' ').replace(/\s+/g, ' ').trim();
+
+            // Atribut normalization
+            if (spaced === 'TOPI DAN DASI' || spaced === 'TOPI & DASI' || spaced === 'TOPI DASI' || spaced === 'TOPI, DASI' || spaced === 'TOPI' || spaced === 'TOPI_DASI') {
+                return 'TOPI_DASI';
+            }
+            if (spaced === 'KACU DAN HASDUK' || spaced === 'KACU & HASDUK' || spaced === 'KACU HASDUK' || spaced === 'KACU' || spaced === 'HASDUK' || spaced === 'KACU_HASDUK') {
+                return 'KACU_HASDUK';
+            }
+            if (spaced === 'SABUK' || spaced === 'IKAT PINGGANG') {
+                return 'SABUK';
+            }
+            if (spaced === 'DASI') {
+                return 'DASI';
+            }
+
+            // Warna & Pakaian normalization
+            if (spaced === 'COKELAT' || spaced === 'COKELAT TUA' || spaced === 'COKELAT_TUA') {
+                return 'COKELAT_TUA';
+            }
+            if (spaced === 'KOTAK' || spaced === 'KOTAK KOTAK' || spaced === 'KOTAK-KOTAK') {
+                return 'KOTAK';
+            }
+            if (spaced === 'PUTIH') return 'PUTIH';
+            if (spaced === 'MERAH') return 'MERAH';
+            if (spaced === 'HITAM') return 'HITAM';
+            if (spaced === 'BATIK') return 'BATIK';
+            if (spaced === 'PRAMUKA') return 'PRAMUKA';
+
+            return clean;
+        }
+
+        getItemDisplayName(type, key) {
+            const shirtNames = {
+                PUTIH: 'Putih',
+                BATIK: 'Batik',
+                KOTAK: 'Kotak',
+                PRAMUKA: 'Pramuka',
+                DEFAULT: 'Standar'
+            };
+            const pantsNames = {
+                MERAH: 'Merah',
+                PUTIH: 'Putih',
+                HITAM: 'Hitam',
+                COKELAT_TUA: 'Cokelat',
+                DEFAULT: 'Standar'
+            };
+            const accNames = {
+                TOPI_DASI: 'Topi & Dasi',
+                DASI: 'Dasi',
+                SABUK: 'Sabuk',
+                KACU_HASDUK: 'Kacu',
+                NONE: 'Tanpa Atribut'
+            };
+            if (type === 'shirt') return shirtNames[key] || key;
+            if (type === 'pants') return pantsNames[key] || key;
+            if (type === 'acc') return accNames[key] || key;
+            return key;
+        }
+
         parseCall(rawText, expectedFnName = 'siapkanSeragam') {
             let str = (rawText || '').trim();
             if (!str) return { valid: false, error: 'empty' };
@@ -327,12 +463,10 @@
                 }
                 argsString = fnMatch[2].trim();
             } else {
-                // If student wrapped in parentheses (arg)
                 const parenMatch = str.match(/^\((.*)\)\s*;?$/);
                 if (parenMatch) {
                     argsString = parenMatch[1].trim();
                 } else {
-                    // No parentheses at all
                     return {
                         valid: false,
                         error: `Tulis pemanggilan fungsi secara lengkap dengan tanda kurung: <code>${expectedFnName}('...')</code>.`
@@ -340,22 +474,8 @@
                 }
             }
 
-            // Split arguments (supports 'putih', "putih", or named 'atasan: putih')
-            const rawArgs = argsString ? argsString.split(',').map(a => {
-                let val = a.trim();
-                if (val.includes(':')) {
-                    val = val.split(':')[1].trim();
-                }
-                return val.replace(/^['"]|['"]$/g, '').trim().toUpperCase();
-            }) : [];
-
-            // Alias normalization
-            const normalizedArgs = rawArgs.map(a => {
-                if (a === 'COKELAT') return 'COKELAT_TUA';
-                if (a === 'TOPI') return 'TOPI_DASI';
-                if (a === 'KACU' || a === 'HASDUK') return 'KACU_HASDUK';
-                return a;
-            });
+            const rawArgs = argsString ? this.splitArgs(argsString) : [];
+            const normalizedArgs = rawArgs.map(a => this.normalizeArgValue(a));
 
             return {
                 valid: true,
@@ -483,7 +603,7 @@
                 if (!call.rawCall.trim()) {
                     this.showAlertModal(
                         'Soal Belum Dijawab!',
-                        `Ketik pemanggilan fungsi pada <strong>Soal ${dayIdx + 1} (${call.day})</strong>.<br><br>Contoh: <code>${call.placeholder}</code>`,
+                        `Ketik pemanggilan fungsi pada <strong>Soal ${dayIdx + 1} (${call.day})</strong>.<br><br>Format: <code>${lvl.fnName}(...)</code>`,
                         inputEl
                     );
                     return false;
@@ -502,7 +622,7 @@
                 if (parsed.args.length < lvl.params.length) {
                     this.showAlertModal(
                         'Parameter Kurang!',
-                        `Fungsi pada level ini membutuhkan <strong>${lvl.params.length} parameter</strong>: <code>${lvl.params.join(', ')}</code>.<br><br>Contoh: <code>${call.placeholder}</code>`,
+                        `Fungsi pada level ini membutuhkan <strong>${lvl.params.length} parameter</strong>: (<code>${lvl.params.join(', ')}</code>).`,
                         inputEl
                     );
                     return false;
@@ -584,73 +704,197 @@
             let effectivePants = (lvl.params.includes('bawahan') && args[1]) ? args[1] : dayConfig.req.pants;
             let effectiveAcc = (lvl.params.includes('atribut') && args[2]) ? args[2] : dayConfig.req.acc;
 
+            const shirtName = this.getItemDisplayName('shirt', effectiveShirt);
+            const pantsName = this.getItemDisplayName('pants', effectivePants);
+            const accName = this.getItemDisplayName('acc', effectiveAcc);
+
             // ── 9 Procedural Steps Animation ──
             const sleep = ms => new Promise(r => setTimeout(r, ms));
+            const hasPants = lvl.params.includes('bawahan');
+            const hasAcc = lvl.params.includes('atribut');
 
-            // 1. Buka pintu lemari
-            this.highlightBlueprintStep('step-open');
-            if (this.dom.closetArmStatus) this.dom.closetArmStatus.textContent = '🦾 Buka Lemari';
-            this.dom.stageLog.textContent = `[${call.day}] 1. Buka pintu lemari pakaian...`;
-            await sleep(200);
+            if (!hasPants && !hasAcc) {
+                // Tier 1: 1 Parameter (atasan) — Penyiapan baju atasan
+                // 1. Buka pintu lemari
+                this.highlightBlueprintStep('step-open');
+                if (this.dom.closetArmStatus) this.dom.closetArmStatus.textContent = '🦾 Buka Lemari';
+                this.dom.stageLog.textContent = `[${call.day}] 1. Buka pintu lemari pakaian...`;
+                await sleep(200);
 
-            // 2. Ambil atasan
-            this.highlightBlueprintStep('step-shirt');
-            document.querySelectorAll('.wardrobe-item-pill').forEach(el => el.classList.remove('active-pick'));
-            const pickShirtEl = document.getElementById(`closet-shirt-${effectiveShirt}`);
-            if (pickShirtEl) pickShirtEl.classList.add('active-pick');
-            sfx.clothSlide();
-            this.dom.stageLog.textContent = `[${call.day}] 2. Ambil atasan '${effectiveShirt}'...`;
-            await sleep(250);
+                // 2. Ambil baju atasan
+                this.highlightBlueprintStep('step-shirt');
+                document.querySelectorAll('.wardrobe-item-pill').forEach(el => el.classList.remove('active-pick'));
+                const pickShirtEl = document.getElementById(`closet-shirt-${effectiveShirt}`);
+                if (pickShirtEl) pickShirtEl.classList.add('active-pick');
+                sfx.clothSlide();
+                this.dom.stageLog.textContent = `[${call.day}] 2. Ambil baju '${shirtName}' dari gantungan...`;
+                await sleep(250);
 
-            // 3. Setrika atasan
-            this.highlightBlueprintStep('step-iron');
-            this.dom.stageLog.textContent = `[${call.day}] 3. Setrika atasan hingga rapi...`;
-            await sleep(180);
+                // 3. Periksa kancing & kerah
+                this.highlightBlueprintStep('step-check');
+                this.dom.stageLog.textContent = `[${call.day}] 3. Periksa kebersihan kerah baju...`;
+                await sleep(180);
 
-            // 4. Kancingkan atasan
-            this.highlightBlueprintStep('step-button');
-            await sleep(140);
+                // 4. Setrika badan
+                this.highlightBlueprintStep('step-iron-front');
+                this.dom.stageLog.textContent = `[${call.day}] 4. Setrika bagian badan baju hingga rapi...`;
+                await sleep(180);
 
-            // 5. Ambil bawahan
-            this.highlightBlueprintStep('step-pants');
-            const pickPantsEl = document.getElementById(`closet-pants-${effectivePants}`);
-            if (pickPantsEl) pickPantsEl.classList.add('active-pick');
-            sfx.clothSlide();
-            this.dom.stageLog.textContent = `[${call.day}] 5. Ambil bawahan '${effectivePants}'...`;
-            await sleep(220);
+                // 5. Setrika lengan
+                this.highlightBlueprintStep('step-iron-sleeve');
+                this.dom.stageLog.textContent = `[${call.day}] 5. Setrika lengan baju hingga licin...`;
+                await sleep(180);
 
-            // 6. Pasang atribut
-            this.highlightBlueprintStep('step-acc');
-            const pickAccEl = document.getElementById(`closet-acc-${effectiveAcc}`);
-            if (pickAccEl) pickAccEl.classList.add('active-pick');
-            sfx.clothSlide();
-            this.dom.stageLog.textContent = `[${call.day}] 6. Pasang atribut '${effectiveAcc}'...`;
-            await sleep(200);
+                // 6. Pasang kancing
+                this.highlightBlueprintStep('step-button');
+                this.dom.stageLog.textContent = `[${call.day}] 6. Pasang dan rapikan kancing baju...`;
+                await sleep(150);
 
-            // 7. Semprot pewangi
-            this.highlightBlueprintStep('step-perfume');
-            this.dom.stageLog.textContent = `[${call.day}] 7. Semprot parfum pewangi...`;
-            await sleep(160);
+                // 7. Semprot pewangi
+                this.highlightBlueprintStep('step-perfume');
+                this.dom.stageLog.textContent = `[${call.day}] 7. Semprot parfum pewangi pakaian...`;
+                await sleep(160);
 
-            // 8. Pasang ke mannequin
-            this.highlightBlueprintStep('step-wear');
-            this.setMannequinOutfit({ shirt: effectiveShirt, pants: effectivePants, acc: effectiveAcc });
-            sfx.equipChime();
-            await sleep(240);
+                // 8. Pasangkan baju ke mannequin
+                this.highlightBlueprintStep('step-wear');
+                this.setMannequinOutfit({ shirt: effectiveShirt, pants: 'MERAH', acc: 'NONE' });
+                sfx.equipChime();
+                await sleep(240);
 
-            // 9. Tutup pintu lemari
-            this.highlightBlueprintStep('step-close');
-            if (this.dom.closetArmStatus) this.dom.closetArmStatus.textContent = '🦾 Siap';
-            await sleep(160);
+                // 9. Tutup pintu lemari
+                this.highlightBlueprintStep('step-close');
+                if (this.dom.closetArmStatus) this.dom.closetArmStatus.textContent = '🦾 Siap';
+                await sleep(160);
+            } else if (hasPants && !hasAcc) {
+                // Tier 2: 2 Parameter (atasan & bawahan) — Setelan baju dan celana
+                // 1. Buka pintu lemari
+                this.highlightBlueprintStep('step-open');
+                if (this.dom.closetArmStatus) this.dom.closetArmStatus.textContent = '🦾 Buka Lemari';
+                this.dom.stageLog.textContent = `[${call.day}] 1. Buka pintu lemari pakaian...`;
+                await sleep(200);
+
+                // 2. Ambil baju atasan
+                this.highlightBlueprintStep('step-shirt');
+                document.querySelectorAll('.wardrobe-item-pill').forEach(el => el.classList.remove('active-pick'));
+                const pickShirtEl = document.getElementById(`closet-shirt-${effectiveShirt}`);
+                if (pickShirtEl) pickShirtEl.classList.add('active-pick');
+                sfx.clothSlide();
+                this.dom.stageLog.textContent = `[${call.day}] 2. Ambil baju '${shirtName}' dari gantungan...`;
+                await sleep(250);
+
+                // 3. Setrika baju
+                this.highlightBlueprintStep('step-iron-shirt');
+                this.dom.stageLog.textContent = `[${call.day}] 3. Setrika baju dan rapikan kancing...`;
+                await sleep(180);
+
+                // 4. Ambil celana bawahan
+                this.highlightBlueprintStep('step-pants');
+                const pickPantsEl = document.getElementById(`closet-pants-${effectivePants}`);
+                if (pickPantsEl) pickPantsEl.classList.add('active-pick');
+                sfx.clothSlide();
+                this.dom.stageLog.textContent = `[${call.day}] 4. Ambil celana '${pantsName}' dari rak lemari...`;
+                await sleep(220);
+
+                // 5. Setrika celana
+                this.highlightBlueprintStep('step-iron-pants');
+                this.dom.stageLog.textContent = `[${call.day}] 5. Setrika dan luruskan lipatan celana...`;
+                await sleep(180);
+
+                // 6. Satukan setelan
+                this.highlightBlueprintStep('step-match');
+                this.dom.stageLog.textContent = `[${call.day}] 6. Satukan setelan baju dan celana...`;
+                await sleep(150);
+
+                // 7. Semprot pewangi
+                this.highlightBlueprintStep('step-perfume');
+                this.dom.stageLog.textContent = `[${call.day}] 7. Semprot parfum pewangi pakaian...`;
+                await sleep(160);
+
+                // 8. Pasangkan setelan ke mannequin
+                this.highlightBlueprintStep('step-wear');
+                this.setMannequinOutfit({ shirt: effectiveShirt, pants: effectivePants, acc: 'NONE' });
+                sfx.equipChime();
+                await sleep(240);
+
+                // 9. Tutup pintu lemari
+                this.highlightBlueprintStep('step-close');
+                if (this.dom.closetArmStatus) this.dom.closetArmStatus.textContent = '🦾 Siap';
+                await sleep(160);
+            } else {
+                // Tier 3: 3 Parameter (atasan, bawahan, atribut) — Seragam lengkap
+                // 1. Buka pintu lemari
+                this.highlightBlueprintStep('step-open');
+                if (this.dom.closetArmStatus) this.dom.closetArmStatus.textContent = '🦾 Buka Lemari';
+                this.dom.stageLog.textContent = `[${call.day}] 1. Buka pintu lemari pakaian...`;
+                await sleep(200);
+
+                // 2. Ambil baju atasan
+                this.highlightBlueprintStep('step-shirt');
+                document.querySelectorAll('.wardrobe-item-pill').forEach(el => el.classList.remove('active-pick'));
+                const pickShirtEl = document.getElementById(`closet-shirt-${effectiveShirt}`);
+                if (pickShirtEl) pickShirtEl.classList.add('active-pick');
+                sfx.clothSlide();
+                this.dom.stageLog.textContent = `[${call.day}] 2. Ambil baju '${shirtName}' dari gantungan...`;
+                await sleep(250);
+
+                // 3. Setrika baju
+                this.highlightBlueprintStep('step-iron-shirt');
+                this.dom.stageLog.textContent = `[${call.day}] 3. Setrika baju dan rapikan kancing...`;
+                await sleep(180);
+
+                // 4. Ambil celana bawahan
+                this.highlightBlueprintStep('step-pants');
+                const pickPantsEl = document.getElementById(`closet-pants-${effectivePants}`);
+                if (pickPantsEl) pickPantsEl.classList.add('active-pick');
+                sfx.clothSlide();
+                this.dom.stageLog.textContent = `[${call.day}] 4. Ambil celana '${pantsName}' dari rak lemari...`;
+                await sleep(220);
+
+                // 5. Setrika celana
+                this.highlightBlueprintStep('step-iron-pants');
+                this.dom.stageLog.textContent = `[${call.day}] 5. Setrika dan rapikan lipatan celana...`;
+                await sleep(180);
+
+                // 6. Pasang atribut
+                this.highlightBlueprintStep('step-acc');
+                const pickAccEl = document.getElementById(`closet-acc-${effectiveAcc}`);
+                if (pickAccEl) pickAccEl.classList.add('active-pick');
+                sfx.clothSlide();
+                this.dom.stageLog.textContent = `[${call.day}] 6. Ambil dan pasang atribut '${accName}'...`;
+                await sleep(200);
+
+                // 7. Semprot pewangi
+                this.highlightBlueprintStep('step-perfume');
+                this.dom.stageLog.textContent = `[${call.day}] 7. Semprot parfum pewangi pakaian...`;
+                await sleep(160);
+
+                // 8. Pasang ke mannequin
+                this.highlightBlueprintStep('step-wear');
+                this.setMannequinOutfit({ shirt: effectiveShirt, pants: effectivePants, acc: effectiveAcc });
+                sfx.equipChime();
+                await sleep(240);
+
+                // 9. Tutup pintu lemari
+                this.highlightBlueprintStep('step-close');
+                if (this.dom.closetArmStatus) this.dom.closetArmStatus.textContent = '🦾 Siap';
+                await sleep(160);
+            }
 
             this.highlightBlueprintStep(null);
 
             // Evaluation against requirement
-            const isCorrect = (
-                effectiveShirt === dayConfig.req.shirt &&
-                effectivePants === dayConfig.req.pants &&
-                effectiveAcc === dayConfig.req.acc
-            );
+            let isCorrect = false;
+            if (!hasPants && !hasAcc) {
+                isCorrect = (effectiveShirt === dayConfig.req.shirt);
+            } else if (hasPants && !hasAcc) {
+                isCorrect = (effectiveShirt === dayConfig.req.shirt && effectivePants === dayConfig.req.pants);
+            } else {
+                isCorrect = (
+                    effectiveShirt === dayConfig.req.shirt &&
+                    effectivePants === dayConfig.req.pants &&
+                    effectiveAcc === dayConfig.req.acc
+                );
+            }
 
             const icon = document.getElementById(`cal-status-${dayIdx}`);
             if (isCorrect) {
@@ -661,8 +905,8 @@
                 }
                 if (badge) badge.textContent = '✅ Berhasil';
                 if (icon) icon.textContent = '✅';
-                this.dom.mannequinTag.textContent = `${call.day}: Sesuai! ✨`;
-                this.dom.stageLog.textContent = `✅ ${call.day}: Pemanggilan fungsi tepat! Pakaian siap.`;
+                this.dom.mannequinTag.textContent = `${call.day}: Baju ${shirtName}${hasPants ? ', Celana ' + pantsName : ''}! ✨`;
+                this.dom.stageLog.textContent = `✅ ${call.day}: Pemanggilan fungsi tepat! Baju ${shirtName}${hasPants ? ' & celana ' + pantsName : ''} siap.`;
                 return true;
             } else {
                 if (cal) cal.className = 'day-card day-failed';

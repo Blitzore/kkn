@@ -383,54 +383,65 @@ class CanvasEngine {
         this.drawBackground();
         if (!this.mapData) return;
 
-        // ── Depth Sorting tiles (Painter's Algorithm) ──────────────────────
-        // PENTING: Robot TIDAK dimasukkan ke dalam queue.
-        // Robot selalu digambar setelah semua tile, sehingga tidak pernah
-        // tertimpa oleh tile apapun pada sudut kamera manapun.
-        const cam = this.getCameraPosition();
-        const getDistSq = (gx, gy, gz) => {
-            const dx = gx - cam.x;
-            const dy = gy - cam.y;
-            const dz = gz - cam.z;
-            return dx * dx + dy * dy + dz * dz;
+        // ── Rendering Berlapis (Layered Painter's Algorithm) ──────────────────────
+        // Masalah Kristal & Laser Tenggelam Terselesaikan:
+        // 1. Seluruh lantai ubin digambar TERLEBIH DAHULU (Layer 1: Lantai).
+        //    Dengan menggambar seluruh lantai di fase pertama, tidak ada ubin lantai manapun
+        //    yang bisa menimpa atau menenggelamkan kristal atau laser pada sudut POV manapun!
+        // 2. Seluruh objek di atas lantai (Kristal & Laser) digambar berikutnya (Layer 2: Objek).
+        //    Diurutkan berdasarkan kedalaman proyeksi kamera murni (tanpa distorsi Euclidean).
+        // 3. Robot selalu digambar di Layer 3 di atas objek/lantai.
+
+        const cosT = Math.cos(this.cameraTheta);
+        const sinT = Math.sin(this.cameraTheta);
+        const cosP = Math.cos(this.cameraPhi);
+        const sinP = Math.sin(this.cameraPhi);
+
+        // Kedalaman proyeksi murni sepanjang sumbu pandang kamera:
+        const getDepth = (gx, gy, gz = 0) => {
+            const dx = gx - this.centerX;
+            const dy = gy - this.centerY;
+            const dz = gz - this.centerZ;
+            const y1 = dx * sinT + dy * cosT;
+            const z1 = dz;
+            return y1 * cosP + z1 * sinP;
         };
 
-        const renderQueue = [];
-        this.mapData.tiles.forEach(tile => {
-            renderQueue.push({
-                type: 'tile',
-                distSq: getDistSq(tile.x, tile.y, tile.z),
-                tile: tile
-            });
+        // ── Layer 1: Seluruh Ubin Lantai ──────────────────────────────────────────
+        const tileQueue = this.mapData.tiles.map(tile => ({
+            depth: getDepth(tile.x, tile.y, tile.z),
+            tile: tile
+        }));
+        tileQueue.sort((a, b) => b.depth - a.depth);
+        tileQueue.forEach(item => {
+            TileRenderer.drawTile(ctx, item.tile, this);
+        });
 
+        // ── Layer 2: Objek Kristal & Laser di Atas Lantai ────────────────────────
+        const propQueue = [];
+        this.mapData.tiles.forEach(tile => {
             if (tile.hasTarget) {
-                renderQueue.push({
+                propQueue.push({
                     type: 'target',
-                    distSq: getDistSq(tile.x, tile.y, tile.z + 0.35),
+                    depth: getDepth(tile.x, tile.y, tile.z + 0.35),
                     tile: tile
                 });
             }
-
             if (tile.hasLaser && !tile.laserDisabled) {
-                renderQueue.push({
+                propQueue.push({
                     type: 'laser',
-                    distSq: getDistSq(tile.x, tile.y, tile.z + 0.35),
+                    depth: getDepth(tile.x, tile.y, tile.z + 0.38),
                     tile: tile
                 });
             }
         });
-
-        // Urutkan dari objek terjauh hingga terdekat
-        renderQueue.sort((a, b) => b.distSq - a.distSq);
-
-        // Gambar semua tile
-        renderQueue.forEach(item => {
-            if (item.type === 'tile')   TileRenderer.drawTile(ctx, item.tile, this);
-            else if (item.type === 'target') TileRenderer.drawTarget(ctx, item.tile, this);
+        propQueue.sort((a, b) => b.depth - a.depth);
+        propQueue.forEach(item => {
+            if (item.type === 'target') TileRenderer.drawTarget(ctx, item.tile, this);
             else if (item.type === 'laser')  TileRenderer.drawLaser(ctx, item.tile, this);
         });
 
-        // ── Robot selalu digambar TERAKHIR di atas semua tile ──────────────
+        // ── Layer 3: Robot selalu digambar di atas lantai ────────────────────────
         RobotRenderer.drawRobot(ctx, this);
 
         // Highlight/peringatan jurang dihilangkan: indikator panah arah robot & kompas sudah cukup jelas
@@ -595,62 +606,106 @@ class CanvasEngine {
             { dx: -1, dy: 0 }  // West
         ];
         const step = deltas[this.robot.dir];
-        const nextX = this.robot.gridX + step.dx;
-        const nextY = this.robot.gridY + step.dy;
+        const step1X = this.robot.gridX + step.dx;
+        const step1Y = this.robot.gridY + step.dy;
+        const tile1 = this.mapData.tiles.find(t => t.x === step1X && t.y === step1Y);
 
-        const targetTile = this.mapData.tiles.find(t => t.x === nextX && t.y === nextY);
-        if (!targetTile) {
-            // Merunduk ke jurang kosong -> jatuh
-            return await RobotRenderer.animateFall(this, nextX, nextY);
+        // Jika di depan tidak ada rintangan laser aktif:
+        // Robot hanya merunduk di tempat (duck in place), agar tidak disalahgunakan sebagai balok MAJU!
+        const hasLaserAhead = tile1 && tile1.hasLaser && !tile1.laserDisabled;
+
+        if (!hasLaserAhead) {
+            this.robot.isDucking = true;
+            const startTime = Date.now();
+            const duration = 300 / (this.speedMultiplier || 1);
+
+            await new Promise(resolve => {
+                const duckInterval = setInterval(() => {
+                    const elapsed = Date.now() - startTime;
+                    const p = Math.min(1, elapsed / duration);
+                    if (p >= 1) {
+                        clearInterval(duckInterval);
+                        this.robot.isDucking = false;
+                        resolve();
+                    }
+                }, 16);
+            });
+
+            await this.waitAnim(60);
+            return {
+                success: true,
+                inPlace: true,
+                message: 'Robot merunduk di tempat karena tidak ada laser di depan. Gunakan [MAJU] untuk jalan datar!'
+            };
         }
 
-        if (targetTile.z > this.robot.gridZ) {
+        // Jika ada laser di petak 1 langkah di depan:
+        // Robot meluncur di bawah laser dan mendarat di petak seberang (2 langkah di depan)
+        const step2X = this.robot.gridX + step.dx * 2;
+        const step2Y = this.robot.gridY + step.dy * 2;
+        const tile2 = this.mapData.tiles.find(t => t.x === step2X && t.y === step2Y);
+
+        if (!tile2) {
+            // Meluncur menembus laser lalu terperosok ke jurang kosong
+            this.robot.isDucking = true;
+            await this.waitAnim(160);
+            this.robot.isDucking = false;
+            return await RobotRenderer.animateFall(this, step2X, step2Y);
+        }
+
+        if (tile2.z > this.robot.gridZ) {
             this.robot.faceExpression = 'dead';
             this.addParticle(this.robot.gridX, this.robot.gridY, this.robot.gridZ, '#ef4444', 8);
-            return { success: false, reason: 'Ubin di depan terlalu tinggi! Tidak bisa merunduk menaiki tebing.' };
+            return { success: false, reason: 'Ubin di seberang laser terlalu tinggi! Tidak bisa meluncur naik tebing.' };
         }
 
-        // Animasi merunduk & meluncur di bawah laser
+        if (tile2.hasLaser && !tile2.laserDisabled) {
+            this.robot.faceExpression = 'dead';
+            this.addParticle(step2X, step2Y, tile2.z, '#f43f5e', 12);
+            return { success: false, reason: 'Ubin pendaratan juga terdapat laser aktif!' };
+        }
+
+        // Animasi merunduk & meluncur menembus laser ke ubin seberang
         this.robot.isDucking = true;
         const startX = this.robot.gridX;
         const startY = this.robot.gridY;
         const startZ = this.robot.gridZ;
-        const endZ = targetTile.z;
+        const endZ = tile2.z;
 
-        this.robot.gridX = nextX;
-        this.robot.gridY = nextY;
+        this.robot.gridX = step2X;
+        this.robot.gridY = step2Y;
         this.robot.gridZ = endZ;
 
         const startTime = Date.now();
-        const duration = 300 / (this.speedMultiplier || 1);
+        const duration = 420 / (this.speedMultiplier || 1);
 
         await new Promise(resolve => {
             const slideInterval = setInterval(() => {
                 const elapsed = Date.now() - startTime;
                 const p = Math.min(1, elapsed / duration);
 
-                this.robot.animX = startX + (nextX - startX) * p;
-                this.robot.animY = startY + (nextY - startY) * p;
+                this.robot.animX = startX + (step2X - startX) * p;
+                this.robot.animY = startY + (step2Y - startY) * p;
                 this.robot.animZ = startZ + (endZ - startZ) * p;
 
-                if (Math.random() > 0.4) {
+                if (Math.random() > 0.3) {
                     this.addParticle(this.robot.animX, this.robot.animY, this.robot.animZ, '#06b6d4', 3, 0.8);
                 }
 
                 if (p >= 1) {
                     clearInterval(slideInterval);
                     this.robot.isDucking = false;
-                    this.robot.animX = nextX;
-                    this.robot.animY = nextY;
+                    this.robot.animX = step2X;
+                    this.robot.animY = step2Y;
                     this.robot.animZ = endZ;
-                    this.addParticle(nextX, nextY, endZ, '#38bdf8', 6);
+                    this.addParticle(step2X, step2Y, endZ, '#38bdf8', 6);
                     resolve();
                 }
             }, 16);
         });
 
         await this.waitAnim(60);
-        return { success: true, tile: targetTile };
+        return { success: true, tile: tile2 };
     }
 
     async turnLeft() {
