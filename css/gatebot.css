@@ -39,6 +39,16 @@ html, body {
     overflow: hidden;
 }
 
+/* Mobile: allow vertical scroll instead of clipping */
+@media (max-width: 1023px) {
+    html, body {
+        overflow-y: auto;
+        overflow-x: hidden;
+        height: auto;
+        min-height: 100%;
+    }
+}
+
 body {
     background: var(--bg-main);
     color: var(--text-primary);
@@ -1039,3 +1049,102 @@ button:disabled {
     0%, 100% { box-shadow: 0 0 0 0 rgba(244, 63, 94, 0); }
     50% { box-shadow: 0 0 16px 4px rgba(244, 63, 94, 0.6); }
 }
+
+/* ── Mobile Responsive (≤ 640px) ── */
+@media (max-width: 640px) {
+    .navbar {
+        height: 48px;
+        padding: 0 10px;
+        gap: 6px;
+    }
+    .nav-left {
+        gap: 5px;
+        flex-shrink: 1;
+        min-width: 0;
+        overflow: hidden;
+    }
+    .btn-nav-link {
+        padding: 4px 7px;
+        font-size: 0.7rem;
+    }
+    /* Hide brand subtitle pill on mobile to prevent overflow */
+    .brand-sub-pill {
+        display: none;
+    }
+    .brand-title {
+        display: none !important;
+    }
+    .brand-badge {
+        margin-left: 2px;
+        gap: 4px;
+    }
+    .level-badge-btn {
+        padding: 4px 8px;
+        font-size: 0.75rem;
+    }
+    .main-content {
+        padding: 8px;
+        gap: 10px;
+    }
+    .card-deck {
+        padding: 10px 12px;
+        gap: 8px;
+    }
+    .card-title {
+        font-size: 0.9rem;
+    }
+    .mission-headline {
+        font-size: 1.1rem;
+    }
+    .mission-body-text {
+        font-size: 0.92rem;
+    }
+    .gate-graphic-box {
+        min-height: 120px;
+        padding: 12px;
+    }
+    /* Visitor cards: stack decision buttons vertically */
+    .vis-decision-section {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    .control-buttons-row {
+        flex-wrap: wrap;
+    }
+    .btn-primary-action,
+    .btn-secondary-action {
+        font-size: 0.85rem;
+        padding: 9px 12px;
+    }
+    /* Level modal: adapt to small screen */
+    .modal-box {
+        padding: 16px;
+    }
+    .level-cards-grid {
+        grid-template-columns: repeat(5, 1fr);
+        gap: 6px;
+    }
+}
+
+@media (max-width: 480px) {
+    .brand-title {
+        display: none;
+    }
+    .btn-nav-link {
+        padding: 3px 5px;
+        font-size: 0.65rem;
+    }
+    .level-badge-btn {
+        padding: 4px 7px;
+        font-size: 0.72rem;
+    }
+    .header-score-pill {
+        font-size: 0.72rem;
+        padding: 3px 8px;
+    }
+    .card-header-bar {
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+}
+
