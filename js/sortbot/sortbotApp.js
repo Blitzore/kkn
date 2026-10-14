@@ -301,7 +301,7 @@
                     <option value="KERTAS">KERTAS 📦</option>
                 </select>
                 <span>)</span>
-                <span class="branch-eval-pill eval-pill-elseif"></span>
+                <span class="branch-eval-pill"></span>
             </div>
             <div class="branch-action-line">
                 <span>👉 MAKA :</span>
@@ -473,27 +473,27 @@
 
         const lvl = window.SORTBOT_LEVELS[activeLevelIdx];
 
-        while (currentItemPointer < lvl.items.length) {
-            const success = await executeOneTrashItem();
-            if (!success) {
-                // Sorter halted due to logic mismatch
-                isRunningSimulation = false;
-                $conveyorBelt.classList.remove('running');
-                $btnRunFactory.disabled = false;
-                $btnStepFactory.disabled = false;
-                $telemetryText.textContent = `STATUS: TERHENTI KARENA KESALAHAN SORTIR`;
-                return;
+        try {
+            while (currentItemPointer < lvl.items.length) {
+                const success = await executeOneTrashItem();
+                if (!success) {
+                    $telemetryText.textContent = `STATUS: TERHENTI KARENA KESALAHAN SORTIR`;
+                    return;
+                }
+                await sleep(400);
             }
-            await sleep(400);
-        }
 
-        // All items sorted successfully!
-        isRunningSimulation = false;
-        $conveyorBelt.classList.remove('running');
-        $btnRunFactory.disabled = false;
-        $btnStepFactory.disabled = false;
-        $telemetryText.textContent = `STATUS: PABRIK SUKSES MENYORTIR! 🎉`;
-        onLevelComplete();
+            $telemetryText.textContent = `STATUS: PABRIK SUKSES MENYORTIR! 🎉`;
+            onLevelComplete();
+        } catch (err) {
+            console.error('Simulation error:', err);
+            $telemetryText.textContent = `STATUS: TERJADI KENDALA SIMULASI`;
+        } finally {
+            isRunningSimulation = false;
+            $conveyorBelt.classList.remove('running');
+            $btnRunFactory.disabled = false;
+            $btnStepFactory.disabled = false;
+        }
     }
 
     // Step-by-step single item evaluation
@@ -508,14 +508,18 @@
         $btnStepFactory.disabled = true;
         $conveyorBelt.classList.add('running');
 
-        const success = await executeOneTrashItem();
-        $conveyorBelt.classList.remove('running');
-        $btnRunFactory.disabled = false;
-        $btnStepFactory.disabled = false;
-
-        const lvl = window.SORTBOT_LEVELS[activeLevelIdx];
-        if (success && currentItemPointer >= lvl.items.length) {
-            onLevelComplete();
+        try {
+            const success = await executeOneTrashItem();
+            const lvl = window.SORTBOT_LEVELS[activeLevelIdx];
+            if (success && currentItemPointer >= lvl.items.length) {
+                onLevelComplete();
+            }
+        } catch (err) {
+            console.error('Step simulation error:', err);
+        } finally {
+            $conveyorBelt.classList.remove('running');
+            $btnRunFactory.disabled = false;
+            $btnStepFactory.disabled = false;
         }
     }
 
@@ -558,6 +562,27 @@
             const lidTimer = setTimeout(() => {
                 if (binElement) binElement.classList.add('bin-lid-open');
             }, 75);
+
+            let finished = false;
+            const finishHandler = () => {
+                if (finished) return;
+                finished = true;
+                clearTimeout(lidTimer);
+                clearTimeout(fallbackTimer);
+                if (binElement) binElement.classList.remove('bin-lid-open');
+                clone.remove();
+                if (isCorrect) {
+                    binElement.classList.add('bin-catch');
+                    setTimeout(() => binElement.classList.remove('bin-catch'), 450);
+                    spawnPlusOneBadge(targetCenterX, targetCenterY);
+                } else {
+                    binElement.classList.add('bin-error');
+                    setTimeout(() => binElement.classList.remove('bin-error'), 450);
+                }
+                resolve();
+            };
+
+            const fallbackTimer = setTimeout(finishHandler, 900);
 
             const keyframes = isCorrect ? [
                 {
@@ -605,26 +630,16 @@
                 }
             ];
 
-            const anim = clone.animate(keyframes, {
-                duration: 620,
-                easing: 'cubic-bezier(0.25, 1, 0.5, 1)',
-                fill: 'forwards'
-            });
-
-            anim.onfinish = () => {
-                clearTimeout(lidTimer);
-                if (binElement) binElement.classList.remove('bin-lid-open');
-                clone.remove();
-                if (isCorrect) {
-                    binElement.classList.add('bin-catch');
-                    setTimeout(() => binElement.classList.remove('bin-catch'), 450);
-                    spawnPlusOneBadge(targetCenterX, targetCenterY);
-                } else {
-                    binElement.classList.add('bin-error');
-                    setTimeout(() => binElement.classList.remove('bin-error'), 450);
-                }
-                resolve();
-            };
+            try {
+                const anim = clone.animate(keyframes, {
+                    duration: 620,
+                    easing: 'cubic-bezier(0.25, 1, 0.5, 1)',
+                    fill: 'forwards'
+                });
+                anim.onfinish = finishHandler;
+            } catch (err) {
+                finishHandler();
+            }
         });
     }
 
@@ -695,43 +710,53 @@
                 const row = elseIfRows[i];
                 const condSel = row.querySelector('.cond-select');
                 const actSel = row.querySelector('.action-select');
-                const c = condSel.value;
-                const a = actSel.value;
-                const pill = row.querySelector('.eval-pill-elseif');
+                const c = condSel ? condSel.value : '';
+                const a = actSel ? actSel.value : '';
+                const pill = row.querySelector('.branch-eval-pill');
 
                 row.classList.add('eval-testing');
-                pill.className = 'branch-eval-pill eval-pill-elseif pill-testing';
-                pill.textContent = `🔍 Menguji...`;
+                if (pill) {
+                    pill.className = 'branch-eval-pill pill-testing';
+                    pill.textContent = `🔍 Menguji...`;
+                }
                 await sleep(380);
 
                 if (item.type === c) {
                     chosenAction = a;
                     row.classList.remove('eval-testing');
                     row.classList.add('eval-matched');
-                    pill.className = 'branch-eval-pill eval-pill-elseif pill-matched';
-                    pill.textContent = `✅ Cocok ✓`;
+                    if (pill) {
+                        pill.className = 'branch-eval-pill pill-matched';
+                        pill.textContent = `✅ Cocok ✓`;
+                    }
                     logBranchText = `✅ Cocok cabang ELSE IF ➔ ${BIN_CATALOG[chosenAction]?.label}`;
                     elseIfMatched = true;
 
                     // Mark remaining else-if & else as skipped
                     for (let j = i + 1; j < elseIfRows.length; j++) {
                         const rNext = elseIfRows[j];
-                        const pNext = rNext.querySelector('.eval-pill-elseif');
+                        const pNext = rNext.querySelector('.branch-eval-pill');
                         rNext.classList.add('eval-skipped');
-                        pNext.className = 'branch-eval-pill eval-pill-elseif pill-skipped';
-                        pNext.textContent = `⏭️ Dilewati`;
+                        if (pNext) {
+                            pNext.className = 'branch-eval-pill pill-skipped';
+                            pNext.textContent = `⏭️ Dilewati`;
+                        }
                     }
                     const rowElse = document.getElementById('row-else');
                     const pillElse = document.getElementById('pill-eval-else');
-                    rowElse.classList.add('eval-skipped');
-                    pillElse.className = 'branch-eval-pill pill-skipped';
-                    pillElse.textContent = `⏭️ Dilewati`;
+                    if (rowElse) rowElse.classList.add('eval-skipped');
+                    if (pillElse) {
+                        pillElse.className = 'branch-eval-pill pill-skipped';
+                        pillElse.textContent = `⏭️ Dilewati`;
+                    }
                     break;
                 } else {
                     row.classList.remove('eval-testing');
                     row.classList.add('eval-failed');
-                    pill.className = 'branch-eval-pill eval-pill-elseif pill-failed';
-                    pill.textContent = `❌ Tidak Cocok ✗`;
+                    if (pill) {
+                        pill.className = 'branch-eval-pill pill-failed';
+                        pill.textContent = `❌ Tidak Cocok ✗`;
+                    }
                     await sleep(300);
                 }
             }
@@ -741,9 +766,11 @@
                 chosenAction = $selectElseAction.value;
                 const rowElse = document.getElementById('row-else');
                 const pillElse = document.getElementById('pill-eval-else');
-                rowElse.classList.add('eval-matched-else');
-                pillElse.className = 'branch-eval-pill pill-matched-else';
-                pillElse.textContent = `⭐ Masuk ELSE ✓`;
+                if (rowElse) rowElse.classList.add('eval-matched-else');
+                if (pillElse) {
+                    pillElse.className = 'branch-eval-pill pill-matched-else';
+                    pillElse.textContent = `⭐ Masuk ELSE ✓`;
+                }
                 logBranchText = `⭐ Syarat atas tidak cocok. Masuk ke ELSE ➔ ${BIN_CATALOG[chosenAction]?.label}`;
             }
         }
@@ -791,9 +818,9 @@
         const elseIfRows = $dynamicElseIfContainer.querySelectorAll('.dynamic-branch');
         elseIfRows.forEach(row => {
             row.classList.add('eval-skipped');
-            const pill = row.querySelector('.eval-pill-elseif');
+            const pill = row.querySelector('.branch-eval-pill');
             if (pill) {
-                pill.className = 'branch-eval-pill eval-pill-elseif pill-skipped';
+                pill.className = 'branch-eval-pill pill-skipped';
                 pill.textContent = `⏭️ Dilewati`;
             }
         });

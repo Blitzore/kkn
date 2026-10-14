@@ -439,6 +439,73 @@
     margin: 0;
 }
 
+/* ── Tombol Buka Panggung Demo di Modal Intro ── */
+#intro-modal-footer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+}
+
+/* ── Kartu Panggung Demo di Modal Peta Level (Sama Besar dengan Level) ── */
+.level-grid-card.demo-card {
+    border-color: rgba(56, 189, 248, 0.4);
+    background: rgba(2, 132, 199, 0.08);
+}
+
+.level-grid-card.demo-card:hover {
+    border-color: #38bdf8;
+    background: rgba(2, 132, 199, 0.22);
+    box-shadow: 0 4px 14px rgba(2, 132, 199, 0.35);
+}
+
+.level-grid-card.demo-card .lgc-num {
+    color: #38bdf8;
+}
+
+
+
+/* ── HUD Tag saat Mode Demo Aktif (Sangat Terbaca di Proyektor) ── */
+.demo-mode-tag {
+    background: linear-gradient(135deg, #0284c7, #2563eb) !important;
+    color: #ffffff !important;
+    font-weight: 800 !important;
+    letter-spacing: 0.5px !important;
+    padding: 3px 10px !important;
+    border-radius: var(--r-full) !important;
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.5) !important;
+}
+
+/* ── Tombol Keluar dari Mode Demo di HUD ── */
+.btn-exit-demo {
+    background: linear-gradient(135deg, #059669, #10b981) !important;
+    border: 1.5px solid #34d399 !important;
+    color: #ffffff !important;
+    font-size: 0.88rem !important;
+    font-weight: 800 !important;
+    padding: 6px 14px !important;
+    border-radius: var(--r-full) !important;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    transition: all 0.15s ease;
+    box-shadow: 0 0 12px rgba(16, 185, 129, 0.4);
+    animation: pulse-demo-btn 2s infinite;
+}
+
+.btn-exit-demo:hover {
+    background: #059669 !important;
+    box-shadow: 0 0 18px rgba(52, 211, 153, 0.7) !important;
+    transform: translateY(-1px);
+}
+
+@keyframes pulse-demo-btn {
+    0%, 100% { box-shadow: 0 0 10px rgba(16, 185, 129, 0.4); }
+    50%      { box-shadow: 0 0 18px rgba(52, 211, 153, 0.7); }
+}
+
 /* ── Kotak Alasan Kalah (Defeat Modal) ── */
 .defeat-reason-box {
     background: #1c0e16;
@@ -627,7 +694,7 @@
     background: rgba(244, 63, 94, 0.3) !important;
     color: #ffffff !important;
     border-color: #f43f5e !important;
-    transform: rotate(180deg);
+    transform: scale(1.08);
 }
 
 /* ── Lobby Reset Prominent Button ── */

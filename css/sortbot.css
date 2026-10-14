@@ -298,7 +298,7 @@ html, body {
     background: rgba(244, 63, 94, 0.32);
     color: #ffffff;
     border-color: #f43f5e;
-    transform: rotate(180deg);
+    transform: scale(1.08);
 }
 .btn-reset-stars-modal {
     background: rgba(244, 63, 94, 0.12);

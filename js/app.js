@@ -11,18 +11,18 @@ document.addEventListener('DOMContentLoaded', () => {
     const gameState  = new window.GameState(window.GAME_LEVELS);
     const canvas     = new window.CanvasEngine('arena-canvas');
     const interpreter = new window.CodeInterpreter(canvas, audio);
-    const tutorialDemo = null; // Dipersiapkan untuk demo in-game saat balok baru diperkenalkan
     canvas.start();
 
     /* ── 2. DOM References ──────────────────────── */
     const $ = id => document.getElementById(id);
 
     // HUD
-    const hudTag      = $('hud-tag');
-    const hudTitle    = $('hud-title');
-    const hudScore    = $('hud-score');
-    const arenaHint   = $('arena-hint');
-    const conceptName = $('concept-name');
+    const hudTag       = $('hud-tag');
+    const hudTitle     = $('hud-title');
+    const hudScore     = $('hud-score');
+    const hudScoreWrap = $('hud-score-wrap');
+    const arenaHint    = $('arena-hint');
+    const conceptName  = $('concept-name');
 
     // Deck
     const paletteContainer = $('palette-container');
@@ -38,23 +38,34 @@ document.addEventListener('DOMContentLoaded', () => {
     const statusMsg  = $('status-msg');
 
     // Buttons
-    const btnRun   = $('btn-run');
-    const btnStep  = $('btn-step');
-    const btnClear = $('btn-clear');
-    const btnSpeed = $('btn-speed');
+    const btnRun        = $('btn-run');
+    const btnStep       = $('btn-step');
+    const btnClear      = $('btn-clear');
+    const btnSpeed      = $('btn-speed');
+    const btnExitDemo   = $('btn-exit-demo');
 
     /* ── 3. App State ───────────────────────────── */
-    let mainSeq   = [];
-    let f1Seq     = [];
-    let inputTarget = 'main';   // 'main' | 'f1'
-    let stepIdx   = 0;
-    let playSpeed = 1;
+    let mainSeq          = [];
+    let f1Seq            = [];
+    let inputTarget      = 'main';   // 'main' | 'f1'
+    let stepIdx          = 0;
+    let playSpeed        = 1;
+    let isDemoMode       = false;
+    let currentDemoStage = null;
+    let returnLevelIndex = 0;
+    let demoSource       = 'game';   // 'game' | 'lobby'
 
     /* ── 4. Lobby ───────────────────────────────── */
-    const lobby = new window.LobbyScreen(gameState, (levelIdx) => {
-        lobby.hide();
-        loadLevelWithIntro(levelIdx);
-    });
+    const lobby = new window.LobbyScreen(
+        gameState,
+        (levelIdx) => {
+            lobby.hide();
+            loadLevelWithIntro(levelIdx);
+        },
+        (demoKey) => {
+            loadDemoWithIntro(demoKey, 'lobby');
+        }
+    );
 
     // Kembali ke lobby dari dalam game
     $('btn-lobby')?.addEventListener('click', () => {
@@ -62,18 +73,16 @@ document.addEventListener('DOMContentLoaded', () => {
         if (interpreter.isExecuting) {
             interpreter.isExecuting = false;
         }
+        if (isDemoMode) {
+            isDemoMode = false;
+            currentDemoStage = null;
+            if (btnExitDemo)  btnExitDemo.style.display = 'none';
+            if (hudScoreWrap) hudScoreWrap.style.display = 'flex';
+            hudTag.className = 'hud-level-tag';
+        }
         lobby.show();
     });
 
-    // Tampilkan lobby saat start atau langsung masuk level jika ada hash #level=X
-    const hashMatch = window.location.hash.match(/level=(\d+)/);
-    if (hashMatch) {
-        const lvlIdx = Math.max(0, Math.min(parseInt(hashMatch[1], 10) - 1, gameState.levels.length - 1));
-        lobby.hide();
-        loadLevelWithIntro(lvlIdx);
-    } else {
-        lobby.show();
-    }
 
     /* ── 5. Status Helper ──────────────────────── */
     function setStatus(msg, type = 'normal', icon = '🤖') {
@@ -117,6 +126,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // Indikator Bintang
         const starsBadge = $('intro-stars-badge');
         if (starsBadge) {
+            starsBadge.style.display = 'flex';
             starsBadge.className = 'intro-stars-badge master-solution';
             starsBadge.innerHTML = `
                 <div class="stars-icon-row">⭐⭐⭐</div>
@@ -145,11 +155,75 @@ document.addEventListener('DOMContentLoaded', () => {
             unlockEl.style.display = 'none';
         }
 
+        const btnStart = $('btn-start-level');
+        if (btnStart) {
+            btnStart.textContent = 'Mulai Misi Soal Siswa →';
+        }
+
         openModal('modal-intro');
     }
 
-    /* ── 8. Start Level ──────────────────────────── */
+    /* ── 7B. Panggung Demo Briefing (Intro Modal) ─── */
+    function showDemoIntro(stage, source = 'game') {
+        if (!stage) return;
+        currentDemoStage = stage;
+        demoSource = source;
+
+        const b = stage.introBriefing || {};
+        $('intro-icon').textContent   = stage.conceptIcon || '🔬';
+        $('intro-title').textContent  = stage.conceptTitle || stage.name;
+        $('intro-module').textContent = `🔬 Panggung Demo Guru · Arena Luas 6×6`;
+        $('intro-body').textContent   = b.explanation || stage.hint;
+
+        // Sembunyikan badge bintang target di mode demo
+        const starsBadge = $('intro-stars-badge');
+        if (starsBadge) {
+            starsBadge.style.display = 'none';
+        }
+
+        const analogyEl = $('intro-analogy');
+        if (b.realLifeAnalogy) {
+            analogyEl.style.display = '';
+            analogyEl.textContent = b.realLifeAnalogy;
+        } else {
+            analogyEl.style.display = 'none';
+        }
+
+        const unlockEl = $('intro-unlock');
+        if (b.newUnlock) {
+            unlockEl.style.display = '';
+            $('intro-unlock-icon').textContent  = b.newUnlock.icon || '✨';
+            $('intro-unlock-title').textContent = `Balok Demo: ${b.newUnlock.label}`;
+            $('intro-unlock-desc').textContent  = b.newUnlock.desc || '';
+        } else {
+            unlockEl.style.display = 'none';
+        }
+
+        const btnStart = $('btn-start-level');
+        if (btnStart) {
+            btnStart.textContent = '🚀 Masuk ke Panggung Demo (Arena 6×6) →';
+        }
+
+        openModal('modal-intro');
+    }
+
+    function loadDemoWithIntro(stageKey, source = 'game') {
+        const stage = window.DEMO_STAGES ? window.DEMO_STAGES[stageKey] : null;
+        if (!stage) return;
+        isDemoMode = true;
+        currentDemoStage = stage;
+        demoSource = source;
+        showDemoIntro(stage, source);
+    }
+
+    /* ── 8. Start Level (Misi Normal) ────────────── */
     function startLevel(lvl) {
+        isDemoMode = false;
+        currentDemoStage = null;
+        if (btnExitDemo)   btnExitDemo.style.display = 'none';
+        if (hudScoreWrap)  hudScoreWrap.style.display = 'flex';
+        hudTag.className = 'hud-level-tag';
+
         hudTag.textContent   = `Level ${lvl.id} · ${lvl.moduleName}`;
         hudTitle.textContent = lvl.name;
         hudScore.textContent = `⭐ ${gameState.getTotalStars()}/${gameState.getMaxStars()}`;
@@ -180,6 +254,70 @@ document.addEventListener('DOMContentLoaded', () => {
         renderSlots();
     }
 
+    /* ── 8B. Panggung Demo Balok (Live Sandbox Layar Penuh) ── */
+    function startDemoStage(stage, source = 'game') {
+        if (!stage) return;
+        isDemoMode = true;
+        currentDemoStage = stage;
+        demoSource = source;
+        returnLevelIndex = gameState.currentLevelIndex;
+
+        closeAllModals();
+        if (lobby && typeof lobby.hide === 'function') lobby.hide();
+        $('screen-game')?.classList.remove('hidden');
+
+        // Tampilan HUD Khusus Panggung Demo
+        hudTag.textContent   = stage.tagTitle || 'PANGGUNG DEMO';
+        hudTag.className     = 'hud-level-tag demo-mode-tag';
+        hudTitle.textContent = stage.name;
+        arenaHint.innerHTML  = `🔬 ${stage.hint}`;
+
+        if (hudScoreWrap) hudScoreWrap.style.display = 'none';
+        if (btnExitDemo) {
+            btnExitDemo.style.display = 'inline-flex';
+            btnExitDemo.textContent   = source === 'lobby'
+                ? '↩️ Selesai Demo (Kembali ke Lobby)'
+                : '↩️ Selesai Demo (Kembali ke Soal)';
+        }
+
+        if (conceptName) conceptName.textContent = stage.name;
+
+        // Muat Map Demo ke Arena 3D Penuh
+        canvas.resize();
+        canvas.setMap(stage.map);
+        canvas.setCameraPreset('iso');
+
+        // Kosongkan slot program agar pengajar bisa peragakan dari nol
+        mainSeq = [];
+        f1Seq   = [];
+        inputTarget = 'main';
+        stepIdx = 0;
+
+        if (f1Deck) f1Deck.style.display = 'none';
+
+        renderPalette(stage);
+        renderSlots();
+
+        setStatus('🔬 Panggung Demo Aktif: Pasang balok lalu jalankan! Robot akan selalu lanjut jalan dari posisinya.', 'running', '🔬');
+    }
+
+    function exitDemoStage() {
+        isDemoMode = false;
+        currentDemoStage = null;
+        if (btnExitDemo)  btnExitDemo.style.display = 'none';
+        if (hudScoreWrap) hudScoreWrap.style.display = 'flex';
+        hudTag.className = 'hud-level-tag';
+
+        if (demoSource === 'lobby') {
+            lobby.show();
+        } else {
+            const lvl = gameState.getCurrentLevel();
+            if (lvl) {
+                startLevel(lvl);
+            }
+        }
+    }
+
     function loadLevelWithIntro(idx) {
         const lvl = gameState.setLevel(idx);
         if (lvl) showIntro(lvl);
@@ -205,35 +343,49 @@ document.addEventListener('DOMContentLoaded', () => {
 
     let activeInsertTarget = { type: 'main' }; // { type: 'main' | 'f1' | 'loop' | 'if_branch' | 'else_branch', index, deck }
 
-    /* ── 9. Palette Render (Kumulatif: Balok Tak Pernah Hilang) ── */
+    /* ── 9. Palette Render (Kumulatif: Balok Tak Pernah Hilang / Spesifik Demo) ── */
     function renderPalette(lvl) {
-        const cumulativeAllowed = [];
-        for (let l = 0; l <= gameState.currentLevelIndex; l++) {
-            const u = gameState.levels[l]?.unlockedCommands || [];
-            u.forEach(cmd => { if (!cumulativeAllowed.includes(cmd)) cumulativeAllowed.push(cmd); });
-        }
-        if (lvl.unlockedCommands) {
-            lvl.unlockedCommands.forEach(cmd => { if (!cumulativeAllowed.includes(cmd)) cumulativeAllowed.push(cmd); });
-        }
-
         const allowedDefs = [];
         const seenIds = new Set();
-        (cumulativeAllowed.length > 0 ? cumulativeAllowed : ['FORWARD', 'ACTIVATE']).forEach(rawId => {
-            if (rawId === 'LOOP_END') return; // Pastikan LOOP_END tidak pernah muncul
-            const def = window.COMMAND_DEFINITIONS[rawId];
-            if (def && !seenIds.has(def.id)) {
-                seenIds.add(def.id);
-                allowedDefs.push(def);
+
+        if (lvl?.isDemoStage && Array.isArray(lvl.unlockedCommands)) {
+            // Panggung Demo: tampilkan hanya balok khusus yang didemonstrasikan
+            lvl.unlockedCommands.forEach(rawId => {
+                const def = window.COMMAND_DEFINITIONS[rawId];
+                if (def && !seenIds.has(def.id)) {
+                    seenIds.add(def.id);
+                    allowedDefs.push(def);
+                }
+            });
+        } else {
+            const cumulativeAllowed = [];
+            for (let l = 0; l <= gameState.currentLevelIndex; l++) {
+                const u = gameState.levels[l]?.unlockedCommands || [];
+                u.forEach(cmd => { if (!cumulativeAllowed.includes(cmd)) cumulativeAllowed.push(cmd); });
             }
-        });
+            if (lvl?.unlockedCommands) {
+                lvl.unlockedCommands.forEach(cmd => { if (!cumulativeAllowed.includes(cmd)) cumulativeAllowed.push(cmd); });
+            }
+
+            (cumulativeAllowed.length > 0 ? cumulativeAllowed : ['FORWARD', 'ACTIVATE']).forEach(rawId => {
+                if (rawId === 'LOOP_END') return; // Pastikan LOOP_END tidak pernah muncul
+                const def = window.COMMAND_DEFINITIONS[rawId];
+                if (def && !seenIds.has(def.id)) {
+                    seenIds.add(def.id);
+                    allowedDefs.push(def);
+                }
+            });
+        }
 
         paletteContainer.innerHTML = allowedDefs.map(def => {
-            const isNew = (
-                lvl.introBriefing?.newUnlock?.label?.includes(def.label)
+            const isNew = Boolean(
+                lvl.introBriefing?.newUnlock?.label?.includes(def.label) ||
+                (lvl.isDemoStage && lvl.name.includes(def.label))
             );
+            const badgeText = lvl.isDemoStage ? 'Demo' : 'Baru';
             return `
                 <button type="button" class="btn-block" data-id="${def.id}" title="${def.desc}">
-                    ${isNew ? '<span class="badge-new">Baru</span>' : ''}
+                    ${isNew ? `<span class="badge-new">${badgeText}</span>` : ''}
                     <span class="block-icon">${def.icon}</span>
                     <span class="block-label">${def.label}</span>
                 </button>
@@ -243,14 +395,14 @@ document.addEventListener('DOMContentLoaded', () => {
         paletteContainer.querySelectorAll('.btn-block').forEach(btn => {
             btn.addEventListener('click', () => {
                 if (interpreter.isExecuting) return;
-                const lvl = gameState.getCurrentLevel();
+                const activeLvl = isDemoMode ? currentDemoStage : gameState.getCurrentLevel();
                 const id  = btn.dataset.id;
                 const def = window.COMMAND_DEFINITIONS[id];
                 const curTotal = countTotalBlocks(mainSeq) + countTotalBlocks(f1Seq);
 
-                if (curTotal >= lvl.maxBlocks && !['LOOP', 'IF_ELSE'].includes(id)) {
+                if (curTotal >= activeLvl.maxBlocks && !['LOOP', 'IF_ELSE'].includes(id)) {
                     audio.playError();
-                    setStatus(`Slot penuh! Maks. ${lvl.maxBlocks} balok untuk level ini.`, 'error', '⚠️');
+                    setStatus(`Slot penuh! Maks. ${activeLvl.maxBlocks} balok untuk level ini.`, 'error', '⚠️');
                     return;
                 }
 
@@ -347,7 +499,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     /* ── 10. Slots Render (Visual Penjepit C-Clamp & E-Clamp Code.org) ── */
     function renderSlots(activeStepPath = '', activeDeck = 'main') {
-        const lvl = gameState.getCurrentLevel();
+        const lvl = isDemoMode ? currentDemoStage : gameState.getCurrentLevel();
         if (!lvl) return;
 
         const totalUsed = countTotalBlocks(mainSeq);
@@ -636,8 +788,10 @@ document.addEventListener('DOMContentLoaded', () => {
         btnRun.disabled  = true;
         btnStep.disabled = true;
 
-        const lvl = gameState.getCurrentLevel();
-        canvas.setMap(lvl.map);
+        const lvl = isDemoMode ? currentDemoStage : gameState.getCurrentLevel();
+        if (!isDemoMode) {
+            canvas.setMap(lvl.map);
+        }
         setStatus('Menjalankan...', 'running', '🚀');
 
         await interpreter.runProgram(mainSeq, f1Seq, {
@@ -646,14 +800,33 @@ document.addEventListener('DOMContentLoaded', () => {
             onComplete: res => {
                 btnRun.disabled  = false;
                 btnStep.disabled = false;
-                renderSlots();
-                if (res.success && res.finished) {
-                    evaluateVictory(lvl);
-                } else if (!res.success) {
-                    audio.playError();
-                    const reason = res.reason || 'Robot melangkah ke petak kosong tanpa lantai!';
-                    setStatus(reason, 'error', '❌');
-                    showDefeatModal(reason, 'fall');
+
+                if (isDemoMode) {
+                    // Panggung Demo: Bersihkan slot balok yang sudah selesai dieksekusi
+                    // agar guru bisa pasang balok baru dan robot tetap lanjut jalan dari posisinya!
+                    mainSeq = [];
+                    f1Seq = [];
+                    stepIdx = 0;
+                    renderSlots();
+
+                    if (res.success && res.finished) {
+                        evaluateVictory(lvl);
+                    } else if (!res.success) {
+                        audio.playError();
+                        const reason = res.reason || 'Robot keluar dari arena atau terhalang!';
+                        canvas.setMap(lvl.map);
+                        setStatus(`⚠️ ${reason} Posisi robot di-reset kembali ke arena.`, 'error', '⚠️');
+                    }
+                } else {
+                    renderSlots();
+                    if (res.success && res.finished) {
+                        evaluateVictory(lvl);
+                    } else if (!res.success) {
+                        audio.playError();
+                        const reason = res.reason || 'Robot melangkah ke petak kosong tanpa lantai!';
+                        setStatus(reason, 'error', '❌');
+                        showDefeatModal(reason, 'fall');
+                    }
                 }
             }
         });
@@ -688,11 +861,13 @@ document.addEventListener('DOMContentLoaded', () => {
             setStatus('⚠️ Tentukan angka perulangan X (+/-) pada balok ULANGI terlebih dahulu!', 'error', '⚠️');
             return;
         }
-        const lvl = gameState.getCurrentLevel();
+        const lvl = isDemoMode ? currentDemoStage : gameState.getCurrentLevel();
 
         if (stepIdx === 0 || stepIdx >= debugTrace.length) {
             stepIdx = 0;
-            canvas.setMap(lvl.map);
+            if (!isDemoMode) {
+                canvas.setMap(lvl.map);
+            }
             debugTrace = buildDebugTrace(mainSeq);
         }
 
@@ -715,11 +890,21 @@ document.addEventListener('DOMContentLoaded', () => {
                 setStatus(reason, 'error', '❌');
                 stepIdx = 0;
                 renderSlots();
-                showDefeatModal(reason, 'fall');
+                if (!isDemoMode) {
+                    showDefeatModal(reason, 'fall');
+                } else {
+                    canvas.setMap(lvl.map);
+                    setStatus(`⚠️ ${reason} Posisi robot di-reset kembali ke arena.`, 'error', '⚠️');
+                }
                 return;
             }
 
             if (stepIdx >= debugTrace.length) {
+                if (isDemoMode) {
+                    mainSeq = [];
+                    f1Seq = [];
+                    stepIdx = 0;
+                }
                 renderSlots();
                 evaluateVictory(lvl);
             }
@@ -731,10 +916,10 @@ document.addEventListener('DOMContentLoaded', () => {
         audio.playTrash();
         mainSeq = []; f1Seq = []; stepIdx = 0;
         activeInsertTarget = { type: 'main' };
-        const lvl = gameState.getCurrentLevel();
+        const lvl = isDemoMode ? currentDemoStage : gameState.getCurrentLevel();
         canvas.setMap(lvl.map);
         renderSlots();
-        setStatus('Semua balok dihapus.', 'normal', '🧹');
+        setStatus(isDemoMode ? '🔄 Arena & posisi awal robot di-reset.' : 'Semua balok dihapus.', 'normal', isDemoMode ? '🔄' : '🧹');
     });
 
     /* ── 13. Speed Toggle ──────────────────────── */
@@ -755,12 +940,20 @@ document.addEventListener('DOMContentLoaded', () => {
     /* ── 15. Info / Materi ─────────────────────── */
     $('btn-info').addEventListener('click', () => {
         audio.playClick();
-        showIntro(gameState.getCurrentLevel());
+        if (isDemoMode && currentDemoStage) {
+            showDemoIntro(currentDemoStage, demoSource);
+        } else {
+            showIntro(gameState.getCurrentLevel());
+        }
     });
 
     $('concept-chip')?.addEventListener('click', () => {
         audio.playClick();
-        showIntro(gameState.getCurrentLevel());
+        if (isDemoMode && currentDemoStage) {
+            showDemoIntro(currentDemoStage, demoSource);
+        } else {
+            showIntro(gameState.getCurrentLevel());
+        }
     });
 
     /* ── 16. Kamera 3D ─────────────────────────── */
@@ -798,6 +991,13 @@ document.addEventListener('DOMContentLoaded', () => {
     /* ── 17. Peta Level ────────────────────────── */
     $('btn-map')?.addEventListener('click', () => {
         audio.playClick();
+        if (isDemoMode) {
+            isDemoMode = false;
+            currentDemoStage = null;
+            if (btnExitDemo)  btnExitDemo.style.display = 'none';
+            if (hudScoreWrap) hudScoreWrap.style.display = 'flex';
+            hudTag.className = 'hud-level-tag';
+        }
         renderLevelGrid();
         openModal('modal-map');
     });
@@ -805,7 +1005,34 @@ document.addEventListener('DOMContentLoaded', () => {
     function renderLevelGrid() {
         const grid = $('level-grid');
         if (!grid) return;
-        grid.innerHTML = gameState.levels.map((lvl, i) => {
+
+        // Panggung demo disisipkan tepat sebelum level yang memperkenalkan balok baru
+        const DEMO_BEFORE_LEVEL = {
+            1: 'forward_grab', // D1 Maju & Ambil sebelum Level 1
+            3: 'turn',         // D2 Putar Haluan sebelum Level 3
+            6: 'jump',         // D3 Lompat Jurang sebelum Level 6
+            8: 'duck',         // D4 Tunduk Laser sebelum Level 8
+            11: 'loop'         // D5 Perulangan Loop sebelum Level 11
+        };
+
+        const demoList = window.DEMO_STAGE_LIST || [];
+        let html = '';
+
+        gameState.levels.forEach((lvl, i) => {
+            const demoKey = DEMO_BEFORE_LEVEL[lvl.id];
+            if (demoKey) {
+                const item = demoList.find(d => d.key === demoKey);
+                if (item) {
+                    html += `
+                        <div class="level-grid-card demo-card" data-stage="${item.key}" title="Panggung Demo ${item.code}: ${item.title}">
+                            <span class="lgc-num">🔬 ${item.code} · Demo</span>
+                            <span class="lgc-name">${item.title}</span>
+                            <span class="lgc-stars" style="color:#38bdf8;font-size:0.75rem;">${item.icon} ${item.tag}</span>
+                        </div>
+                    `;
+                }
+            }
+
             const isDone = gameState.isLevelCompleted(i);
             const s      = gameState.starsEarned[i] || 0;
             const cur    = i === gameState.currentLevelIndex;
@@ -815,16 +1042,27 @@ document.addEventListener('DOMContentLoaded', () => {
                 badgeHtml = '⭐'.repeat(Math.max(1, s));
             }
 
-            return `
-                <div class="level-grid-card${cur ? ' active' : ''}" data-idx="${i}">
+            html += `
+                <div class="level-grid-card${cur ? ' active' : ''}" data-idx="${i}" title="Level ${lvl.id}: ${lvl.name}">
                     <span class="lgc-num">Level ${lvl.id}</span>
                     <span class="lgc-name">${lvl.name}</span>
                     <span class="lgc-stars">${badgeHtml}</span>
                 </div>
             `;
-        }).join('');
+        });
 
-        grid.querySelectorAll('.level-grid-card').forEach(card => {
+        grid.innerHTML = html;
+
+        grid.querySelectorAll('.demo-card[data-stage]').forEach(card => {
+            card.addEventListener('click', () => {
+                audio.playClick();
+                closeAllModals();
+                const stageKey = card.dataset.stage;
+                loadDemoWithIntro(stageKey, 'game');
+            });
+        });
+
+        grid.querySelectorAll('.level-grid-card[data-idx]').forEach(card => {
             card.addEventListener('click', () => {
                 audio.playClick();
                 closeAllModals();
@@ -848,17 +1086,39 @@ document.addEventListener('DOMContentLoaded', () => {
     $('btn-reset-stars')?.addEventListener('click', performReset);
     $('btn-hud-reset-stars')?.addEventListener('click', performReset);
 
-    /* ── 18. Start Mission (dari modal intro) ─── */
+    /* ── 18. Start Mission & Demo Controls ───── */
     $('btn-start-level')?.addEventListener('click', () => {
         audio.playClick();
         ensureBgm();
         closeAllModals();
-        startLevel(gameState.getCurrentLevel());
+        if (isDemoMode && currentDemoStage) {
+            startDemoStage(currentDemoStage, demoSource);
+        } else {
+            startLevel(gameState.getCurrentLevel());
+        }
+    });
+
+    $('btn-exit-demo')?.addEventListener('click', () => {
+        audio.playClick();
+        exitDemoStage();
     });
 
     /* ── 19. Victory ───────────────────────────── */
     function evaluateVictory(lvl) {
         const remaining = canvas.mapData?.tiles?.filter(t => t.hasTarget && !t.collected) ?? [];
+
+        // Khusus Mode Panggung Demo: rayakan dengan suara & status tanpa pop-up modal pengunci
+        if (isDemoMode) {
+            if (remaining.length === 0) {
+                audio.playVictory();
+                if (window.confetti) window.confetti({ particleCount: 75, spread: 60, origin: { y: 0.65 } });
+                setStatus('🎉 Berhasil! Kristal terambil. Pasang balok lagi untuk lanjut jalan!', 'success', '💎');
+            } else {
+                audio.playStep();
+                setStatus('🤖 Robot selesai melangkah! Pasang balok berikutnya untuk lanjut jalan.', 'running', '✅');
+            }
+            return;
+        }
 
         if (remaining.length === 0) {
             audio.playVictory();
@@ -1038,5 +1298,15 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     document.addEventListener('click',      ensureBgm, { passive: true });
     document.addEventListener('touchstart', ensureBgm, { passive: true });
+
+    /* ── 22. Inisialisasi Boot Awal ────────────── */
+    const hashMatch = window.location.hash.match(/level=(\d+)/);
+    if (hashMatch) {
+        const lvlIdx = Math.max(0, Math.min(parseInt(hashMatch[1], 10) - 1, gameState.levels.length - 1));
+        lobby.hide();
+        loadLevelWithIntro(lvlIdx);
+    } else {
+        lobby.show();
+    }
 
 });
