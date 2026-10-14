@@ -769,6 +769,8 @@
         .blueprint-steps-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, auto);
+            grid-auto-flow: column;
             gap: 2.5px 12px;
             font-size: 0.76rem;
             line-height: 1.35;
@@ -983,10 +985,10 @@
             <div class="toolbar-title">📄 Bundel Lembar Kerja Koding Siswa (4 Modul Lengkap)</div>
             <span class="toolbar-badge">7 HALAMAN LENGKAP A4</span>
             <div class="toolbar-nav-jumps" style="display:flex;gap:5px;margin-left:6px;">
-                <a href="#modul-algobot" style="color:#38bdf8;text-decoration:none;font-size:0.75rem;font-weight:700;padding:2px 7px;background:rgba(255,255,255,0.08);border-radius:4px;">🤖 ALGO (Hal 1-4)</a>
-                <a href="#modul-sortbot" style="color:#4ade80;text-decoration:none;font-size:0.75rem;font-weight:700;padding:2px 7px;background:rgba(255,255,255,0.08);border-radius:4px;">♻️ SORT (Hal 5)</a>
-                <a href="#modul-outfitbot" style="color:#c084fc;text-decoration:none;font-size:0.75rem;font-weight:700;padding:2px 7px;background:rgba(255,255,255,0.08);border-radius:4px;">👗 OUTFIT (Hal 6)</a>
-                <a href="#modul-gatebot" style="color:#f472b6;text-decoration:none;font-size:0.75rem;font-weight:700;padding:2px 7px;background:rgba(255,255,255,0.08);border-radius:4px;">🚪 GATE (Hal 7)</a>
+                <a href="#modul-gatebot" style="color:#f472b6;text-decoration:none;font-size:0.75rem;font-weight:700;padding:2px 7px;background:rgba(255,255,255,0.08);border-radius:4px;">🚪 GATE (Hal 1)</a>
+                <a href="#modul-sortbot" style="color:#4ade80;text-decoration:none;font-size:0.75rem;font-weight:700;padding:2px 7px;background:rgba(255,255,255,0.08);border-radius:4px;">♻️ SORT (Hal 2)</a>
+                <a href="#modul-outfitbot" style="color:#c084fc;text-decoration:none;font-size:0.75rem;font-weight:700;padding:2px 7px;background:rgba(255,255,255,0.08);border-radius:4px;">👗 OUTFIT (Hal 3)</a>
+                <a href="#modul-algobot" style="color:#38bdf8;text-decoration:none;font-size:0.75rem;font-weight:700;padding:2px 7px;background:rgba(255,255,255,0.08);border-radius:4px;">🤖 ALGO (Hal 4-7)</a>
             </div>
         </div>
         <div class="toolbar-right">
@@ -1007,899 +1009,24 @@
     <main class="sheets-wrapper">
 
         <!-- ========================================================================= -->
-        <!-- HALAMAN 1 DARI 7: KONSEP ALGORITMA & LEVEL 1 S.D. LEVEL 5                 -->
-        <!-- ========================================================================= -->
-        <article class="a4-page" id="modul-algobot">
-            <!-- Header Identitas Siswa Ramping (Hanya 1 di Halaman Ini) -->
-            <header class="page-header-main">
-                <div>
-                    <h1 class="app-title-h1">LEMBAR MISI KODING: ALGO-BOT</h1>
-                    <div class="app-sub-h2">Media Visual Interaktif Pengenalan Logika Pemrograman Siswa SD</div>
-                </div>
-                <div class="student-id-card">
-                    <div class="id-line"><span class="id-label">Nama:</span><span class="id-dot-fill"></span></div>
-                    <div class="id-line"><span class="id-label">Kelas / Kel:</span><span class="id-dot-fill"></span></div>
-                </div>
-            </header>
-
-            <!-- Target Game & Petunjuk Cara Jawab di Awal -->
-            <section class="global-instructions-banner">
-                <div class="banner-row-goal">🎯 Target Game: Pandu robot melangkah dan ambil seluruh kristal energi (⭐) yang ada di arena!</div>
-                <div class="banner-row-how">👉 Petunjuk Jawab: Isikan kotak sesuai angka nomor balok. <strong>Kotak TIDAK WAJIB diisi penuh</strong> (selesaikan misi dengan langkah sehemat dan seefisien mungkin)!</div>
-            </section>
-
-            <!-- Konsep 1: Algoritma -->
-            <section class="section-concept">
-                <h2 class="concept-title">1. Algoritma (Urutan Langkah Logis)</h2>
-                <p class="concept-desc">
-                    Algoritma adalah serangkaian instruksi langkah demi langkah yang disusun secara logis dan berurutan. Komputer menjalankan perintah persis sesuai urutan nomor balok yang kamu susun.
-                </p>
-                <div class="blocks-showcase-row">
-                    <div class="block-unit">
-                        <span class="block-number-tag">1</span>
-                        <div class="block-capsule cyan"><span>⬆️</span> MAJU</div>
-                    </div>
-                    <div class="block-unit">
-                        <span class="block-number-tag">2</span>
-                        <div class="block-capsule gold"><span>⭐</span> AMBIL</div>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Level 1 (6 Kotak) -->
-            <div class="level-task-wrap">
-                <div class="level-map-thumb">
-                    <img src="gambar level/level 1.png" alt="Peta Level 1">
-                </div>
-                <div class="level-task-main">
-                    <div class="level-name-label">Level 1 — Langkah Pertama</div>
-                    <div class="slots-square-row">
-                        <div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Level 2 (8 Kotak) -->
-            <div class="level-task-wrap">
-                <div class="level-map-thumb">
-                    <img src="gambar level/level 2.png" alt="Peta Level 2">
-                </div>
-                <div class="level-task-main">
-                    <div class="level-name-label">Level 2 — Jejak Dua Kristal</div>
-                    <div class="slots-square-row">
-                        <div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Balok Baru: Putar Kiri & Kanan -->
-            <div class="unlock-mini-pill">
-                <span>🆕 Balok Baru Terbuka:</span>
-                <div class="block-unit"><span class="block-number-tag">3</span><div class="block-capsule purple"><span>↩️</span> PUTAR KIRI</div></div>
-                <div class="block-unit"><span class="block-number-tag">4</span><div class="block-capsule purple"><span>↪️</span> PUTAR KANAN</div></div>
-            </div>
-
-            <!-- Level 3 (12 Kotak) -->
-            <div class="level-task-wrap">
-                <div class="level-map-thumb">
-                    <img src="gambar level/level 3.png" alt="Peta Level 3">
-                </div>
-                <div class="level-task-main">
-                    <div class="level-name-label">Level 3 — Simpang Belok Presisi</div>
-                    <div class="slots-square-row">
-                        <div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Level 4 (14 Kotak) -->
-            <div class="level-task-wrap">
-                <div class="level-map-thumb">
-                    <img src="gambar level/level 4.png" alt="Peta Level 4">
-                </div>
-                <div class="level-task-main">
-                    <div class="level-name-label">Level 4 — Simpang Dua Cabang</div>
-                    <div class="slots-square-row">
-                        <div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Level 5 (18 Kotak) -->
-            <div class="level-task-wrap" style="margin-bottom:0;">
-                <div class="level-map-thumb">
-                    <img src="gambar level/level 5.png" alt="Peta Level 5">
-                </div>
-                <div class="level-task-main">
-                    <div class="level-name-label">Level 5 — Labirin Zig-Zag</div>
-                    <div class="slots-square-row">
-                        <div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div>
-                    </div>
-                </div>
-            </div>
-
-            <footer class="sheet-page-footer">
-                <span>LEMBAR KERJA KODING SISWA · ALGO-BOT (LEVEL 1–5)</span>
-                <span>Halaman 1 dari 7</span>
-            </footer>
-        </article>
-
-        <!-- ========================================================================= -->
-        <!-- HALAMAN 2 DARI 7: ALGO-BOT LEVEL 6–10 & KONSEP LOOPING                    -->
-        <!-- ========================================================================= -->
-        <article class="a4-page">
-            <!-- Balok Baru: Lompat & Tunduk (Tanpa Header Mini) -->
-            <div class="unlock-mini-pill" style="margin-top:0;margin-bottom:8px;">
-                <span>🆕 Balok Baru Terbuka:</span>
-                <div class="block-unit"><span class="block-number-tag">5</span><div class="block-capsule emerald"><span>🦘</span> LOMPAT (Lewati Jurang)</div></div>
-                <div class="block-unit"><span class="block-number-tag">6</span><div class="block-capsule emerald"><span>🛡️</span> TUNDUK (Bawah Laser)</div></div>
-            </div>
-
-            <!-- Level 6 (16 Kotak) -->
-            <div class="level-task-wrap">
-                <div class="level-map-thumb">
-                    <img src="gambar level/level 6.png" alt="Peta Level 6">
-                </div>
-                <div class="level-task-main">
-                    <div class="level-name-label">Level 6 — Jembatan Celah Jurang Berkelok</div>
-                    <div class="slots-square-row">
-                        <div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Level 7 (18 Kotak) -->
-            <div class="level-task-wrap">
-                <div class="level-map-thumb">
-                    <img src="gambar level/level 7.png" alt="Peta Level 7">
-                </div>
-                <div class="level-task-main">
-                    <div class="level-name-label">Level 7 — Taktik Potong Jurang Danau</div>
-                    <div class="slots-square-row">
-                        <div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Level 8 (20 Kotak) -->
-            <div class="level-task-wrap">
-                <div class="level-map-thumb">
-                    <img src="gambar level/level 8.png" alt="Peta Level 8">
-                </div>
-                <div class="level-task-main">
-                    <div class="level-name-label">Level 8 — Koridor Laser & Tikungan Ganda</div>
-                    <div class="slots-square-row">
-                        <div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Level 9 (20 Kotak) -->
-            <div class="level-task-wrap">
-                <div class="level-map-thumb">
-                    <img src="gambar level/level 9.png" alt="Peta Level 9">
-                </div>
-                <div class="level-task-main">
-                    <div class="level-name-label">Level 9 — Kombinasi Jurang & Laser Terpadu</div>
-                    <div class="slots-square-row">
-                        <div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div>
-                    </div>
-                </div>
-            </div>
-
-<!-- Level 10 (20 Kotak) -->
-            <div class="level-task-wrap" style="margin-bottom:6px;">
-                <div class="level-map-thumb">
-                    <img src="gambar level/level 10.png" alt="Peta Level 10">
-                </div>
-                <div class="level-task-main">
-                    <div class="level-name-label">Level 10 — Benteng Rintangan Ganda</div>
-                    <div class="slots-square-row">
-                        <div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Konsep 2: Perulangan (Looping) -->
-            <section class="section-concept" style="border-left-color:#a855f7;margin-top:4px;margin-bottom:0;">
-                <div class="loop-concept-flex">
-                    <div class="loop-concept-text">
-                        <h2 class="concept-title">2. Perulangan (Looping)</h2>
-                        <p class="concept-desc">
-                            Perulangan digunakan untuk mengulang langkah yang sama secara otomatis agar hemat balok. <strong>Jika ada balok yang ingin kamu ulang</strong>, beri <strong>garis luar pembungkus</strong> pada kotak-kotak tersebut dan tuliskan berapa kali diulang (misal: <strong>2x</strong>, <strong>3x</strong>) di atas garisnya secara bebas!
-                        </p>
-                        <div class="blocks-showcase-row">
-                            <div class="block-unit">
-                                <span class="block-number-tag">7</span>
-                                <div class="block-capsule" style="border-color:#38bdf8;background:#0369a1;"><span>🔁</span> ULANGI</div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Contoh Ilustrasi Sesuai Desain User -->
-                    <div class="loop-instruction-demo">
-                        <span class="demo-caption">Contoh Tulis Loop di Kertas:</span>
-                        <div class="loop-draw-example">
-                            <div class="loop-bracket-demo">
-                                <span class="bracket-mult-label">2x</span>
-                                <div class="slot-box filled-preset">1</div>
-                                <div class="slot-box filled-preset">1</div>
-                                <div class="slot-box filled-preset">2</div>
-                            </div>
-                            <div class="slot-box filled-preset">1</div>
-                            <div class="slot-box filled-preset">2</div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-
-            <footer class="sheet-page-footer">
-                <span>LEMBAR KERJA KODING SISWA · ALGO-BOT (LEVEL 6–10 & KONSEP LOOPING)</span>
-                <span>Halaman 2 dari 7</span>
-            </footer>
-        </article>
-
-        <!-- ========================================================================= -->
-        <!-- HALAMAN 3 DARI 7: ALGO-BOT LEVEL 11–15 & DEBUGGING (LEVEL 16)             -->
-        <!-- ========================================================================= -->
-        <article class="a4-page">
-            <!-- Header Modul ALGO-BOT Lanjutan -->
-            <header class="page-header-main" style="padding-bottom:3px;margin-bottom:6px;">
-                <div>
-                    <h1 class="app-title-h1" style="font-size:0.95rem;">LEMBAR MISI KODING: ALGO-BOT (LANJUTAN)</h1>
-                    <div class="app-sub-h2" style="font-size:0.68rem;">Modul Looping & Pengenalan Debugging (Pelacakan Kesalahan)</div>
-                </div>
-                <div class="module-badge-tag" style="background:#e0f2fe;color:#0369a1;border:1px solid #7dd3fc;font-size:0.66rem;padding:2px 8px;">🔁 LEVEL 11 – 16</div>
-            </header>
-
-            <!-- Level 11 (10 Kotak Bebas) -->
-            <div class="level-task-wrap">
-                <div class="level-map-thumb">
-                    <img src="gambar level/level 11.png" alt="Peta Level 11">
-                </div>
-                <div class="level-task-main">
-                    <div class="level-name-label">Level 11 — Koridor Panjang</div>
-                    <div class="slots-square-row">
-                        <div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Level 12 (14 Kotak Bebas) -->
-            <div class="level-task-wrap">
-                <div class="level-map-thumb">
-                    <img src="gambar level/level 12.png" alt="Peta Level 12">
-                </div>
-                <div class="level-task-main">
-                    <div class="level-name-label">Level 12 — Loop Multi-Aksi</div>
-                    <div class="slots-square-row">
-                        <div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Level 13 (18 Kotak Bebas) -->
-            <div class="level-task-wrap">
-                <div class="level-map-thumb">
-                    <img src="gambar level/level 13.png" alt="Peta Level 13">
-                </div>
-                <div class="level-task-main">
-                    <div class="level-name-label">Level 13 — Loop Persegi Mengelilingi Taman</div>
-                    <div class="slots-square-row">
-                        <div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Level 14 (14 Kotak Bebas) -->
-            <div class="level-task-wrap">
-                <div class="level-map-thumb">
-                    <img src="gambar level/level 14.png" alt="Peta Level 14">
-                </div>
-                <div class="level-task-main">
-                    <div class="level-name-label">Level 14 — Sirkuit Maraton Laser Berirama</div>
-                    <div class="slots-square-row">
-                        <div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div>
-                    </div>
-                </div>
-            </div>
-
-<!-- Level 15 (14 Kotak Bebas) -->
-            <div class="level-task-wrap" style="margin-bottom:6px;">
-                <div class="level-map-thumb">
-                    <img src="gambar level/level 15.png" alt="Peta Level 15">
-                </div>
-                <div class="level-task-main">
-                    <div class="level-name-label">Level 15 — Marathon Rintangan Silang Akbar</div>
-                    <div class="slots-square-row">
-                        <div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Konsep 3: Pelacakan Kesalahan (Debugging) -->
-            <section class="section-concept" style="border-left-color:#ef4444;margin-top:4px;margin-bottom:6px;">
-                <h2 class="concept-title">3. Pelacakan Kesalahan (Debugging)</h2>
-                <p class="concept-desc">
-                    Debugging adalah proses menemukan dan memperbaiki kesalahan (bug) pada urutan kode robot. Amati gambar arena, telusuri kode pada <strong>Kode Awal</strong>, lalu susun urutan yang benar atau racik solusi baru yang lebih hemat dan tepat pada baris <strong>Kode Perbaikan</strong>!
-                </p>
-            </section>
-
-            <!-- Level 16 (14 Kotak Kode Awal & 14 Kotak Kode Perbaikan) -->
-            <div class="level-task-wrap" style="margin-bottom:0;">
-                <div class="level-map-thumb">
-                    <img src="gambar level/level 16.png" alt="Peta Level 16">
-                </div>
-                <div class="level-task-main">
-                    <div class="level-name-label">Level 16 — Debug: Menyeberangi Jembatan</div>
-                    <div class="debug-dual-box">
-                        <div class="debug-line faulty">
-                            <span class="debug-badge err">Kode Awal:</span>
-                            <div class="slot-box filled-preset">1</div><div class="slot-box filled-preset">1</div><div class="slot-box filled-preset">1</div><div class="slot-box filled-preset">2</div><div class="slot-box filled-preset">1</div><div class="slot-box filled-preset">1</div><div class="slot-box filled-preset">1</div><div class="slot-box filled-preset">1</div><div class="slot-box filled-preset">2</div>
-                            <div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div>
-                        </div>
-                        <div class="debug-line correct">
-                            <span class="debug-badge ok">Kode Perbaikan:</span>
-                            <div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <footer class="sheet-page-footer">
-                <span>LEMBAR KERJA KODING SISWA · ALGO-BOT (LEVEL 11–16 & DEBUGGING)</span>
-                <span>Halaman 3 dari 7</span>
-            </footer>
-        </article>
-
-        <!-- ========================================================================= -->
-        <!-- HALAMAN 4 DARI 7: ALGO-BOT (LEVEL 17–20) & SORT-BOT (LEVEL 1)             -->
-        <!-- ========================================================================= -->
-        <article class="a4-page">
-            <!-- Header Modul ALGO-BOT Debugging -->
-            <header class="page-header-main" style="padding-bottom:3px;margin-bottom:6px;">
-                <div>
-                    <h1 class="app-title-h1" style="font-size:0.95rem;">LEMBAR MISI KODING: ALGO-BOT (DEBUGGING LANJUTAN)</h1>
-                    <div class="app-sub-h2" style="font-size:0.68rem;">Tantangan Puncak Debugging · Perbaiki Urutan Kode pada Stadion dan Labirin Kompleks</div>
-                </div>
-                <div class="module-badge-tag" style="background:#fee2e2;color:#b91c1c;border:1px solid #f87171;font-size:0.66rem;padding:2px 8px;">🔧 LEVEL 17 – 20</div>
-            </header>
-
-            <!-- Level 17 (14 Kotak Kode Awal & 14 Kotak Kode Perbaikan) -->
-            <div class="level-task-wrap">
-                <div class="level-map-thumb">
-                    <img src="gambar level/level 17.png" alt="Peta Level 17">
-                </div>
-                <div class="level-task-main">
-                    <div class="level-name-label">Level 17 — Debug: Labirin Laser</div>
-                    <div class="debug-dual-box">
-                        <div class="debug-line faulty compact-slots">
-                            <span class="debug-badge err">Kode Awal:</span>
-                            <div class="slot-box filled-preset">1</div><div class="slot-box filled-preset">1</div><div class="slot-box filled-preset">4</div><div class="slot-box filled-preset">1</div><div class="slot-box filled-preset">2</div><div class="slot-box filled-preset">1</div><div class="slot-box filled-preset">2</div>
-                            <div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div>
-                        </div>
-                        <div class="debug-line correct compact-slots">
-                            <span class="debug-badge ok">Kode Perbaikan:</span>
-                            <div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Level 18 (10 Kotak Kode Awal & 10 Kotak Kode Perbaikan) -->
-            <div class="level-task-wrap">
-                <div class="level-map-thumb">
-                    <img src="gambar level/level 18.png" alt="Peta Level 18">
-                </div>
-                <div class="level-task-main">
-                    <div class="level-name-label">Level 18 — Debug: Runway Panjang</div>
-                    <div class="debug-dual-box">
-                        <div class="debug-line faulty compact-slots">
-                            <span class="debug-badge err">Kode Awal:</span>
-                            <div class="loop-bracket-demo">
-                                <span class="bracket-mult-label">2x</span>
-                                <div class="slot-box filled-preset">1</div>
-                                <div class="slot-box filled-preset">1</div>
-                                <div class="slot-box filled-preset">2</div>
-                            </div>
-                            <div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div>
-                        </div>
-                        <div class="debug-line correct compact-slots">
-                            <span class="debug-badge ok">Kode Perbaikan:</span>
-                            <div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Level 19 (12 Kotak Kode Awal & 12 Kotak Kode Perbaikan) -->
-            <div class="level-task-wrap">
-                <div class="level-map-thumb">
-                    <img src="gambar level/level 19.png" alt="Peta Level 19">
-                </div>
-                <div class="level-task-main">
-                    <div class="level-name-label">Level 19 — Debug: Halangan Kombo</div>
-                    <div class="debug-dual-box">
-                        <div class="debug-line faulty compact-slots">
-                            <span class="debug-badge err">Kode Awal:</span>
-                            <div class="loop-bracket-demo">
-                                <span class="bracket-mult-label">2x</span>
-                                <div class="slot-box filled-preset">6</div>
-                                <div class="slot-box filled-preset">5</div>
-                                <div class="slot-box filled-preset">1</div>
-                                <div class="slot-box filled-preset">2</div>
-                            </div>
-                            <div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div>
-                        </div>
-                        <div class="debug-line correct compact-slots">
-                            <span class="debug-badge ok">Kode Perbaikan:</span>
-                            <div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Level 20 (20 Kotak Kode Awal & 20 Kotak Kode Perbaikan) -->
-            <div class="level-task-wrap" style="margin-bottom:0;border:1.8px solid #0f172a;background:#fafafa;">
-                <div class="level-map-thumb">
-                    <img src="gambar level/level 20.png" alt="Peta Level 20">
-                </div>
-                <div class="level-task-main">
-                    <div class="level-name-label" style="color:#0284c7;">🏆 Level 20 — Debug: GRAND CHAMPIONSHIP (Stadion Kolosal)</div>
-                    <div class="debug-dual-box">
-                        <div class="debug-line faulty compact-slots">
-                            <span class="debug-badge err">Kode Awal:</span>
-                            <div class="loop-bracket-demo">
-                                <span class="bracket-mult-label">2x</span>
-                                <div class="slot-box filled-preset">1</div>
-                            </div>
-                            <div class="slot-box filled-preset">4</div>
-                            <div class="slot-box filled-preset">6</div>
-                            <div class="slot-box filled-preset">1</div>
-                            <div class="slot-box filled-preset">2</div>
-                            <div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div>
-                        </div>
-                        <div class="debug-line correct compact-slots">
-                            <span class="debug-badge ok">Kode Perbaikan:</span>
-                            <div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Banner QR Code Akses Game Online (https://blitzore.github.io/kkn/) & Panduan Beralih ke Game 2 -->
-            <div style="margin-top: 18px; padding: 10px 16px; background: #f8fafc; border: 2px solid #0284c7; border-radius: 8px; display: flex; align-items: center; gap: 16px;">
-                <div style="background: #ffffff; padding: 5px; border-radius: 6px; border: 1.5px solid #cbd5e1; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
-                    <img src="qrcode_kkn.png" alt="QR Code Game KKN" style="width: 86px; height: 86px; display: block;">
-                </div>
-                <div style="flex: 1;">
-                    <div style="font-size: 0.88rem; font-weight: 800; color: #0369a1; margin-bottom: 2px; display: flex; align-items: center; gap: 6px;">
-                        <span>📱</span> Akses Simulasi Game Interaktif Online
-                    </div>
-                    <div style="font-size: 0.73rem; color: #334155; line-height: 1.35; margin-bottom: 4px;">
-                        Pindai (scan) QR code dengan kamera HP atau buka tautan di bawah ini untuk mencoba dan memainkan langsung seluruh modul game robot koding di internet:
-                    </div>
-                    <div style="font-family: var(--font-mono); font-size: 0.74rem; font-weight: 800; color: #0284c7; background: #e0f2fe; padding: 2px 8px; border-radius: 4px; display: inline-block; margin-bottom: 4px;">
-                        🔗 https://blitzore.github.io/kkn/
-                    </div>
-                    <div style="font-size: 0.72rem; font-weight: 700; color: #166534;">
-                        👉 Buka <strong>Halaman 5</strong> untuk memulai tantangan berikutnya: <strong>Game 2 — SORT-BOT (Percabangan IF-ELSE)</strong> ➔
-                    </div>
-                </div>
-            </div>
-
-            <footer class="sheet-page-footer">
-                <span>LEMBAR KERJA KODING SISWA · ALGO-BOT (LEVEL 17–20 TUNTAS)</span>
-                <span>Halaman 4 dari 7</span>
-            </footer>
-        </article>
-
-<!-- ========================================================================= -->
-        <!-- HALAMAN 5 DARI 7: SORT-BOT (LEVEL 2–5 LENGKAP & LEGA TANPA OUTFIT-BOT)    -->
-        <!-- ========================================================================= -->
-        <article class="a4-page" id="modul-sortbot">
-            <!-- Header Modul SORT-BOT Lengkap -->
-            <header class="module-page-header" style="padding-bottom:3px;margin-bottom:4px;">
-                <div>
-                    <h1 class="module-title-h1" style="font-size:0.95rem;">MODUL PERCABANGAN (IF-ELSE): SORT-BOT</h1>
-                    <div class="module-sub-h2" style="font-size:0.68rem;">Robot Pemilah Sampah Pintar · Menentukan Aturan Logika Komputer Berdasarkan Syarat Objek (5 Level Lengkap)</div>
-                </div>
-                <div class="module-badge-tag sort" style="font-size:0.66rem;padding:2px 8px;">♻️ MODUL PERCABANGAN (LEVEL 1–5)</div>
-            </header>
-
-            <!-- Penjelasan Konsep Logika Percabangan -->
-            <section class="section-concept" style="border-left-color:#16a34a;margin-bottom:4px;padding:3px 8px;">
-                <h2 class="concept-title" style="color:#15803d;font-size:0.76rem;margin-bottom:1px;">4. Logika Percabangan (IF - ELSE IF - ELSE)</h2>
-                <p class="concept-desc" style="font-size:0.69rem;line-height:1.26;margin:0;">
-                    Komputer tidak menyortir sampah satu per satu secara manual, melainkan menjalankan <strong>ATURAN LOGIKA UMUM</strong>. <strong>JIKA (IF)</strong> kategori sampah cocok, buang ke tong tertentu. <strong>SELAIN ITU (ELSE)</strong>, buang ke tong alternatif!
-                </p>
-            </section>
-
-            <!-- Palet Balok Bernomor (Sesuai Pilihan Dropdown Game) -->
-            <div class="sort-palette-container" style="margin-bottom:4px;padding:3px 6px;">
-                <div class="sort-palette-row">
-                    <span class="palette-group-label" style="font-size:0.67rem;">🏷️ Balok Kategori (Syarat):</span>
-                    <div class="block-unit"><span class="block-number-tag">1</span><div class="block-capsule cyan"><span>🧴</span> PLASTIK</div></div>
-                    <div class="block-unit"><span class="block-number-tag">2</span><div class="block-capsule emerald"><span>🍏</span> ORGANIK</div></div>
-                    <div class="block-unit"><span class="block-number-tag">3</span><div class="block-capsule gold"><span>🥫</span> LOGAM</div></div>
-                    <div class="block-unit"><span class="block-number-tag">4</span><div class="block-capsule purple"><span>📦</span> KERTAS</div></div>
-                </div>
-                <div class="sort-palette-row">
-                    <span class="palette-group-label" style="font-size:0.67rem;">🎯 Balok Tindakan (Tong):</span>
-                    <div class="block-unit"><span class="block-number-tag">5</span><div class="block-capsule emerald"><span>🟢</span> TONG HIJAU</div></div>
-                    <div class="block-unit"><span class="block-number-tag">6</span><div class="block-capsule gold"><span>🟡</span> TONG KUNING</div></div>
-                    <div class="block-unit"><span class="block-number-tag">7</span><div class="block-capsule" style="border-color:#ef4444;background:#991b1b;"><span>🔴</span> TONG MERAH</div></div>
-                    <div class="block-unit"><span class="block-number-tag">8</span><div class="block-capsule cyan"><span>🔵</span> TONG BIRU</div></div>
-                </div>
-            </div>
-
-            <!-- Petunjuk Pengerjaan Singkat -->
-            <div style="font-size:0.68rem;color:#1e3a8a;font-weight:700;margin-bottom:4px;background:#eff6ff;padding:2px 7px;border-radius:4px;border:1px solid #bfdbfe;">
-                👉 <strong>Petunjuk Jawab:</strong> Tuliskan <strong>nomor balok</strong> ke dalam kotak <code>[ &nbsp; ]</code> pada struktur IF-ELSE di bawah agar robot memilah otomatis!
-            </div>
-
-            <!-- Level 1 (SORT-BOT) -->
-            <div class="sort-level-card" style="margin-bottom:3.5px;padding:3.5px 7px;">
-                <div class="level-name-label">Level 1 — Pemilahan Khusus Plastik</div>
-                <div class="sort-mission-text">🎯 <strong>Misi:</strong> Sampah <strong>PLASTIK</strong> ➔ Tong Kuning. Semua sampah lainnya ➔ Tong Hijau!</div>
-                <div class="sort-conveyor-sample">
-                    <span>📦 Sampah di Ban:</span>
-                    <span>🧴 Botol Plastik,</span>
-                    <span>🍌 Kulit Pisang,</span>
-                    <span>📦 Kardus Paket,</span>
-                    <span>🥫 Kaleng Minum,</span>
-                    <span>🥤 Gelas Plastik,</span>
-                    <span>🍎 Apel Busuk</span>
-                </div>
-                <div class="code-branch-wrap">
-                    <div class="code-rule-row">
-                        <span class="badge-if">JIKA (IF)</span>
-                        <span>( Kategori ==</span> <div class="rule-slot-box"></div> <span>)</span>
-                        <span class="arrow-sep">➔ MAKA : Masukkan ke</span> <div class="rule-slot-box"></div>
-                    </div>
-                    <div class="code-rule-row">
-                        <span class="badge-else">LAINNYA (ELSE)</span>
-                        <span class="arrow-sep">➔ MAKA : Masukkan ke</span> <div class="rule-slot-box"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Level 2 (SORT-BOT) -->
-            <div class="sort-level-card" style="margin-bottom:3.5px;padding:3.5px 7px;">
-                <div class="level-name-label">Level 2 — Pemilahan Khusus Organik</div>
-                <div class="sort-mission-text">🎯 <strong>Misi:</strong> Sampah <strong>ORGANIK</strong> ➔ Tong Hijau. Semua sampah lainnya ➔ Tong Kuning!</div>
-                <div class="sort-conveyor-sample">
-                    <span>📦 Sampah di Ban:</span>
-                    <span>🥬 Sisa Sayur,</span>
-                    <span>🛍️ Kantong Kresek,</span>
-                    <span>📄 Koran Bekas,</span>
-                    <span>🍊 Kulit Jeruk,</span>
-                    <span>🔩 Baut Besi,</span>
-                    <span>🍂 Daun Kering,</span>
-                    <span>🥡 Wadah Mika</span>
-                </div>
-                <div class="code-branch-wrap">
-                    <div class="code-rule-row">
-                        <span class="badge-if">JIKA (IF)</span>
-                        <span>( Kategori ==</span> <div class="rule-slot-box"></div> <span>)</span>
-                        <span class="arrow-sep">➔ MAKA : Masukkan ke</span> <div class="rule-slot-box"></div>
-                    </div>
-                    <div class="code-rule-row">
-                        <span class="badge-else">LAINNYA (ELSE)</span>
-                        <span class="arrow-sep">➔ MAKA : Masukkan ke</span> <div class="rule-slot-box"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Level 3 (SORT-BOT) -->
-            <div class="sort-level-card" style="margin-bottom:3.5px;padding:3.5px 7px;">
-                <div class="level-name-label">Level 3 — Logam, Plastik, & Sisa Lainnya</div>
-                <div class="sort-mission-text">🎯 <strong>Misi:</strong> <strong>LOGAM</strong> ➔ Tong Merah, <strong>PLASTIK</strong> ➔ Tong Kuning, dan semua sampah lainnya ➔ Tong Hijau!</div>
-                <div class="sort-conveyor-sample">
-                    <span>📦 Sampah di Ban:</span>
-                    <span>🥫 Kaleng Soda,</span>
-                    <span>🧴 Botol Shampo,</span>
-                    <span>🍎 Sisa Apel,</span>
-                    <span>📦 Kardus Susu,</span>
-                    <span>🔧 Kunci Pas,</span>
-                    <span>🥤 Sedotan Cup,</span>
-                    <span>🍉 Semangka,</span>
-                    <span>📚 Buku Bekas</span>
-                </div>
-                <div class="code-branch-wrap">
-                    <div class="code-rule-row">
-                        <span class="badge-if">JIKA (IF)</span>
-                        <span>( Kategori ==</span> <div class="rule-slot-box"></div> <span>)</span>
-                        <span class="arrow-sep">➔ MAKA : Masukkan ke</span> <div class="rule-slot-box"></div>
-                    </div>
-                    <div class="code-rule-row">
-                        <span class="badge-elseif">ATAU JIKA (ELSE IF)</span>
-                        <span>( Kategori ==</span> <div class="rule-slot-box"></div> <span>)</span>
-                        <span class="arrow-sep">➔ MAKA : Masukkan ke</span> <div class="rule-slot-box"></div>
-                    </div>
-                    <div class="code-rule-row">
-                        <span class="badge-else">LAINNYA (ELSE)</span>
-                        <span class="arrow-sep">➔ MAKA : Masukkan ke</span> <div class="rule-slot-box"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Level 4 (SORT-BOT) -->
-            <div class="sort-level-card" style="margin-bottom:3.5px;padding:3.5px 7px;">
-                <div class="level-name-label">Level 4 — Logam, Kertas, Plastik, & Lainnya</div>
-                <div class="sort-mission-text">🎯 <strong>Misi:</strong> <strong>LOGAM</strong> ➔ Merah, <strong>KERTAS</strong> ➔ Biru, <strong>PLASTIK</strong> ➔ Kuning, dan lainnya ➔ Hijau!</div>
-                <div class="sort-conveyor-sample">
-                    <span>📦 Sampah di Ban:</span>
-                    <span>🌽 Sisa Jagung,</span>
-                    <span>📦 Kardus Paket,</span>
-                    <span>🔋 Baterai Bekas,</span>
-                    <span>🥤 Gelas Cup,</span>
-                    <span>📄 Koran Bekas,</span>
-                    <span>🥕 Wortel,</span>
-                    <span>🥫 Kaleng Biskuit,</span>
-                    <span>🧴 Deterjen</span>
-                </div>
-                <div class="code-branch-wrap">
-                    <div class="code-rule-row">
-                        <span class="badge-if">JIKA (IF)</span>
-                        <span>( Kategori ==</span> <div class="rule-slot-box"></div> <span>)</span>
-                        <span class="arrow-sep">➔ MAKA : Masukkan ke</span> <div class="rule-slot-box"></div>
-                    </div>
-                    <div class="code-rule-row">
-                        <span class="badge-elseif">ATAU JIKA (ELSE IF)</span>
-                        <span>( Kategori ==</span> <div class="rule-slot-box"></div> <span>)</span>
-                        <span class="arrow-sep">➔ MAKA : Masukkan ke</span> <div class="rule-slot-box"></div>
-                    </div>
-                    <div class="code-rule-row">
-                        <span class="badge-elseif">ATAU JIKA (ELSE IF)</span>
-                        <span>( Kategori ==</span> <div class="rule-slot-box"></div> <span>)</span>
-                        <span class="arrow-sep">➔ MAKA : Masukkan ke</span> <div class="rule-slot-box"></div>
-                    </div>
-                    <div class="code-rule-row">
-                        <span class="badge-else">LAINNYA (ELSE)</span>
-                        <span class="arrow-sep">➔ MAKA : Masukkan ke</span> <div class="rule-slot-box"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Level 5 (SORT-BOT) -->
-            <div class="sort-level-card" style="border:1.8px solid #0f172a;background:#fafafa;margin-bottom:0;padding:3.5px 7px;">
-                <div class="level-name-label" style="color:#16a34a;">🏆 Level 5 — Master Pemilah Sampah (4 Kategori Lengkap)</div>
-                <div class="sort-mission-text">🎯 <strong>Misi:</strong> <strong>ORGANIK</strong> ➔ Hijau, <strong>PLASTIK</strong> ➔ Kuning, <strong>LOGAM</strong> ➔ Merah, dan <strong>KERTAS/lainnya</strong> ➔ Biru!</div>
-                <div class="sort-conveyor-sample">
-                    <span>📦 Sampah di Ban:</span>
-                    <span>🧴 Minyak,</span>
-                    <span>🍚 Nasi,</span>
-                    <span>🥫 Kaleng,</span>
-                    <span>📚 Buku,</span>
-                    <span>🥤 Sedotan,</span>
-                    <span>🍈 Durian,</span>
-                    <span>📎 Kabel,</span>
-                    <span>📦 Karton,</span>
-                    <span>🥒 Timun,</span>
-                    <span>🛍️ Kresek</span>
-                </div>
-                <div class="code-branch-wrap">
-                    <div class="code-rule-row">
-                        <span class="badge-if">JIKA (IF)</span>
-                        <span>( Kategori ==</span> <div class="rule-slot-box"></div> <span>)</span>
-                        <span class="arrow-sep">➔ MAKA : Masukkan ke</span> <div class="rule-slot-box"></div>
-                    </div>
-                    <div class="code-rule-row">
-                        <span class="badge-elseif">ATAU JIKA (ELSE IF)</span>
-                        <span>( Kategori ==</span> <div class="rule-slot-box"></div> <span>)</span>
-                        <span class="arrow-sep">➔ MAKA : Masukkan ke</span> <div class="rule-slot-box"></div>
-                    </div>
-                    <div class="code-rule-row">
-                        <span class="badge-elseif">ATAU JIKA (ELSE IF)</span>
-                        <span>( Kategori ==</span> <div class="rule-slot-box"></div> <span>)</span>
-                        <span class="arrow-sep">➔ MAKA : Masukkan ke</span> <div class="rule-slot-box"></div>
-                    </div>
-                    <div class="code-rule-row">
-                        <span class="badge-else">LAINNYA (ELSE)</span>
-                        <span class="arrow-sep">➔ MAKA : Masukkan ke</span> <div class="rule-slot-box"></div>
-                    </div>
-                </div>
-            </div>
-
-            <footer class="sheet-page-footer">
-                <span>LEMBAR KERJA KODING SISWA · SORT-BOT (LEVEL 1–5 LENGKAP)</span>
-                <span>Halaman 5 dari 7</span>
-            </footer>
-        </article>
-
-        <!-- ========================================================================= -->
-        <!-- HALAMAN 6 DARI 7: MODUL FUNGSI & PARAMETER — OUTFIT-BOT (LEVEL 1–5 FULL)   -->
-        <!-- ========================================================================= -->
-        <article class="a4-page" id="modul-outfitbot">
-            <!-- Header Modul OUTFIT-BOT Lengkap -->
-            <header class="module-page-header" style="padding-bottom:4px;margin-bottom:6px;">
-                <div>
-                    <h1 class="module-title-h1" style="font-size:1.12rem;">MODUL FUNGSI & PARAMETER: OUTFIT-BOT</h1>
-                    <div class="module-sub-h2" style="font-size:0.78rem;">Robot Lemari Seragam · Memanggil Fungsi Berulang dengan Argumen Masukan Spesifik (5 Level Lengkap)</div>
-                </div>
-                <div class="module-badge-tag outfit" style="font-size:0.74rem;padding:3px 9px;">👗 MODUL FUNGSI (LEVEL 1–5)</div>
-            </header>
-
-            <!-- Penjelasan Konsep Logika Fungsi & Parameter -->
-            <section class="section-concept" style="border-left-color:#a855f7;margin-bottom:6px;padding:5px 11px;">
-                <h2 class="concept-title" style="color:#7e22ce;font-size:0.84rem;margin-bottom:2px;">5. Fungsi & Parameter (Functions & Arguments)</h2>
-                <p class="concept-desc" style="font-size:0.78rem;line-height:1.36;margin:0;">
-                    <strong>Fungsi</strong> adalah paket prosedur yang diberi nama agar hemat kode dan bisa dipanggil berulang kali. <strong>Parameter/Variabel</strong> di dalam kurung <code>(...)</code> adalah nilai seragam yang kamu perintahkan ke robot, dan simbol <strong>+</strong> menandakan nilai variabel tersebut dimasukkan ke tindakan robot!
-                </p>
-            </section>
-
-            <!-- CETAK BIRU PROSEDUR FUNGSI TERPADU (9 Langkah Otomatis Robot) -->
-            <div class="blueprint-procedure-box">
-                <div class="blueprint-header-row">
-                    <span class="blueprint-tag">⚙️ CETAK BIRU FUNGSI: <code>siapkanSeragam( atasan, [bawahan], [atribut] )</code></span>
-                    <span class="blueprint-eff-badge">⚡ 1 Baris Pemanggilan = 9 Langkah Prosedur Otomatis!</span>
-                </div>
-                <div class="blueprint-steps-grid">
-                    <div class="bp-step-item"><span>1.</span> Buka pintu lemari</div>
-                    <div class="bp-step-item"><span>2.</span> Ambil baju + <code>atasan</code></div>
-                    <div class="bp-step-item"><span>3.</span> Periksa kerah & kancing</div>
-                    <div class="bp-step-item"><span>4.</span> Setrika badan & lengan</div>
-                    <div class="bp-step-item"><span>5.</span> Ambil celana + <code>bawahan</code></div>
-                    <div class="bp-step-item"><span>6.</span> Pasang atribut + <code>atribut</code></div>
-                    <div class="bp-step-item"><span>7.</span> Semprot pewangi seragam</div>
-                    <div class="bp-step-item"><span>8.</span> Pasang ke mannequin</div>
-                    <div class="bp-step-item"><span>9.</span> Tutup pintu lemari</div>
-                </div>
-                <div style="display:flex;justify-content:space-between;align-items:center;background:#f3e8ff;padding:3.5px 10px;border-radius:4px;margin-top:4px;font-size:0.74rem;color:#6b21a8;font-weight:700;">
-                    <span>📌 <strong>Sintaks Pemanggilan:</strong></span>
-                    <span>1 Parameter: <code>siapkanSeragam(atasan)</code></span>
-                    <span>2 Parameter: <code>siapkanSeragam(atasan, bawahan)</code></span>
-                    <span>3 Parameter: <code>siapkanSeragam(atasan, bawahan, atribut)</code></span>
-                </div>
-            </div>
-
-            <!-- Bank Nilai Lengkap (Atasan, Bawahan, Atribut) -->
-            <div class="outfit-wordbank-banner">
-                <span style="font-weight:800;color:#0f172a;">🏷️ Bank Nilai Argumen:</span>
-                <span>Atasan: <code>"putih"</code>, <code>"batik"</code>, <code>"pramuka"</code>, <code>"kotak"</code></span>
-                <span>Bawahan: <code>"merah"</code>, <code>"putih"</code>, <code>"cokelat"</code>, <code>"hitam"</code></span>
-                <span>Atribut: <code>"topi & dasi"</code>, <code>"dasi"</code>, <code>"sabuk"</code>, <code>"kacu"</code></span>
-            </div>
-
-            <!-- Level 1 (OUTFIT-BOT) -->
-            <div class="outfit-task-card">
-                <div class="outfit-task-header">
-                    <span class="level-name-label" style="font-size:0.82rem;">Level 1 — 1 Parameter (Atasan)</span>
-                    <span style="font-size:0.74rem;font-weight:700;color:#64748b;">Bentuk: <code>siapkanSeragam(atasan)</code></span>
-                </div>
-                <div class="fn-prompt-hint">📅 <strong>Senin (Upacara Bendera):</strong> Butuh baju atasan warna putih!</div>
-                <div class="fn-write-row" style="margin-bottom:0;">
-                    <span class="fn-day-badge">Senin:</span>
-                    <div class="fn-code-box"></div>
-                </div>
-            </div>
-
-            <!-- Level 2 (OUTFIT-BOT) — 2 Kolom Sejajar -->
-            <div class="outfit-task-card">
-                <div class="outfit-task-header">
-                    <span class="level-name-label" style="font-size:0.82rem;">Level 2 — 1 Fungsi untuk 2 Hari</span>
-                    <span style="font-size:0.74rem;font-weight:700;color:#64748b;">Panggil fungsi yang sama dua kali</span>
-                </div>
-                <div class="fn-prompt-hint">📅 <strong>Senin</strong> (Baju Putih) &nbsp;·&nbsp; 📅 <strong>Rabu</strong> (Batik Sekolah: Baju Batik)</div>
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-                    <div class="fn-write-row" style="margin-bottom:0;">
-                        <span class="fn-day-badge">Senin:</span>
-                        <div class="fn-code-box"></div>
-                    </div>
-                    <div class="fn-write-row" style="margin-bottom:0;">
-                        <span class="fn-day-badge">Rabu:</span>
-                        <div class="fn-code-box"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Level 3 (OUTFIT-BOT) — 2 Kolom Sejajar -->
-            <div class="outfit-task-card">
-                <div class="outfit-task-header">
-                    <span class="level-name-label" style="font-size:0.82rem;">Level 3 — 2 Parameter (Atasan & Bawahan)</span>
-                    <span style="font-size:0.74rem;font-weight:700;color:#64748b;">Bentuk: <code>siapkanSeragam(atasan, bawahan)</code></span>
-                </div>
-                <div class="fn-prompt-hint">📅 <strong>Selasa:</strong> Seragam Nasional (Putih + Merah) &nbsp;·&nbsp; 📅 <strong>Jumat:</strong> Pramuka Siaga (Pramuka + Cokelat)</div>
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-                    <div class="fn-write-row" style="margin-bottom:0;">
-                        <span class="fn-day-badge">Selasa:</span>
-                        <div class="fn-code-box"></div>
-                    </div>
-                    <div class="fn-write-row" style="margin-bottom:0;">
-                        <span class="fn-day-badge">Jumat:</span>
-                        <div class="fn-code-box"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Level 4 (OUTFIT-BOT) — Maksimal 2 Hari 1 Baris (2 + 1) -->
-            <div class="outfit-task-card">
-                <div class="outfit-task-header">
-                    <span class="level-name-label" style="font-size:0.82rem;">Level 4 — 3 Parameter Lengkap (Atasan, Bawahan, Atribut)</span>
-                    <span style="font-size:0.74rem;font-weight:700;color:#64748b;">Bentuk: <code>siapkanSeragam(atasan, bawahan, atribut)</code></span>
-                </div>
-                <div class="fn-prompt-hint">📅 <strong>Senin:</strong> Putih + Merah + Topi & Dasi &nbsp;·&nbsp; 📅 <strong>Kamis:</strong> Kotak + Hitam + Sabuk &nbsp;·&nbsp; 📅 <strong>Jumat:</strong> Pramuka + Cokelat + Kacu</div>
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 8px;margin-bottom:4px;">
-                    <div class="fn-write-row" style="margin-bottom:0;">
-                        <span class="fn-day-badge">Senin:</span>
-                        <div class="fn-code-box"></div>
-                    </div>
-                    <div class="fn-write-row" style="margin-bottom:0;">
-                        <span class="fn-day-badge">Kamis:</span>
-                        <div class="fn-code-box"></div>
-                    </div>
-                </div>
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 8px;">
-                    <div class="fn-write-row" style="margin-bottom:0;">
-                        <span class="fn-day-badge">Jumat:</span>
-                        <div class="fn-code-box"></div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Level 5 (OUTFIT-BOT) — SEMUA 5 HARI SEKOLAH (Maksimal 2 Hari 1 Baris: 2 + 2 + 1) -->
-            <div class="outfit-task-card" style="border:1.8px solid #7c3aed;background:#faf5ff;margin-bottom:0;padding:6px 10px;">
-                <div class="outfit-task-header">
-                    <span class="level-name-label" style="color:#6d28d9;font-size:0.84rem;">🏆 Level 5 — Master Jadwal 5 Hari Sekolah (Senin s/d Jumat)</span>
-                    <span style="font-size:0.74rem;font-weight:700;color:#64748b;">5 Hari Lengkap</span>
-                </div>
-                <div class="fn-prompt-hint" style="font-size:0.77rem;margin-bottom:4px;line-height:1.35;">
-                    📅 <strong>Senin:</strong> Putih + Merah + Topi & Dasi &nbsp;|&nbsp; 
-                    📅 <strong>Selasa:</strong> Putih + Merah + Dasi &nbsp;|&nbsp; 
-                    📅 <strong>Rabu:</strong> Batik + Putih + Sabuk &nbsp;|&nbsp; 
-                    📅 <strong>Kamis:</strong> Kotak + Hitam + Sabuk &nbsp;|&nbsp; 
-                    📅 <strong>Jumat:</strong> Pramuka + Cokelat + Kacu
-                </div>
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px 8px;margin-bottom:4px;">
-                    <div class="fn-write-row" style="margin-bottom:0;">
-                        <span class="fn-day-badge">Senin:</span>
-                        <div class="fn-code-box"></div>
-                    </div>
-                    <div class="fn-write-row" style="margin-bottom:0;">
-                        <span class="fn-day-badge">Selasa:</span>
-                        <div class="fn-code-box"></div>
-                    </div>
-                </div>
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px 8px;margin-bottom:4px;">
-                    <div class="fn-write-row" style="margin-bottom:0;">
-                        <span class="fn-day-badge">Rabu:</span>
-                        <div class="fn-code-box"></div>
-                    </div>
-                    <div class="fn-write-row" style="margin-bottom:0;">
-                        <span class="fn-day-badge">Kamis:</span>
-                        <div class="fn-code-box"></div>
-                    </div>
-                </div>
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px 8px;">
-                    <div class="fn-write-row" style="margin-bottom:0;">
-                        <span class="fn-day-badge">Jumat:</span>
-                        <div class="fn-code-box"></div>
-                    </div>
-                </div>
-            </div>
-
-            <footer class="sheet-page-footer">
-                <span>LEMBAR KERJA KODING SISWA · OUTFIT-BOT (LEVEL 1–5 LENGKAP)</span>
-                <span>Halaman 6 dari 7</span>
-            </footer>
-        </article>
-
-<!-- ========================================================================= -->
-        <!-- HALAMAN 7 DARI 7: MODUL OPERATOR LOGIKA — GATE-BOT (5 LEVEL SESUAI GAME)  -->
+        <!-- HALAMAN 1 DARI 7: MODUL OPERATOR LOGIKA — GATE-BOT (5 LEVEL SESUAI GAME)  -->
         <!-- ========================================================================= -->
         <article class="a4-page" id="modul-gatebot">
             <!-- Header Modul GATE-BOT Lengkap -->
-            <header class="module-page-header" style="padding-bottom:4px;margin-bottom:6px;">
+            <header class="page-header-main">
                 <div>
-                    <h1 class="module-title-h1" style="font-size:1.12rem;">MODUL OPERATOR LOGIKA: GATE-BOT</h1>
-                    <div class="module-sub-h2" style="font-size:0.78rem;">Gerbang Keamanan Pintar · Evaluasi Logika Boolean: TRUE (Buka 🟢) atau FALSE (Kunci 🔴)</div>
+                    <h1 class="app-title-h1">LEMBAR MISI KODING: GATE-BOT</h1>
+                    <div class="app-sub-h2">Media Visual Interaktif Pengenalan Logika Pemrograman Siswa SD · Modul Operator Logika</div>
                 </div>
-                <div class="module-badge-tag gate" style="font-size:0.74rem;padding:3px 9px;">🚪 OPERATOR LOGIKA (5 LEVEL)</div>
+                <div class="student-id-card">
+                    <div class="id-line"><span class="id-label">Nama:</span><span class="id-dot-fill"></span></div>
+                    <div class="id-line"><span class="id-label">Kelas:</span><span class="id-dot-fill"></span></div>
+                </div>
             </header>
 
             <!-- Penjelasan Konsep Logika Boolean & Operator Sesuai Game -->
             <section class="section-concept" style="border-left-color:#0284c7;margin-bottom:6px;padding:5px 11px;">
-                <h2 class="concept-title" style="color:#0369a1;font-size:0.84rem;margin-bottom:2px;">6. Logika Boolean & Operator (AND, OR, NOT)</h2>
+                <h2 class="concept-title" style="color:#0369a1;font-size:0.84rem;margin-bottom:2px;">1. Logika Boolean & Operator (AND, OR, NOT)</h2>
                 <p class="concept-desc" style="font-size:0.78rem;line-height:1.36;margin:0;">
                     Nilai <strong>Boolean</strong> hanya ada dua: <strong>TRUE (Benar ➔ 🟢 BUKA)</strong> atau <strong>FALSE (Salah ➔ 🔴 KUNCI)</strong>.<br>
                     • <strong>AND (DAN)</strong>: Bernilai TRUE jika <strong>semua</strong> syarat wajib bernilai TRUE.<br>
@@ -2189,6 +1316,875 @@
 
             <footer class="sheet-page-footer">
                 <span>LEMBAR KERJA KODING SISWA · GATE-BOT (LEVEL 1–5 LENGKAP)</span>
+                <span>Halaman 1 dari 7</span>
+            </footer>
+        </article>
+        <!-- ========================================================================= -->
+        <!-- HALAMAN 2 DARI 7: SORT-BOT (LEVEL 1–5 LENGKAP & LEGA)                     -->
+        <!-- ========================================================================= -->
+        <article class="a4-page" id="modul-sortbot">
+            <!-- Header Modul SORT-BOT Lengkap -->
+            <header class="module-page-header" style="padding-bottom:3px;margin-bottom:4px;">
+                <div>
+                    <h1 class="module-title-h1" style="font-size:0.95rem;">MODUL PERCABANGAN (IF-ELSE): SORT-BOT</h1>
+                    <div class="module-sub-h2" style="font-size:0.68rem;">Robot Pemilah Sampah Pintar · Menentukan Aturan Logika Komputer Berdasarkan Syarat Objek (5 Level Lengkap)</div>
+                </div>
+                <div class="module-badge-tag sort" style="font-size:0.66rem;padding:2px 8px;">♻️ MODUL PERCABANGAN (LEVEL 1–5)</div>
+            </header>
+
+            <!-- Penjelasan Konsep Logika Percabangan -->
+            <section class="section-concept" style="border-left-color:#16a34a;margin-bottom:4px;padding:3px 8px;">
+                <h2 class="concept-title" style="color:#15803d;font-size:0.76rem;margin-bottom:1px;">2. Logika Percabangan (IF - ELSE IF - ELSE)</h2>
+                <p class="concept-desc" style="font-size:0.69rem;line-height:1.26;margin:0;">
+                    Komputer tidak menyortir sampah satu per satu secara manual, melainkan menjalankan <strong>ATURAN LOGIKA UMUM</strong>. <strong>JIKA (IF)</strong> kategori sampah cocok, buang ke tong tertentu. <strong>SELAIN ITU (ELSE)</strong>, buang ke tong alternatif!
+                </p>
+            </section>
+
+            <!-- Palet Balok Bernomor (Sesuai Pilihan Dropdown Game) -->
+            <div class="sort-palette-container" style="margin-bottom:4px;padding:3px 6px;">
+                <div class="sort-palette-row">
+                    <span class="palette-group-label" style="font-size:0.67rem;">🏷️ Balok Kategori (Syarat):</span>
+                    <div class="block-unit"><span class="block-number-tag">1</span><div class="block-capsule cyan"><span>🧴</span> PLASTIK</div></div>
+                    <div class="block-unit"><span class="block-number-tag">2</span><div class="block-capsule emerald"><span>🍏</span> ORGANIK</div></div>
+                    <div class="block-unit"><span class="block-number-tag">3</span><div class="block-capsule gold"><span>🥫</span> LOGAM</div></div>
+                    <div class="block-unit"><span class="block-number-tag">4</span><div class="block-capsule purple"><span>📦</span> KERTAS</div></div>
+                </div>
+                <div class="sort-palette-row">
+                    <span class="palette-group-label" style="font-size:0.67rem;">🎯 Balok Tindakan (Tong):</span>
+                    <div class="block-unit"><span class="block-number-tag">5</span><div class="block-capsule emerald"><span>🟢</span> TONG HIJAU</div></div>
+                    <div class="block-unit"><span class="block-number-tag">6</span><div class="block-capsule gold"><span>🟡</span> TONG KUNING</div></div>
+                    <div class="block-unit"><span class="block-number-tag">7</span><div class="block-capsule" style="border-color:#ef4444;background:#991b1b;"><span>🔴</span> TONG MERAH</div></div>
+                    <div class="block-unit"><span class="block-number-tag">8</span><div class="block-capsule cyan"><span>🔵</span> TONG BIRU</div></div>
+                </div>
+            </div>
+
+            <!-- Petunjuk Pengerjaan Singkat -->
+            <div style="font-size:0.68rem;color:#1e3a8a;font-weight:700;margin-bottom:4px;background:#eff6ff;padding:2px 7px;border-radius:4px;border:1px solid #bfdbfe;">
+                👉 <strong>Petunjuk Jawab:</strong> Tuliskan <strong>nomor balok</strong> ke dalam kotak <code>[ &nbsp; ]</code> pada struktur IF-ELSE di bawah agar robot memilah otomatis!
+            </div>
+
+            <!-- Level 1 (SORT-BOT) -->
+            <div class="sort-level-card" style="margin-bottom:3.5px;padding:3.5px 7px;">
+                <div class="level-name-label">Level 1 — Pemilahan Khusus Plastik</div>
+                <div class="sort-mission-text">🎯 <strong>Misi:</strong> Sampah <strong>PLASTIK</strong> ➔ Tong Kuning. Semua sampah lainnya ➔ Tong Hijau!</div>
+                <div class="sort-conveyor-sample">
+                    <span>📦 Sampah di Ban:</span>
+                    <span>🧴 Botol Plastik,</span>
+                    <span>🍌 Kulit Pisang,</span>
+                    <span>📦 Kardus Paket,</span>
+                    <span>🥫 Kaleng Minum,</span>
+                    <span>🥤 Gelas Plastik,</span>
+                    <span>🍎 Apel Busuk</span>
+                </div>
+                <div class="code-branch-wrap">
+                    <div class="code-rule-row">
+                        <span class="badge-if">JIKA (IF)</span>
+                        <span>( Kategori ==</span> <div class="rule-slot-box"></div> <span>)</span>
+                        <span class="arrow-sep">➔ MAKA : Masukkan ke</span> <div class="rule-slot-box"></div>
+                    </div>
+                    <div class="code-rule-row">
+                        <span class="badge-else">LAINNYA (ELSE)</span>
+                        <span class="arrow-sep">➔ MAKA : Masukkan ke</span> <div class="rule-slot-box"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Level 2 (SORT-BOT) -->
+            <div class="sort-level-card" style="margin-bottom:3.5px;padding:3.5px 7px;">
+                <div class="level-name-label">Level 2 — Pemilahan Khusus Organik</div>
+                <div class="sort-mission-text">🎯 <strong>Misi:</strong> Sampah <strong>ORGANIK</strong> ➔ Tong Hijau. Semua sampah lainnya ➔ Tong Kuning!</div>
+                <div class="sort-conveyor-sample">
+                    <span>📦 Sampah di Ban:</span>
+                    <span>🥬 Sisa Sayur,</span>
+                    <span>🛍️ Kantong Kresek,</span>
+                    <span>📄 Koran Bekas,</span>
+                    <span>🍊 Kulit Jeruk,</span>
+                    <span>🔩 Baut Besi,</span>
+                    <span>🍂 Daun Kering,</span>
+                    <span>🥡 Wadah Mika</span>
+                </div>
+                <div class="code-branch-wrap">
+                    <div class="code-rule-row">
+                        <span class="badge-if">JIKA (IF)</span>
+                        <span>( Kategori ==</span> <div class="rule-slot-box"></div> <span>)</span>
+                        <span class="arrow-sep">➔ MAKA : Masukkan ke</span> <div class="rule-slot-box"></div>
+                    </div>
+                    <div class="code-rule-row">
+                        <span class="badge-else">LAINNYA (ELSE)</span>
+                        <span class="arrow-sep">➔ MAKA : Masukkan ke</span> <div class="rule-slot-box"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Level 3 (SORT-BOT) -->
+            <div class="sort-level-card" style="margin-bottom:3.5px;padding:3.5px 7px;">
+                <div class="level-name-label">Level 3 — Logam, Plastik, & Sisa Lainnya</div>
+                <div class="sort-mission-text">🎯 <strong>Misi:</strong> <strong>LOGAM</strong> ➔ Tong Merah, <strong>PLASTIK</strong> ➔ Tong Kuning, dan semua sampah lainnya ➔ Tong Hijau!</div>
+                <div class="sort-conveyor-sample">
+                    <span>📦 Sampah di Ban:</span>
+                    <span>🥫 Kaleng Soda,</span>
+                    <span>🧴 Botol Shampo,</span>
+                    <span>🍎 Sisa Apel,</span>
+                    <span>📦 Kardus Susu,</span>
+                    <span>🔧 Kunci Pas,</span>
+                    <span>🥤 Sedotan Cup,</span>
+                    <span>🍉 Semangka,</span>
+                    <span>📚 Buku Bekas</span>
+                </div>
+                <div class="code-branch-wrap">
+                    <div class="code-rule-row">
+                        <span class="badge-if">JIKA (IF)</span>
+                        <span>( Kategori ==</span> <div class="rule-slot-box"></div> <span>)</span>
+                        <span class="arrow-sep">➔ MAKA : Masukkan ke</span> <div class="rule-slot-box"></div>
+                    </div>
+                    <div class="code-rule-row">
+                        <span class="badge-elseif">ATAU JIKA (ELSE IF)</span>
+                        <span>( Kategori ==</span> <div class="rule-slot-box"></div> <span>)</span>
+                        <span class="arrow-sep">➔ MAKA : Masukkan ke</span> <div class="rule-slot-box"></div>
+                    </div>
+                    <div class="code-rule-row">
+                        <span class="badge-else">LAINNYA (ELSE)</span>
+                        <span class="arrow-sep">➔ MAKA : Masukkan ke</span> <div class="rule-slot-box"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Level 4 (SORT-BOT) -->
+            <div class="sort-level-card" style="margin-bottom:3.5px;padding:3.5px 7px;">
+                <div class="level-name-label">Level 4 — Logam, Kertas, Plastik, & Lainnya</div>
+                <div class="sort-mission-text">🎯 <strong>Misi:</strong> <strong>LOGAM</strong> ➔ Merah, <strong>KERTAS</strong> ➔ Biru, <strong>PLASTIK</strong> ➔ Kuning, dan lainnya ➔ Hijau!</div>
+                <div class="sort-conveyor-sample">
+                    <span>📦 Sampah di Ban:</span>
+                    <span>🌽 Sisa Jagung,</span>
+                    <span>📦 Kardus Paket,</span>
+                    <span>🔋 Baterai Bekas,</span>
+                    <span>🥤 Gelas Cup,</span>
+                    <span>📄 Koran Bekas,</span>
+                    <span>🥕 Wortel,</span>
+                    <span>🥫 Kaleng Biskuit,</span>
+                    <span>🧴 Deterjen</span>
+                </div>
+                <div class="code-branch-wrap">
+                    <div class="code-rule-row">
+                        <span class="badge-if">JIKA (IF)</span>
+                        <span>( Kategori ==</span> <div class="rule-slot-box"></div> <span>)</span>
+                        <span class="arrow-sep">➔ MAKA : Masukkan ke</span> <div class="rule-slot-box"></div>
+                    </div>
+                    <div class="code-rule-row">
+                        <span class="badge-elseif">ATAU JIKA (ELSE IF)</span>
+                        <span>( Kategori ==</span> <div class="rule-slot-box"></div> <span>)</span>
+                        <span class="arrow-sep">➔ MAKA : Masukkan ke</span> <div class="rule-slot-box"></div>
+                    </div>
+                    <div class="code-rule-row">
+                        <span class="badge-elseif">ATAU JIKA (ELSE IF)</span>
+                        <span>( Kategori ==</span> <div class="rule-slot-box"></div> <span>)</span>
+                        <span class="arrow-sep">➔ MAKA : Masukkan ke</span> <div class="rule-slot-box"></div>
+                    </div>
+                    <div class="code-rule-row">
+                        <span class="badge-else">LAINNYA (ELSE)</span>
+                        <span class="arrow-sep">➔ MAKA : Masukkan ke</span> <div class="rule-slot-box"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Level 5 (SORT-BOT) -->
+            <div class="sort-level-card" style="border:1.8px solid #0f172a;background:#fafafa;margin-bottom:0;padding:3.5px 7px;">
+                <div class="level-name-label" style="color:#16a34a;">🏆 Level 5 — Master Pemilah Sampah (4 Kategori Lengkap)</div>
+                <div class="sort-mission-text">🎯 <strong>Misi:</strong> <strong>ORGANIK</strong> ➔ Hijau, <strong>PLASTIK</strong> ➔ Kuning, <strong>LOGAM</strong> ➔ Merah, dan <strong>KERTAS/lainnya</strong> ➔ Biru!</div>
+                <div class="sort-conveyor-sample">
+                    <span>📦 Sampah di Ban:</span>
+                    <span>🧴 Minyak,</span>
+                    <span>🍚 Nasi,</span>
+                    <span>🥫 Kaleng,</span>
+                    <span>📚 Buku,</span>
+                    <span>🥤 Sedotan,</span>
+                    <span>🍈 Durian,</span>
+                    <span>📎 Kabel,</span>
+                    <span>📦 Karton,</span>
+                    <span>🥒 Timun,</span>
+                    <span>🛍️ Kresek</span>
+                </div>
+                <div class="code-branch-wrap">
+                    <div class="code-rule-row">
+                        <span class="badge-if">JIKA (IF)</span>
+                        <span>( Kategori ==</span> <div class="rule-slot-box"></div> <span>)</span>
+                        <span class="arrow-sep">➔ MAKA : Masukkan ke</span> <div class="rule-slot-box"></div>
+                    </div>
+                    <div class="code-rule-row">
+                        <span class="badge-elseif">ATAU JIKA (ELSE IF)</span>
+                        <span>( Kategori ==</span> <div class="rule-slot-box"></div> <span>)</span>
+                        <span class="arrow-sep">➔ MAKA : Masukkan ke</span> <div class="rule-slot-box"></div>
+                    </div>
+                    <div class="code-rule-row">
+                        <span class="badge-elseif">ATAU JIKA (ELSE IF)</span>
+                        <span>( Kategori ==</span> <div class="rule-slot-box"></div> <span>)</span>
+                        <span class="arrow-sep">➔ MAKA : Masukkan ke</span> <div class="rule-slot-box"></div>
+                    </div>
+                    <div class="code-rule-row">
+                        <span class="badge-else">LAINNYA (ELSE)</span>
+                        <span class="arrow-sep">➔ MAKA : Masukkan ke</span> <div class="rule-slot-box"></div>
+                    </div>
+                </div>
+            </div>
+
+            <footer class="sheet-page-footer">
+                <span>LEMBAR KERJA KODING SISWA · SORT-BOT (LEVEL 1–5 LENGKAP)</span>
+                <span>Halaman 2 dari 7</span>
+            </footer>
+        </article>
+        <!-- ========================================================================= -->
+        <!-- HALAMAN 3 DARI 7: MODUL FUNGSI & PARAMETER — OUTFIT-BOT (5 LEVEL LENGKAP) -->
+        <!-- ========================================================================= -->
+        <article class="a4-page" id="modul-outfitbot">
+            <!-- Header Modul OUTFIT-BOT Lengkap -->
+            <header class="module-page-header" style="padding-bottom:4px;margin-bottom:6px;">
+                <div>
+                    <h1 class="module-title-h1" style="font-size:1.12rem;">MODUL FUNGSI & PARAMETER: OUTFIT-BOT</h1>
+                    <div class="module-sub-h2" style="font-size:0.78rem;">Robot Lemari Seragam · Memanggil Fungsi Berulang dengan Argumen Masukan Spesifik (5 Level Lengkap)</div>
+                </div>
+                <div class="module-badge-tag outfit" style="font-size:0.74rem;padding:3px 9px;">👗 MODUL FUNGSI (LEVEL 1–5)</div>
+            </header>
+
+            <!-- Penjelasan Konsep Logika Fungsi & Parameter -->
+            <section class="section-concept" style="border-left-color:#a855f7;margin-bottom:6px;padding:5px 11px;">
+                <h2 class="concept-title" style="color:#7e22ce;font-size:0.84rem;margin-bottom:2px;">3. Fungsi & Parameter (Functions & Arguments)</h2>
+                <p class="concept-desc" style="font-size:0.78rem;line-height:1.36;margin:0;">
+                    <strong>Fungsi</strong> adalah paket prosedur yang diberi nama agar hemat kode dan bisa dipanggil berulang kali. <strong>Parameter/Variabel</strong> di dalam kurung <code>(...)</code> adalah nilai seragam yang kamu perintahkan ke robot, dan simbol <strong>+</strong> menandakan nilai variabel tersebut dimasukkan ke tindakan robot!
+                </p>
+            </section>
+
+            <!-- CETAK BIRU PROSEDUR FUNGSI TERPADU (9 Langkah Otomatis Robot) -->
+            <div class="blueprint-procedure-box">
+                <div class="blueprint-header-row">
+                    <span class="blueprint-tag">⚙️ CETAK BIRU FUNGSI: <code>siapkanSeragam( atasan, [bawahan], [atribut] )</code></span>
+                    <span class="blueprint-eff-badge">⚡ 1 Baris Pemanggilan = 9 Langkah Prosedur Otomatis!</span>
+                </div>
+                <div class="blueprint-steps-grid">
+                    <div class="bp-step-item"><span>1.</span> Buka pintu lemari</div>
+                    <div class="bp-step-item"><span>2.</span> Ambil baju + <code>atasan</code></div>
+                    <div class="bp-step-item"><span>3.</span> Periksa kerah & kancing</div>
+                    <div class="bp-step-item"><span>4.</span> Setrika bagian badan dan lengan</div>
+                    <div class="bp-step-item"><span>5.</span> Ambil celana + <code>bawahan</code></div>
+                    <div class="bp-step-item"><span>6.</span> Pasang atribut + <code>atribut</code></div>
+                    <div class="bp-step-item"><span>7.</span> Semprot pewangi seragam</div>
+                    <div class="bp-step-item"><span>8.</span> Pasang ke mannequin</div>
+                    <div class="bp-step-item"><span>9.</span> Tutup pintu lemari</div>
+                </div>
+                <div style="display:flex;justify-content:space-between;align-items:center;background:#f3e8ff;padding:3.5px 10px;border-radius:4px;margin-top:4px;font-size:0.74rem;color:#6b21a8;font-weight:700;">
+                    <span>📌 <strong>Sintaks Pemanggilan:</strong></span>
+                    <span>1 Parameter: <code>siapkanSeragam(atasan)</code></span>
+                    <span>2 Parameter: <code>siapkanSeragam(atasan, bawahan)</code></span>
+                    <span>3 Parameter: <code>siapkanSeragam(atasan, bawahan, atribut)</code></span>
+                </div>
+            </div>
+
+            <!-- Bank Nilai Lengkap (Atasan, Bawahan, Atribut) -->
+            <div class="outfit-wordbank-banner">
+                <span style="font-weight:800;color:#0f172a;">🏷️ Bank Nilai Argumen:</span>
+                <span>Atasan: <code>"putih"</code>, <code>"batik"</code>, <code>"pramuka"</code>, <code>"kotak"</code></span>
+                <span>Bawahan: <code>"merah"</code>, <code>"putih"</code>, <code>"cokelat"</code>, <code>"hitam"</code></span>
+                <span>Atribut: <code>"topi & dasi"</code>, <code>"dasi"</code>, <code>"sabuk"</code>, <code>"kacu"</code></span>
+            </div>
+
+            <!-- Level 1 (OUTFIT-BOT) -->
+            <div class="outfit-task-card">
+                <div class="outfit-task-header">
+                    <span class="level-name-label" style="font-size:0.82rem;">Level 1 — 1 Parameter (Atasan)</span>
+                    <span style="font-size:0.74rem;font-weight:700;color:#64748b;">Bentuk: <code>siapkanSeragam(atasan)</code></span>
+                </div>
+                <div class="fn-prompt-hint">📅 <strong>Senin (Upacara Bendera):</strong> Butuh baju atasan warna putih!</div>
+                <div class="fn-write-row" style="margin-bottom:0;">
+                    <span class="fn-day-badge">Senin:</span>
+                    <div class="fn-code-box"></div>
+                </div>
+            </div>
+
+            <!-- Level 2 (OUTFIT-BOT) — 2 Kolom Sejajar -->
+            <div class="outfit-task-card">
+                <div class="outfit-task-header">
+                    <span class="level-name-label" style="font-size:0.82rem;">Level 2 — 1 Fungsi untuk 2 Hari</span>
+                    <span style="font-size:0.74rem;font-weight:700;color:#64748b;">Panggil fungsi yang sama dua kali</span>
+                </div>
+                <div class="fn-prompt-hint">📅 <strong>Senin</strong> (Baju Putih) &nbsp;·&nbsp; 📅 <strong>Rabu</strong> (Batik Sekolah: Baju Batik)</div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                    <div class="fn-write-row" style="margin-bottom:0;">
+                        <span class="fn-day-badge">Senin:</span>
+                        <div class="fn-code-box"></div>
+                    </div>
+                    <div class="fn-write-row" style="margin-bottom:0;">
+                        <span class="fn-day-badge">Rabu:</span>
+                        <div class="fn-code-box"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Level 3 (OUTFIT-BOT) — 2 Kolom Sejajar -->
+            <div class="outfit-task-card">
+                <div class="outfit-task-header">
+                    <span class="level-name-label" style="font-size:0.82rem;">Level 3 — 2 Parameter (Atasan & Bawahan)</span>
+                    <span style="font-size:0.74rem;font-weight:700;color:#64748b;">Bentuk: <code>siapkanSeragam(atasan, bawahan)</code></span>
+                </div>
+                <div class="fn-prompt-hint">📅 <strong>Selasa:</strong> Seragam Nasional (Putih + Merah) &nbsp;·&nbsp; 📅 <strong>Jumat:</strong> Pramuka Siaga (Pramuka + Cokelat)</div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
+                    <div class="fn-write-row" style="margin-bottom:0;">
+                        <span class="fn-day-badge">Selasa:</span>
+                        <div class="fn-code-box"></div>
+                    </div>
+                    <div class="fn-write-row" style="margin-bottom:0;">
+                        <span class="fn-day-badge">Jumat:</span>
+                        <div class="fn-code-box"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Level 4 (OUTFIT-BOT) — Maksimal 2 Hari 1 Baris (2 + 1) -->
+            <div class="outfit-task-card">
+                <div class="outfit-task-header">
+                    <span class="level-name-label" style="font-size:0.82rem;">Level 4 — 3 Parameter Lengkap (Atasan, Bawahan, Atribut)</span>
+                    <span style="font-size:0.74rem;font-weight:700;color:#64748b;">Bentuk: <code>siapkanSeragam(atasan, bawahan, atribut)</code></span>
+                </div>
+                <div class="fn-prompt-hint">📅 <strong>Senin:</strong> Putih + Merah + Topi & Dasi &nbsp;·&nbsp; 📅 <strong>Kamis:</strong> Kotak + Hitam + Sabuk &nbsp;·&nbsp; 📅 <strong>Jumat:</strong> Pramuka + Cokelat + Kacu</div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 8px;margin-bottom:4px;">
+                    <div class="fn-write-row" style="margin-bottom:0;">
+                        <span class="fn-day-badge">Senin:</span>
+                        <div class="fn-code-box"></div>
+                    </div>
+                    <div class="fn-write-row" style="margin-bottom:0;">
+                        <span class="fn-day-badge">Kamis:</span>
+                        <div class="fn-code-box"></div>
+                    </div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:6px 8px;">
+                    <div class="fn-write-row" style="margin-bottom:0;">
+                        <span class="fn-day-badge">Jumat:</span>
+                        <div class="fn-code-box"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Level 5 (OUTFIT-BOT) — SEMUA 5 HARI SEKOLAH (Maksimal 2 Hari 1 Baris: 2 + 2 + 1) -->
+            <div class="outfit-task-card" style="border:1.8px solid #7c3aed;background:#faf5ff;margin-bottom:0;padding:6px 10px;">
+                <div class="outfit-task-header">
+                    <span class="level-name-label" style="color:#6d28d9;font-size:0.84rem;">🏆 Level 5 — Master Jadwal 5 Hari Sekolah (Senin s/d Jumat)</span>
+                    <span style="font-size:0.74rem;font-weight:700;color:#64748b;">5 Hari Lengkap</span>
+                </div>
+                <div class="fn-prompt-hint" style="font-size:0.77rem;margin-bottom:4px;line-height:1.35;">
+                    📅 <strong>Senin:</strong> Putih + Merah + Topi & Dasi &nbsp;|&nbsp; 
+                    📅 <strong>Selasa:</strong> Putih + Merah + Dasi &nbsp;|&nbsp; 
+                    📅 <strong>Rabu:</strong> Batik + Putih + Sabuk &nbsp;|&nbsp; 
+                    📅 <strong>Kamis:</strong> Kotak + Hitam + Sabuk &nbsp;|&nbsp; 
+                    📅 <strong>Jumat:</strong> Pramuka + Cokelat + Kacu
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px 8px;margin-bottom:4px;">
+                    <div class="fn-write-row" style="margin-bottom:0;">
+                        <span class="fn-day-badge">Senin:</span>
+                        <div class="fn-code-box"></div>
+                    </div>
+                    <div class="fn-write-row" style="margin-bottom:0;">
+                        <span class="fn-day-badge">Selasa:</span>
+                        <div class="fn-code-box"></div>
+                    </div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px 8px;margin-bottom:4px;">
+                    <div class="fn-write-row" style="margin-bottom:0;">
+                        <span class="fn-day-badge">Rabu:</span>
+                        <div class="fn-code-box"></div>
+                    </div>
+                    <div class="fn-write-row" style="margin-bottom:0;">
+                        <span class="fn-day-badge">Kamis:</span>
+                        <div class="fn-code-box"></div>
+                    </div>
+                </div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px 8px;">
+                    <div class="fn-write-row" style="margin-bottom:0;">
+                        <span class="fn-day-badge">Jumat:</span>
+                        <div class="fn-code-box"></div>
+                    </div>
+                </div>
+            </div>
+
+            <footer class="sheet-page-footer">
+                <span>LEMBAR KERJA KODING SISWA · OUTFIT-BOT (LEVEL 1–5 LENGKAP)</span>
+                <span>Halaman 3 dari 7</span>
+            </footer>
+        </article>
+        <!-- ========================================================================= -->
+        <!-- HALAMAN 4 DARI 7: ALGO-BOT LEVEL 1–5 (SEQUENCE & ARAH)                    -->
+        <!-- ========================================================================= -->
+        <article class="a4-page" id="modul-algobot">
+            <!-- Header Identitas Siswa Ramping (Hanya 1 di Halaman Ini) -->
+            <header class="module-page-header" style="padding-bottom:3px;margin-bottom:5px;">
+                <div>
+                    <h1 class="module-title-h1" style="font-size:1.08rem;">MODUL PEMROGRAMAN DASAR: ALGO-BOT</h1>
+                    <div class="module-sub-h2" style="font-size:0.74rem;">Langkah Berurutan (Sequence) & Orientasi Arah Robot (Level 1–5)</div>
+                </div>
+                <div class="module-badge-tag algo" style="font-size:0.72rem;padding:2px 8px;">🤖 URUTAN LANGKAH (LEVEL 1–5)</div>
+            </header>
+
+            <!-- Target Game & Petunjuk Cara Jawab di Awal -->
+            <section class="global-instructions-banner">
+                <div class="banner-row-goal">🎯 Target Game: Pandu robot melangkah dan ambil seluruh kristal energi (⭐) yang ada di arena!</div>
+                <div class="banner-row-how">👉 Petunjuk Jawab: Isikan kotak sesuai angka nomor balok. <strong>Kotak TIDAK WAJIB diisi penuh</strong> (selesaikan misi dengan langkah sehemat dan seefisien mungkin)!</div>
+            </section>
+
+            <!-- Konsep 1: Algoritma -->
+            <section class="section-concept">
+                <h2 class="concept-title">4. Algoritma (Urutan Langkah Logis)</h2>
+                <p class="concept-desc">
+                    Algoritma adalah serangkaian instruksi langkah demi langkah yang disusun secara logis dan berurutan. Komputer menjalankan perintah persis sesuai urutan nomor balok yang kamu susun.
+                </p>
+                <div class="blocks-showcase-row">
+                    <div class="block-unit">
+                        <span class="block-number-tag">1</span>
+                        <div class="block-capsule cyan"><span>⬆️</span> MAJU</div>
+                    </div>
+                    <div class="block-unit">
+                        <span class="block-number-tag">2</span>
+                        <div class="block-capsule gold"><span>⭐</span> AMBIL</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Level 1 (6 Kotak) -->
+            <div class="level-task-wrap">
+                <div class="level-map-thumb">
+                    <img src="gambar level/level 1.png" alt="Peta Level 1">
+                </div>
+                <div class="level-task-main">
+                    <div class="level-name-label">Level 1 — Langkah Pertama</div>
+                    <div class="slots-square-row">
+                        <div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Level 2 (8 Kotak) -->
+            <div class="level-task-wrap">
+                <div class="level-map-thumb">
+                    <img src="gambar level/level 2.png" alt="Peta Level 2">
+                </div>
+                <div class="level-task-main">
+                    <div class="level-name-label">Level 2 — Jejak Dua Kristal</div>
+                    <div class="slots-square-row">
+                        <div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Balok Baru: Putar Kiri & Kanan -->
+            <div class="unlock-mini-pill">
+                <span>🆕 Balok Baru Terbuka:</span>
+                <div class="block-unit"><span class="block-number-tag">3</span><div class="block-capsule purple"><span>↩️</span> PUTAR KIRI</div></div>
+                <div class="block-unit"><span class="block-number-tag">4</span><div class="block-capsule purple"><span>↪️</span> PUTAR KANAN</div></div>
+            </div>
+
+            <!-- Level 3 (12 Kotak) -->
+            <div class="level-task-wrap">
+                <div class="level-map-thumb">
+                    <img src="gambar level/level 3.png" alt="Peta Level 3">
+                </div>
+                <div class="level-task-main">
+                    <div class="level-name-label">Level 3 — Simpang Belok Presisi</div>
+                    <div class="slots-square-row">
+                        <div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Level 4 (14 Kotak) -->
+            <div class="level-task-wrap">
+                <div class="level-map-thumb">
+                    <img src="gambar level/level 4.png" alt="Peta Level 4">
+                </div>
+                <div class="level-task-main">
+                    <div class="level-name-label">Level 4 — Simpang Dua Cabang</div>
+                    <div class="slots-square-row">
+                        <div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Level 5 (18 Kotak) -->
+            <div class="level-task-wrap" style="margin-bottom:0;">
+                <div class="level-map-thumb">
+                    <img src="gambar level/level 5.png" alt="Peta Level 5">
+                </div>
+                <div class="level-task-main">
+                    <div class="level-name-label">Level 5 — Labirin Zig-Zag</div>
+                    <div class="slots-square-row">
+                        <div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div>
+                    </div>
+                </div>
+            </div>
+
+            <footer class="sheet-page-footer">
+                <span>LEMBAR KERJA KODING SISWA · ALGO-BOT (LEVEL 1–5)</span>
+                <span>Halaman 4 dari 7</span>
+            </footer>
+        </article>
+        <!-- ========================================================================= -->
+        <!-- HALAMAN 5 DARI 7: ALGO-BOT LEVEL 6–10 (LOMPAT, TUNDUK & LOOP)             -->
+        <!-- ========================================================================= -->
+        <article class="a4-page">
+            <!-- Balok Baru: Lompat & Tunduk (Tanpa Header Mini) -->
+            <div class="unlock-mini-pill" style="margin-top:0;margin-bottom:8px;">
+                <span>🆕 Balok Baru Terbuka:</span>
+                <div class="block-unit"><span class="block-number-tag">5</span><div class="block-capsule emerald"><span>🦘</span> LOMPAT (Lewati Jurang)</div></div>
+                <div class="block-unit"><span class="block-number-tag">6</span><div class="block-capsule emerald"><span>🛡️</span> TUNDUK (Bawah Laser)</div></div>
+            </div>
+
+            <!-- Level 6 (16 Kotak) -->
+            <div class="level-task-wrap">
+                <div class="level-map-thumb">
+                    <img src="gambar level/level 6.png" alt="Peta Level 6">
+                </div>
+                <div class="level-task-main">
+                    <div class="level-name-label">Level 6 — Jembatan Celah Jurang Berkelok</div>
+                    <div class="slots-square-row">
+                        <div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Level 7 (18 Kotak) -->
+            <div class="level-task-wrap">
+                <div class="level-map-thumb">
+                    <img src="gambar level/level 7.png" alt="Peta Level 7">
+                </div>
+                <div class="level-task-main">
+                    <div class="level-name-label">Level 7 — Taktik Potong Jurang Danau</div>
+                    <div class="slots-square-row">
+                        <div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Level 8 (20 Kotak) -->
+            <div class="level-task-wrap">
+                <div class="level-map-thumb">
+                    <img src="gambar level/level 8.png" alt="Peta Level 8">
+                </div>
+                <div class="level-task-main">
+                    <div class="level-name-label">Level 8 — Koridor Laser & Tikungan Ganda</div>
+                    <div class="slots-square-row">
+                        <div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Level 9 (20 Kotak) -->
+            <div class="level-task-wrap">
+                <div class="level-map-thumb">
+                    <img src="gambar level/level 9.png" alt="Peta Level 9">
+                </div>
+                <div class="level-task-main">
+                    <div class="level-name-label">Level 9 — Kombinasi Jurang & Laser Terpadu</div>
+                    <div class="slots-square-row">
+                        <div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div>
+                    </div>
+                </div>
+            </div>
+
+<!-- Level 10 (20 Kotak) -->
+            <div class="level-task-wrap" style="margin-bottom:6px;">
+                <div class="level-map-thumb">
+                    <img src="gambar level/level 10.png" alt="Peta Level 10">
+                </div>
+                <div class="level-task-main">
+                    <div class="level-name-label">Level 10 — Benteng Rintangan Ganda</div>
+                    <div class="slots-square-row">
+                        <div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Konsep 2: Perulangan (Looping) -->
+            <section class="section-concept" style="border-left-color:#a855f7;margin-top:4px;margin-bottom:0;">
+                <div class="loop-concept-flex">
+                    <div class="loop-concept-text">
+                        <h2 class="concept-title">2. Perulangan (Looping)</h2>
+                        <p class="concept-desc">
+                            Perulangan digunakan untuk mengulang langkah yang sama secara otomatis agar hemat balok. <strong>Jika ada balok yang ingin kamu ulang</strong>, beri <strong>garis luar pembungkus</strong> pada kotak-kotak tersebut dan tuliskan berapa kali diulang (misal: <strong>2x</strong>, <strong>3x</strong>) di atas garisnya secara bebas!
+                        </p>
+                        <div class="blocks-showcase-row">
+                            <div class="block-unit">
+                                <span class="block-number-tag">7</span>
+                                <div class="block-capsule" style="border-color:#38bdf8;background:#0369a1;"><span>🔁</span> ULANGI</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Contoh Ilustrasi Sesuai Desain User -->
+                    <div class="loop-instruction-demo">
+                        <span class="demo-caption">Contoh Tulis Loop di Kertas:</span>
+                        <div class="loop-draw-example">
+                            <div class="loop-bracket-demo">
+                                <span class="bracket-mult-label">2x</span>
+                                <div class="slot-box filled-preset">1</div>
+                                <div class="slot-box filled-preset">1</div>
+                                <div class="slot-box filled-preset">2</div>
+                            </div>
+                            <div class="slot-box filled-preset">1</div>
+                            <div class="slot-box filled-preset">2</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <footer class="sheet-page-footer">
+                <span>LEMBAR KERJA KODING SISWA · ALGO-BOT (LEVEL 6–10 & KONSEP LOOPING)</span>
+                <span>Halaman 5 dari 7</span>
+            </footer>
+        </article>
+        <!-- ========================================================================= -->
+        <!-- HALAMAN 6 DARI 7: ALGO-BOT LEVEL 11–15 (PROSEDUR FUNGSI F1)               -->
+        <!-- ========================================================================= -->
+        <article class="a4-page">
+            <!-- Header Modul ALGO-BOT Lanjutan -->
+            <header class="page-header-main" style="padding-bottom:3px;margin-bottom:6px;">
+                <div>
+                    <h1 class="app-title-h1" style="font-size:0.95rem;">LEMBAR MISI KODING: ALGO-BOT (LANJUTAN)</h1>
+                    <div class="app-sub-h2" style="font-size:0.68rem;">Modul Looping & Pengenalan Debugging (Pelacakan Kesalahan)</div>
+                </div>
+                <div class="module-badge-tag" style="background:#e0f2fe;color:#0369a1;border:1px solid #7dd3fc;font-size:0.66rem;padding:2px 8px;">🔁 LEVEL 11 – 16</div>
+            </header>
+
+            <!-- Level 11 (10 Kotak Bebas) -->
+            <div class="level-task-wrap">
+                <div class="level-map-thumb">
+                    <img src="gambar level/level 11.png" alt="Peta Level 11">
+                </div>
+                <div class="level-task-main">
+                    <div class="level-name-label">Level 11 — Koridor Panjang</div>
+                    <div class="slots-square-row">
+                        <div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Level 12 (14 Kotak Bebas) -->
+            <div class="level-task-wrap">
+                <div class="level-map-thumb">
+                    <img src="gambar level/level 12.png" alt="Peta Level 12">
+                </div>
+                <div class="level-task-main">
+                    <div class="level-name-label">Level 12 — Loop Multi-Aksi</div>
+                    <div class="slots-square-row">
+                        <div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Level 13 (18 Kotak Bebas) -->
+            <div class="level-task-wrap">
+                <div class="level-map-thumb">
+                    <img src="gambar level/level 13.png" alt="Peta Level 13">
+                </div>
+                <div class="level-task-main">
+                    <div class="level-name-label">Level 13 — Loop Persegi Mengelilingi Taman</div>
+                    <div class="slots-square-row">
+                        <div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Level 14 (14 Kotak Bebas) -->
+            <div class="level-task-wrap">
+                <div class="level-map-thumb">
+                    <img src="gambar level/level 14.png" alt="Peta Level 14">
+                </div>
+                <div class="level-task-main">
+                    <div class="level-name-label">Level 14 — Sirkuit Maraton Laser Berirama</div>
+                    <div class="slots-square-row">
+                        <div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div>
+                    </div>
+                </div>
+            </div>
+
+<!-- Level 15 (14 Kotak Bebas) -->
+            <div class="level-task-wrap" style="margin-bottom:6px;">
+                <div class="level-map-thumb">
+                    <img src="gambar level/level 15.png" alt="Peta Level 15">
+                </div>
+                <div class="level-task-main">
+                    <div class="level-name-label">Level 15 — Marathon Rintangan Silang Akbar</div>
+                    <div class="slots-square-row">
+                        <div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Konsep 3: Pelacakan Kesalahan (Debugging) -->
+            <section class="section-concept" style="border-left-color:#ef4444;margin-top:4px;margin-bottom:6px;">
+                <h2 class="concept-title">3. Pelacakan Kesalahan (Debugging)</h2>
+                <p class="concept-desc">
+                    Debugging adalah proses menemukan dan memperbaiki kesalahan (bug) pada urutan kode robot. Amati gambar arena, telusuri kode pada <strong>Kode Awal</strong>, lalu susun urutan yang benar atau racik solusi baru yang lebih hemat dan tepat pada baris <strong>Kode Perbaikan</strong>!
+                </p>
+            </section>
+
+            <!-- Level 16 (14 Kotak Kode Awal & 14 Kotak Kode Perbaikan) -->
+            <div class="level-task-wrap" style="margin-bottom:0;">
+                <div class="level-map-thumb">
+                    <img src="gambar level/level 16.png" alt="Peta Level 16">
+                </div>
+                <div class="level-task-main">
+                    <div class="level-name-label">Level 16 — Debug: Menyeberangi Jembatan</div>
+                    <div class="debug-dual-box">
+                        <div class="debug-line faulty">
+                            <span class="debug-badge err">Kode Awal:</span>
+                            <div class="slot-box filled-preset">1</div><div class="slot-box filled-preset">1</div><div class="slot-box filled-preset">1</div><div class="slot-box filled-preset">2</div><div class="slot-box filled-preset">1</div><div class="slot-box filled-preset">1</div><div class="slot-box filled-preset">1</div><div class="slot-box filled-preset">1</div><div class="slot-box filled-preset">2</div>
+                            <div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div>
+                        </div>
+                        <div class="debug-line correct">
+                            <span class="debug-badge ok">Kode Perbaikan:</span>
+                            <div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <footer class="sheet-page-footer">
+                <span>LEMBAR KERJA KODING SISWA · ALGO-BOT (LEVEL 11–16 & DEBUGGING)</span>
+                <span>Halaman 6 dari 7</span>
+            </footer>
+        </article>
+        <!-- ========================================================================= -->
+        <!-- HALAMAN 7 DARI 7: ALGO-BOT LEVEL 16–20 (DEBUGGING & QR CODE ONLINE)       -->
+        <!-- ========================================================================= -->
+        <article class="a4-page">
+            <!-- Header Modul ALGO-BOT Debugging -->
+            <header class="page-header-main" style="padding-bottom:3px;margin-bottom:6px;">
+                <div>
+                    <h1 class="app-title-h1" style="font-size:0.95rem;">LEMBAR MISI KODING: ALGO-BOT (DEBUGGING LANJUTAN)</h1>
+                    <div class="app-sub-h2" style="font-size:0.68rem;">Tantangan Puncak Debugging · Perbaiki Urutan Kode pada Stadion dan Labirin Kompleks</div>
+                </div>
+                <div class="module-badge-tag" style="background:#fee2e2;color:#b91c1c;border:1px solid #f87171;font-size:0.66rem;padding:2px 8px;">🔧 LEVEL 17 – 20</div>
+            </header>
+
+            <!-- Level 17 (14 Kotak Kode Awal & 14 Kotak Kode Perbaikan) -->
+            <div class="level-task-wrap">
+                <div class="level-map-thumb">
+                    <img src="gambar level/level 17.png" alt="Peta Level 17">
+                </div>
+                <div class="level-task-main">
+                    <div class="level-name-label">Level 17 — Debug: Labirin Laser</div>
+                    <div class="debug-dual-box">
+                        <div class="debug-line faulty compact-slots">
+                            <span class="debug-badge err">Kode Awal:</span>
+                            <div class="slot-box filled-preset">1</div><div class="slot-box filled-preset">1</div><div class="slot-box filled-preset">4</div><div class="slot-box filled-preset">1</div><div class="slot-box filled-preset">2</div><div class="slot-box filled-preset">1</div><div class="slot-box filled-preset">2</div>
+                            <div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div>
+                        </div>
+                        <div class="debug-line correct compact-slots">
+                            <span class="debug-badge ok">Kode Perbaikan:</span>
+                            <div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Level 18 (10 Kotak Kode Awal & 10 Kotak Kode Perbaikan) -->
+            <div class="level-task-wrap">
+                <div class="level-map-thumb">
+                    <img src="gambar level/level 18.png" alt="Peta Level 18">
+                </div>
+                <div class="level-task-main">
+                    <div class="level-name-label">Level 18 — Debug: Runway Panjang</div>
+                    <div class="debug-dual-box">
+                        <div class="debug-line faulty compact-slots">
+                            <span class="debug-badge err">Kode Awal:</span>
+                            <div class="loop-bracket-demo">
+                                <span class="bracket-mult-label">2x</span>
+                                <div class="slot-box filled-preset">1</div>
+                                <div class="slot-box filled-preset">1</div>
+                                <div class="slot-box filled-preset">2</div>
+                            </div>
+                            <div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div>
+                        </div>
+                        <div class="debug-line correct compact-slots">
+                            <span class="debug-badge ok">Kode Perbaikan:</span>
+                            <div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Level 19 (12 Kotak Kode Awal & 12 Kotak Kode Perbaikan) -->
+            <div class="level-task-wrap">
+                <div class="level-map-thumb">
+                    <img src="gambar level/level 19.png" alt="Peta Level 19">
+                </div>
+                <div class="level-task-main">
+                    <div class="level-name-label">Level 19 — Debug: Halangan Kombo</div>
+                    <div class="debug-dual-box">
+                        <div class="debug-line faulty compact-slots">
+                            <span class="debug-badge err">Kode Awal:</span>
+                            <div class="loop-bracket-demo">
+                                <span class="bracket-mult-label">2x</span>
+                                <div class="slot-box filled-preset">6</div>
+                                <div class="slot-box filled-preset">5</div>
+                                <div class="slot-box filled-preset">1</div>
+                                <div class="slot-box filled-preset">2</div>
+                            </div>
+                            <div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div>
+                        </div>
+                        <div class="debug-line correct compact-slots">
+                            <span class="debug-badge ok">Kode Perbaikan:</span>
+                            <div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Level 20 (20 Kotak Kode Awal & 20 Kotak Kode Perbaikan) -->
+            <div class="level-task-wrap" style="margin-bottom:0;border:1.8px solid #0f172a;background:#fafafa;">
+                <div class="level-map-thumb">
+                    <img src="gambar level/level 20.png" alt="Peta Level 20">
+                </div>
+                <div class="level-task-main">
+                    <div class="level-name-label" style="color:#0284c7;">🏆 Level 20 — Debug: GRAND CHAMPIONSHIP (Stadion Kolosal)</div>
+                    <div class="debug-dual-box">
+                        <div class="debug-line faulty compact-slots">
+                            <span class="debug-badge err">Kode Awal:</span>
+                            <div class="loop-bracket-demo">
+                                <span class="bracket-mult-label">2x</span>
+                                <div class="slot-box filled-preset">1</div>
+                            </div>
+                            <div class="slot-box filled-preset">4</div>
+                            <div class="slot-box filled-preset">6</div>
+                            <div class="slot-box filled-preset">1</div>
+                            <div class="slot-box filled-preset">2</div>
+                            <div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div>
+                        </div>
+                        <div class="debug-line correct compact-slots">
+                            <span class="debug-badge ok">Kode Perbaikan:</span>
+                            <div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div><div class="slot-box"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Banner QR Code Akses Game Online (https://blitzore.github.io/kkn/) & Panduan Beralih ke Game 2 -->
+            <div style="margin-top: 18px; padding: 10px 16px; background: #f8fafc; border: 2px solid #0284c7; border-radius: 8px; display: flex; align-items: center; gap: 16px;">
+                <div style="background: #ffffff; padding: 5px; border-radius: 6px; border: 1.5px solid #cbd5e1; display: flex; align-items: center; justify-content: center; flex-shrink: 0;">
+                    <img src="qrcode_kkn.png" alt="QR Code Game KKN" style="width: 86px; height: 86px; display: block;">
+                </div>
+                <div style="flex: 1;">
+                    <div style="font-size: 0.88rem; font-weight: 800; color: #0369a1; margin-bottom: 2px; display: flex; align-items: center; gap: 6px;">
+                        <span>📱</span> Akses Simulasi Game Interaktif Online
+                    </div>
+                    <div style="font-size: 0.73rem; color: #334155; line-height: 1.35; margin-bottom: 4px;">
+                        Pindai (scan) QR code dengan kamera HP atau buka tautan di bawah ini untuk mencoba dan memainkan langsung seluruh modul game robot koding di internet:
+                    </div>
+                    <div style="font-family: var(--font-mono); font-size: 0.74rem; font-weight: 800; color: #0284c7; background: #e0f2fe; padding: 2px 8px; border-radius: 4px; display: inline-block; margin-bottom: 4px;">
+                        🔗 https://blitzore.github.io/kkn/
+                    </div>
+                    <div style="font-size: 0.72rem; font-weight: 700; color: #166534;">
+                        👉 🎉 <strong>Selamat!</strong> Kamu telah menyelesaikan seluruh 4 modul koding: <strong>GATE-BOT</strong>, <strong>SORT-BOT</strong>, <strong>OUTFIT-BOT</strong>, dan <strong>ALGO-BOT</strong>!
+                    </div>
+                </div>
+            </div>
+
+            <footer class="sheet-page-footer">
+                <span>LEMBAR KERJA KODING SISWA · ALGO-BOT (LEVEL 17–20 TUNTAS)</span>
                 <span>Halaman 7 dari 7</span>
             </footer>
         </article>

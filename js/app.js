@@ -771,6 +771,17 @@ document.addEventListener('DOMContentLoaded', () => {
         return false;
     }
 
+    function scrollToArena() {
+        if (window.innerWidth <= 900) {
+            const arena = document.querySelector('.arena-wrap');
+            if (arena) {
+                arena.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+    }
+
     btnRun.addEventListener('click', async () => {
         if (interpreter.isExecuting) return;
         if (mainSeq.length === 0) {
@@ -783,6 +794,11 @@ document.addEventListener('DOMContentLoaded', () => {
             audio.playError();
             setStatus('⚠️ Tentukan angka perulangan X (+/-) pada balok ULANGI terlebih dahulu!', 'error', '⚠️');
             return;
+        }
+
+        scrollToArena();
+        if (window.innerWidth <= 900) {
+            await new Promise(r => setTimeout(r, 350));
         }
 
         btnRun.disabled  = true;
@@ -861,6 +877,12 @@ document.addEventListener('DOMContentLoaded', () => {
             setStatus('⚠️ Tentukan angka perulangan X (+/-) pada balok ULANGI terlebih dahulu!', 'error', '⚠️');
             return;
         }
+
+        scrollToArena();
+        if (window.innerWidth <= 900) {
+            await new Promise(r => setTimeout(r, 350));
+        }
+
         const lvl = isDemoMode ? currentDemoStage : gameState.getCurrentLevel();
 
         if (stepIdx === 0 || stepIdx >= debugTrace.length) {

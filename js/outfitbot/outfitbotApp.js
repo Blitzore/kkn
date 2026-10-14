@@ -631,9 +631,25 @@
             return true;
         }
 
+        scrollToStage() {
+            if (window.innerWidth <= 992) {
+                const stage = document.querySelector('.stage-card');
+                if (stage) {
+                    stage.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                } else {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            }
+        }
+
         async runSimulation() {
             if (this.isRunning) return;
             if (!this.validateAllCalls()) return;
+
+            this.scrollToStage();
+            if (window.innerWidth <= 992) {
+                await new Promise(r => setTimeout(r, 350));
+            }
 
             this.isRunning = true;
             this.dom.btnRun.disabled = true;
@@ -663,6 +679,11 @@
         async stepSimulation() {
             if (this.isRunning) return;
             if (!this.validateAllCalls()) return;
+
+            this.scrollToStage();
+            if (window.innerWidth <= 992) {
+                await new Promise(r => setTimeout(r, 350));
+            }
 
             const lvl = window.OUTFITBOT_LEVELS[this.currentLvlIdx];
             if (this.currentStepDayIdx >= lvl.scheduleDays.length) {

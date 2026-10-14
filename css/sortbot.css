@@ -1521,6 +1521,9 @@ html, body {
 
 /* ── Responsive Mobile Media Queries ── */
 @media (max-width: 900px) {
+    .btn-concept-nav {
+        display: none !important;
+    }
     html, body {
         overflow-y: auto !important;
         height: auto !important;
@@ -1550,6 +1553,11 @@ html, body {
     }
     .nav-left {
         gap: 4px;
+        overflow-x: auto;
+        scrollbar-width: none;
+    }
+    .nav-left::-webkit-scrollbar {
+        display: none;
     }
     .btn-back-algo, .btn-goto-outfit {
         padding: 4px 6px;
@@ -1559,11 +1567,7 @@ html, body {
         display: none !important;
     }
     .btn-concept-nav {
-        padding: 4px 7px;
-        font-size: 0.72rem;
-    }
-    .btn-concept-nav span {
-        display: none;
+        display: none !important;
     }
     .level-badge-btn {
         padding: 4px 8px;

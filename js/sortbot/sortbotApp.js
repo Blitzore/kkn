@@ -313,7 +313,7 @@
         `;
 
         row.querySelectorAll('.rule-select').forEach(sel => {
-            sel.addEventListener('change', () => sel.classList.remove('unconfigured'));
+            sel.addEventListener('change', () => handleRuleSelectChange(sel));
         });
 
         $dynamicElseIfContainer.appendChild(row);
@@ -457,12 +457,55 @@
 
     const sleep = (ms) => new Promise(res => setTimeout(res, ms));
 
+    function scrollToSimulationStage() {
+        if (window.innerWidth <= 900) {
+            const simCard = document.querySelector('.simulation-card');
+            if (simCard) {
+                simCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            } else {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+    }
+
+    function checkAllRulesConfigured() {
+        if (!$selectIfCond || !$selectIfAction || !$selectElseAction) return false;
+        if (!$selectIfCond.value || !$selectIfAction.value || !$selectElseAction.value) {
+            return false;
+        }
+        if ($dynamicElseIfContainer) {
+            const dynamicRows = $dynamicElseIfContainer.querySelectorAll('.dynamic-branch');
+            for (let row of dynamicRows) {
+                const condSel = row.querySelector('.cond-select');
+                const actSel = row.querySelector('.action-select');
+                if (!condSel || !condSel.value || !actSel || !actSel.value) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    function handleRuleSelectChange(sel) {
+        if (sel) sel.classList.remove('unconfigured');
+        if (checkAllRulesConfigured()) {
+            setTimeout(() => {
+                scrollToSimulationStage();
+            }, 300);
+        }
+    }
+
     // Full automatic run
     async function runFullSimulation() {
         if (isRunningSimulation) return;
         if (!validatePlayerRules()) {
             sfx.errorBuzzer();
             return;
+        }
+
+        scrollToSimulationStage();
+        if (window.innerWidth <= 900) {
+            await sleep(350);
         }
 
         isRunningSimulation = true;
@@ -502,6 +545,11 @@
         if (!validatePlayerRules()) {
             sfx.errorBuzzer();
             return;
+        }
+
+        scrollToSimulationStage();
+        if (window.innerWidth <= 900) {
+            await sleep(350);
         }
 
         $btnRunFactory.disabled = true;
@@ -904,9 +952,9 @@
         document.getElementById('btn-reset-stars-hud')?.addEventListener('click', resetAllStars);
         document.getElementById('btn-reset-stars-modal')?.addEventListener('click', resetAllStars);
 
-        // Remove unconfigured class when select changed
+        // Remove unconfigured class when select changed & auto scroll if all rules filled
         [$selectIfCond, $selectIfAction, $selectElseAction].forEach(sel => {
-            sel.addEventListener('change', () => sel.classList.remove('unconfigured'));
+            sel.addEventListener('change', () => handleRuleSelectChange(sel));
         });
 
         // Level Modal toggles

@@ -147,6 +147,23 @@
             this.userDecisions[visitorIdx] = val;
             this.renderer.updateCardChoiceUI(visitorIdx, val);
             this.sound.playTone(val ? 587.33 : 370, 0.05, 'triangle', 0.12);
+
+            if (this.userDecisions.every(d => d !== null)) {
+                setTimeout(() => {
+                    this.scrollToStage();
+                }, 300);
+            }
+        }
+
+        scrollToStage() {
+            if (window.innerWidth <= 1024) {
+                const stage = document.querySelector('.card-deck');
+                if (stage) {
+                    stage.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                } else {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            }
         }
 
         renderLevelModal() {
@@ -226,6 +243,11 @@
             if (this.isRunning) return;
             if (!this.validateAllDecisionsMade()) return;
 
+            this.scrollToStage();
+            if (window.innerWidth <= 1024) {
+                await new Promise(r => setTimeout(r, 350));
+            }
+
             this.isRunning = true;
             this.dom.btnRun.disabled = true;
             this.dom.btnStep.disabled = true;
@@ -254,6 +276,11 @@
         async stepSimulation() {
             if (this.isRunning) return;
             if (!this.validateAllDecisionsMade()) return;
+
+            this.scrollToStage();
+            if (window.innerWidth <= 1024) {
+                await new Promise(r => setTimeout(r, 350));
+            }
 
             const lvl = window.GATEBOT_LEVELS[this.currentLvlIdx];
             if (this.currentVisitorIdx >= lvl.visitors.length) {
